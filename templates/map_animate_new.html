@@ -44,24 +44,49 @@
 </div>
 
 <script>
-//wih public token, I can see map & button, but no route or animation:
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajFuMWRlYmwwMGRiMnd0YWM5MmV4cW41In0.IAQ546t5zPFLSdMLl-rqNA';
 
-//with my token, all I can see is the button:
-// mapboxgl.accessToken = 'sk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajJhbTF2MmEwMDhnMzNvZzhndDZkOG5oIn0.M8t-MQ_OSc_hCGwSDkyjnQ';
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajFuMWRlYmwwMGRiMnd0YWM5MmV4cW41In0.IAQ546t5zPFLSdMLl-rqNA';
 
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',
-    center: [-122.414, 37.776],
-    zoom: 8
+    center: [-122.4114, 37.7887],
+    zoom: 12
 });
 
 // San Francisco
-var origin = [-122.411499, 37.788736];
+var origin = [-122.4114, 37.7887];
 
 // Washington DC
-var destination = [-122.410154, 37.784330];
+var destination = [-122.4683, 37.7181];
+
+//here is a list of waypoints, see if I can get these to
+//animate iinstead of using the arc between origin and destination
+//[[-122.411413, 37.788534],
+ // [-122.411845, 37.788479],
+ // [-122.411912, 37.788811],
+ // [-122.413555, 37.788603],
+ // [-122.412238, 37.78208],
+ // [-122.410356, 37.782207],
+ // [-122.404083, 37.777278],
+ // [-122.406378, 37.775464],
+ // [-122.40654, 37.771925],
+ // [-122.408143, 37.739469],
+ // [-122.408841, 37.735737],
+ // [-122.412327, 37.733408],
+ // [-122.451223, 37.714303],
+ // [-122.455211, 37.711823],
+ // [-122.455834, 37.71131],
+ // [-122.456041, 37.711429],
+ // [-122.456073, 37.713204],
+ // [-122.462501, 37.713191],
+ // [-122.462734, 37.714256],
+ // [-122.465304, 37.714286],
+ // [-122.465347, 37.717919],
+ // [-122.468042, 37.717896],
+ // [-122.468044, 37.718102]]
+
+
 
 // A simple line from origin to destination.
 var route = {
@@ -98,7 +123,13 @@ var arc = [];
 
 // Draw an arc between the `origin` & `destination` of the two points
 for (var i = 0; i < lineDistance; i++) {
-    var segment = turf.along(route.features[0], i / 1000 * lineDistance, 'kilometers');
+    // arguments for turf.along:  line, distance, units
+    //example had 1/1000 for "distance"
+    // changing that to divide by 10 instead of 1000 got a line to draw on my map!  but it's not an arc, and the animation doesn't happen
+    // try just i instead of i divided by anything....?
+    //that brought no joy
+    //how about not multiplying by lineDistance?
+    var segment = turf.along(route.features[0], i / 10 * lineDistance, 'kilometers');
     arc.push(segment.geometry.coordinates);
 }
 

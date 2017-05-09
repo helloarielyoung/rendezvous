@@ -32,6 +32,11 @@ var map = new mapboxgl.Map({
 map.addControl(new MapboxDirections({
     accessToken: mapboxgl.accessToken
 }), 'top-left');
+
+ // request directions with steps and alternatives
+ //run this from command line with 
+// curl "https://api.mapbox.com/directions/v5/mapbox/driving/-122.4114, 37.7887;-122.4683, 37.7181?steps=true&alternatives=true&sk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajJhbTF2MmEwMDhnMzNvZzhndDZkOG5oIn0.M8t-MQ_OSc_hCGwSDkyjnQ"
+
 </script>
 
 </body>

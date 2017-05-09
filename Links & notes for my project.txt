@@ -1,0 +1,47 @@
+Links for my project
+
+Mapbox
+    driving directions
+        example: https://www.mapbox.com/mapbox-gl-js/example/mapbox-gl-directions/
+
+        Maybe v4 returns the actual data?
+        https://www.mapbox.com/api-documentation/pages/directions-v4.html
+
+    point animation
+        example: https://www.mapbox.com/mapbox-gl-js/example/animate-point-along-route/
+
+    turf
+        https://www.mapbox.com/help/analysis-with-turf/
+
+
+        line-distance:
+            example: https://www.mapbox.com/mapbox-gl-js/example/measure/
+            documentation:  https://github.com/turf-junkyard/turf-line-distance
+
+        turf.along:
+            docs:  http://turfjs.org/docs/ and search for "along"
+
+            turf.along looks like it has feature "Center" that I can use in future release to calculate the center point between User1 and User2... and then use Yelp to find a restaurant near that center point...
+
+
+
+working with routes data from mapbox
+    bash command line:
+         curl "https://api.mapbox.com/directions/v5/mapbox/driving/-122.4114, 37.7887;-122.4683, 37.7181?steps=true&alternatives=true&access_token=sk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajJhbTF2MmEwMDhnMzNvZzhndDZkOG5oIn0.M8t-MQ_OSc_hCGwSDkyjnQ" > directions.json
+         (found this here:  https://www.mapbox.com/api-documentation/#directions)
+
+    interactive python:
+        f=open('directions.json')
+        data = f.read()
+
+        import json
+        data = json.loads(data)
+
+        new_data = data['routes'][0]['legs'][0]['steps']
+
+        directions = []
+
+        for step in new_data:
+            directions.append(step['intersections'][0]['location'])
+
+

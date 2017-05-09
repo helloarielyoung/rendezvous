@@ -1,3 +1,5 @@
+<!-- sample code to add a marker to a map given coordinates
+     I will try to customize this to display a destination in SF -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,13 +27,23 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',
     //that's longitude, latitude:
-    center: [-79.4512, 43.6568],
-    zoom: 13
+    // center: [-79.4512, 43.6568],
+    //SF - got coordinates from GoogleMaps, but does not display map
+    // center: [37.7901,-122.4070]
+    //because GM coordinates are reversed! so try other way around:
+    center: [-122.4070, 37.37901]
+    // but mapbox still does not display my map.  :()
+    zoom: 15
 });
 
-map.addControl(new MapboxDirections({
-    accessToken: mapboxgl.accessToken
-}), 'top-left');
+L.mapbox.accessToken = 'pk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajFuMWRlYmwwMGRiMnd0YWM5MmV4cW41In0.IAQ546t5zPFLSdMLl-rqNA';
+
+// Hackbright coordinates from Google:  37.788617, -122.411488
+// L.marker([37.788617, -122.411488]).addTo(map);
+
+// map.addControl(new MapboxDirections({
+//     accessToken: mapboxgl.accessToken
+// }), 'top-left');
 </script>
 
 </body>

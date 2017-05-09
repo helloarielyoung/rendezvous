@@ -49,6 +49,31 @@ def load_waypoints():
 
     Waypoint.query.delete()
 
+    route1 = [
+        {'lat': 37.748915, 'lng': -122.4181515, 'time': '2017 05 09 8:30:00'},
+        {'lat': 37.7482293, 'lng': -122.4182139, 'time': '2017 05 09 8:30:10'},
+        {'lat': 37.7496136, 'lng': -122.4041771, 'time': '2017 05 09 8:30:15'},
+        {'lat': 37.7505216, 'lng': -122.4036993, 'time': '2017 05 09 8:30:25'},
+        {'lat': 37.7519918, 'lng': -122.4030731, 'time': '2017 05 09 8:30:30'},
+        {'lat': 37.7703559, 'lng': -122.4097319, 'time': '2017 05 09 8:30:35'},
+        {'lat': 37.7740446, 'lng': -122.4143887, 'time': '2017 05 09 8:30:45'},
+        {'lat': 37.7762332, 'lng': -122.4116211, 'time': '2017 05 09 8:30:50'},
+        {'lat': 37.7788903, 'lng': -122.4149656, 'time': '2017 05 09 8:31:00'},
+        {'lat': 37.7881866, 'lng': -122.4168552, 'time': '2017 05 09 8:31:15'}
+        ]
+
+    for item in route1:
+        waypoint_lat = item['lat']
+        waypoint_long = item['lng']
+        current_time = item['time']
+
+        waypoint = Waypoint(invite_id=1, user_id=1,
+                            current_time=current_time,
+                            waypoint_lat=waypoint_lat,
+                            waypoint_long=waypoint_long)
+        db.session.add(waypoint)
+
+    db.session.commit()
     #sample if doing manually:
     #waypoint1 = Waypoint(waypoint_id=1,
     #                     invite_id=1, user_id=1,

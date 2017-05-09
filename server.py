@@ -46,17 +46,25 @@ def map_steps():
 
 @app.route('/googlemap')
 def googlemap():
-    """Homepage."""
+    """Google map with animated route. Hardcoded version"""
 
-    return render_template("google_maps_animation.html")
+    return render_template("google_maps_animation2.html")
 
+@app.route('/googlemap2')
+def googlemap2():
+    """Google map with animated route. Database version"""
 
-#helper function
-def test_get():
-    testy = ''
-    requests.get('https://api.mapbox.com/directions/v5/driving/-122.4114, 37.7887;-122.4683, 37.7181, steps=True', testy)
+    user1data = db.session.query(Waypoint.waypoint_lat,
+                               Waypoint.waypoint_long,
+                               Waypoint.current_time).filter(Waypoint.user_id == 1,
+                                                             Waypoint.invite_id == 1).all()
 
-    print testy
+    user2data = db.session.query(Waypoint.waypoint_lat,
+                                 Waypoint.waypoint_long,
+                                 Waypoint.current_time).filter(Waypoint.user_id == 2,
+                                 Waypoint.invite_id == 1).all()
+
+    return render_template("google_maps_animation2.html", user1data=user1data, user2data=user2data)
 
 
 if __name__ == "__main__":

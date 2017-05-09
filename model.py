@@ -73,14 +73,14 @@ class Waypoint(db.Model):
     waypoint_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     invite_id = db.Column(db.Integer, db.ForeignKey('invitations.invite_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    current_datetime = db.Column(db.DateTime, nullable=False)
+    current_time = db.Column(db.DateTime, nullable=False)
     waypoint_lat = db.Column(db.Integer, nullable=False)
     waypoint_long = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return "<Waypoint waypoint_id=%s user_id=%s waypoint_lat=%s \
-            waypoint_long=%s>" % (self.waypoint_id, self.user_id, self.waypoint_lat,
-                                  self.waypoint_long)
+            waypoint_long=%s current_time=%s>" % (self.waypoint_id, self.user_id, self.waypoint_lat,
+                                                  self.waypoint_long, self.current_time)
 
     waypoint_user = db.relationship('User')
 

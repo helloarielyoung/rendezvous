@@ -1,4 +1,4 @@
-#!/home/vagrant/src/arielsproject/env/bin/python
+#!/home/user/src/arielsproject/env/bin/python
 
 import sys
 import getopt

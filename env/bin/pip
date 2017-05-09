@@ -1,4 +1,4 @@
-#!/home/vagrant/src/arielsproject/env/bin/python2
+#!/home/user/src/arielsproject/env/bin/python2
 
 # -*- coding: utf-8 -*-
 import re

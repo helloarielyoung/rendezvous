@@ -1,5 +1,8 @@
 Links for my project
 
+Google Maps
+    API key:  AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0 
+
 Mapbox
     driving directions
         example: https://www.mapbox.com/mapbox-gl-js/example/mapbox-gl-directions/
@@ -44,4 +47,8 @@ working with routes data from mapbox
         for step in new_data:
             directions.append(step['intersections'][0]['location'])
 
+
+    Polyline
+        installed polyline:   npm install @mapbox/polyline
+        but still did not get polyline to work.
 

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />
+<!-- added this to try and get polyline working -->
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<style>
+.overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.overlay button {
+    font:600 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    background-color: #3386c0;
+    color: #fff;
+    display: inline-block;
+    margin: 0;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.overlay button:hover {
+    background-color:#4ea0da;
+}
+</style>
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js' charset='utf-8'></script>
+
+<div id='map'></div>
+<div class='overlay'>
+    <button id='replay'>Replay</button>
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajFuMWRlYmwwMGRiMnd0YWM5MmV4cW41In0.IAQ546t5zPFLSdMLl-rqNA';
+L.mapbox.accessToken = 'pk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajFuMWRlYmwwMGRiMnd0YWM5MmV4cW41In0.IAQ546t5zPFLSdMLl-rqNA'
+
+//here is a list of waypoints, see if I can get these to
+//animate iinstead of using the arc between origin and destination
+// polyline.encode didn't work (Uncaught TypeError: Cannot read property 'encode' of undefined
+    // at map-animate:57), so tray as a list of lists...?
+latlngs = [[-122.411413, 37.788534],
+ [-122.411845, 37.788479],
+ [-122.411912, 37.788811],
+ [-122.413555, 37.788603],
+ [-122.412238, 37.78208],
+ [-122.410356, 37.782207],
+ [-122.404083, 37.777278],
+ [-122.406378, 37.775464],
+ [-122.40654, 37.771925],
+ [-122.408143, 37.739469],
+ [-122.408841, 37.735737],
+ [-122.412327, 37.733408],
+ [-122.451223, 37.714303],
+ [-122.455211, 37.711823],
+ [-122.455834, 37.71131],
+ [-122.456041, 37.711429],
+ [-122.456073, 37.713204],
+ [-122.462501, 37.713191],
+ [-122.462734, 37.714256],
+ [-122.465304, 37.714286],
+ [-122.465347, 37.717919],
+ [-122.468042, 37.717896],
+ [-122.468044, 37.718102]]
+
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9',
+    center: [-122.4114, 37.7887],
+    zoom: 12
+});
+
+// San Francisco
+var origin = [-122.4114, 37.7887];
+
+// Washington DC
+var destination = [-122.4683, 37.7181];
+
+
+// A simple line from origin to destination.
+// var route = {
+//     "type": "FeatureCollection",
+//     "features": [{
+//         "type": "Feature",
+//         "geometry": {
+//             "type": "LineString",
+//             "coordinates": [
+//                 origin,
+//                 destination
+//             ]
+//         }
+//     }]
+// };
+
+// A poly line using my list of points
+var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+// // A single point that animates along the route.
+// // Coordinates are initially set to origin.
+// var point = {
+//     "type": "FeatureCollection",
+//     "features": [{
+//         "type": "Feature",
+//         "geometry": {
+//             "type": "Point",
+//             "coordinates": origin
+//         }
+//     }]
+// };
+
+// // Calculate the distance in kilometers between route start/end point.
+// var lineDistance = turf.lineDistance(route.features[0], 'kilometers');
+
+// var arc = [];
+
+// // Draw an arc between the `origin` & `destination` of the two points
+// for (var i = 0; i < lineDistance; i++) {
+//     // arguments for turf.along:  line, distance, units
+//     //example had 1/1000 for "distance"
+//     // changing that to divide by 10 instead of 1000 got a line to draw on my map!  but it's not an arc, and the animation doesn't happen
+//     // try just i instead of i divided by anything....?
+//     //that brought no joy
+//     //how about not multiplying by lineDistance?
+//     var segment = turf.along(route.features[0], i / 10 * lineDistance, 'kilometers');
+//     arc.push(segment.geometry.coordinates);
+// }
+
+// // Update the route with calculated arc coordinates
+// route.features[0].geometry.coordinates = arc;
+
+// // Used to increment the value of the point measurement against the route.
+// var counter = 0;
+
+// map.on('load', function () {
+//     // Add a source and layer displaying a point which will be animated in a circle.
+//     map.addSource('route', {
+//         "type": "geojson",
+//         "data": route
+//     });
+
+//     map.addSource('point', {
+//         "type": "geojson",
+//         "data": point
+//     });
+
+//     map.addLayer({
+//         "id": "route",
+//         "source": "route",
+//         "type": "line",
+//         "paint": {
+//             "line-width": 2,
+//             "line-color": "#007cbf"
+//         }
+//     });
+
+//     map.addLayer({
+//         "id": "point",
+//         "source": "point",
+//         "type": "symbol",
+//         "layout": {
+//             "icon-image": "airport-15",
+//             "icon-rotate": 90
+//         }
+//     });
+
+//     function animate() {
+//         // Update point geometry to a new position based on counter denoting
+//         // the index to access the arc.
+//         point.features[0].geometry.coordinates = route.features[0].geometry.coordinates[counter];
+
+
+//         // Update the source with this new data.
+//         map.getSource('point').setData(point);
+
+//         // Request the next frame of animation so long as destination has not
+//         // been reached.
+//         if (point.features[0].geometry.coordinates[0] !== destination[0]) {
+//             requestAnimationFrame(animate);
+//         }
+
+//         counter = counter + 1;
+//     }
+
+//     document.getElementById('replay').addEventListener('click', function() {
+//         // Set the coordinates of the original point back to origin
+//         point.features[0].geometry.coordinates = origin;
+
+//         // Update the source layer
+//         map.getSource('point').setData(point);
+
+//         // Reset the counter
+//         counter = 0;
+
+//         // Restart the animation.
+//         animate(counter);
+//     });
+
+//     // Start the animation.
+//     animate(counter);
+// });
+</script>
+
+</body>
+</html>

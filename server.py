@@ -7,8 +7,6 @@ from flask import Flask, jsonify, render_template, redirect, request, flash, ses
 
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
 
-import requests
-
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -30,7 +28,7 @@ def index():
 def map():
     """Homepage."""
 
-    return render_template("map_animate_new.html")
+    return render_template("map_animate_new_points.html")
 
 @app.route('/map-directions')
 def map_directions():
@@ -44,6 +42,13 @@ def map_steps():
     """Homepage."""
 
     return render_template("request_directions_with_steps.html")
+
+
+@app.route('/googlemap')
+def googlemap():
+    """Homepage."""
+
+    return render_template("google_maps_animation.html")
 
 
 #helper function

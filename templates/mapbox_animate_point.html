@@ -53,15 +53,15 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbG9hcmllbCIsImEiOiJjajFuMWRlYmwwMGRiMnd0Y
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',
-    center: [-96, 37.8],
-    zoom: 3
+    center: [-122.414, 37.776],
+    zoom: 8
 });
 
 // San Francisco
-var origin = [-122.414, 37.776];
+var origin = [-122.411499, 37.788736];
 
 // Washington DC
-var destination = [-77.032, 38.913];
+var destination = [-122.410154, 37.784330];
 
 // A simple line from origin to destination.
 var route = {

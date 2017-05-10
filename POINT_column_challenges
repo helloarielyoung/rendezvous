@@ -1,0 +1,32 @@
+Trying to get POINT column to hold lat & long.
+PostgreSQL v9.5.6
+
+added to model.py:
+    from geoalchemy2 import Geometry
+
+modified table definition to:
+     destination_lat = db.Column(Geometry('POINT'), nullable=False)\
+
+     and get error "sqlalchemy.exc.ProgrammingError: (psycopg2.ProgrammingError) type "geometry" does not exist"
+
+did some reading and tried this instead:
+     destination_lat = db.Column(Geometry('POINT', management=True), nullable=False)
+
+     and get error "sqlalchemy.exc.ProgrammingError: (psycopg2.ProgrammingError) function addgeometrycolumn(unknown, unknown, unknown, integer, unknown, integer) does not exist
+LINE 1: SELECT AddGeometryColumn('public', 'invitations', 'destinati...
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ [SQL: 'SELECT AddGeometryColumn(%(AddGeometryColumn_2)s, %(AddGeometryColumn_3)s, %(AddGeometryColumn_4)s, %(AddGeometryColumn_5)s, %(AddGeometryColumn_6)s, %(AddGeometryColumn_7)s) AS "AddGeometryColumn_1"'] [parameters: {'AddGeometryColumn_3': 'invitations', 'AddGeometryColumn_2': 'public', 'AddGeometryColumn_5': -1, 'AddGeometryColumn_4': 'destination_lat', 'AddGeometryColumn_7': 2, 'AddGeometryColumn_6': 'POINT'}]
+"
+
+More reading.  Pretty sure I need to install postGIS, but not sure which version/how to install.  http://postgis.net/install/
+
+Tried:
+    pip install cython
+    pip install psycopg-postgis
+
+    then in my database:
+    CREATE EXTENSION postgis;
+    which got this error:
+        ERROR:  could not open extension control file "/usr/share/postgresql/9.5/extension/postgis.control": No such file or directory
+

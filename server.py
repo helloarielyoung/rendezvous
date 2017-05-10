@@ -50,21 +50,32 @@ def googlemap():
 
     return render_template("google_maps_animation2.html")
 
+
 @app.route('/googlemap2')
 def googlemap2():
     """Google map with animated route. Database version"""
 
-    user1data = db.session.query(Waypoint.waypoint_lat,
-                               Waypoint.waypoint_long,
-                               Waypoint.current_time).filter(Waypoint.user_id == 1,
-                                                             Waypoint.invite_id == 1).all()
+    user1path = []
 
-    user2data = db.session.query(Waypoint.waypoint_lat,
-                                 Waypoint.waypoint_long,
-                                 Waypoint.current_time).filter(Waypoint.user_id == 2,
-                                 Waypoint.invite_id == 1).all()
+    user1query = db.session.query(Waypoint.waypoint_lat,
+                                  Waypoint.waypoint_long).filter(Waypoint.user_id == 1,
+                                                                Waypoint.invite_id == 1).all()
 
-    return render_template("google_maps_animation2.html", user1data=user1data, user2data=user2data)
+    for waypoint in user1query:
+        waypoint_dict = {}
+        waypoint_dict['lat'] = waypoint[0]
+        waypoint_dict['lng'] = waypoint[1]
+        user1path.append(waypoint_dict)
+
+    user2path = db.session.query(Waypoint.waypoint_lat,
+                                 Waypoint.waypoint_long).filter(Waypoint.user_id == 2,
+                                                                Waypoint.invite_id == 1).all()
+
+    # to draw the polyline of route:
+    # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
+         # {'lat': 37.7482293, 'lng': -122.4182139}]
+
+    return render_template("google_maps_animation2.html", user1path=user1path, user2path=user2path)
 
 
 if __name__ == "__main__":

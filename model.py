@@ -1,7 +1,6 @@
 """Models and database functions for Ariel's project - db Rendezvous."""
 
 from flask_sqlalchemy import SQLAlchemy
-from geoalchemy2 import Geometry
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -20,6 +19,8 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
+    origin_lat = db.Column(db.String(12))
+    origin_long = db.Column(db.String(12))
 
     def __repr__(self):
         return "<User user_id=%s name=%s>" % (self.user_id, self.name)
@@ -37,8 +38,8 @@ class Invitation(db.Model):
     __tablename__ = "invitations"
 
     invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    destination_lat = db.Column(db.Geometry('POINT'), nullable=False)
-    destination_long = db.Column(db.Geometry('POINT'), nullable=False)
+    destination_lat = db.Column(db.String(12), nullable=False)
+    destination_long = db.Column(db.String(12), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
 
     invite_users = db.relationship("User",
@@ -75,8 +76,8 @@ class Waypoint(db.Model):
     invite_id = db.Column(db.Integer, db.ForeignKey('invitations.invite_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     current_time = db.Column(db.DateTime, nullable=False)
-    waypoint_lat = db.Column(db.Geometry('POINT'), nullable=False)
-    waypoint_long = db.Column(db.Geometry('POINT'), nullable=False)
+    waypoint_lat = db.Column(db.String(12), nullable=False)
+    waypoint_long = db.Column(db.String(12), nullable=False)
 
     def __repr__(self):
         return "<Waypoint waypoint_id=%s user_id=%s waypoint_lat=%s \

@@ -2,55 +2,78 @@
 ***TO DO***
 ***********
 
-Make rel_status table (pending, rejected, active, inactive)
-    mark user1 as "rejected" if user2 declines friendship
-    mark both users as "inactive" if either user revokes friendship
-Make relationships table(s?) in model.py
-    user1 asks user2:
-        create record in relationships (user1 as user_id, user2 as friend_id,
-        status as 'pending')
-        if rejected, mark status as "rejected"
-        if accepted, mark status as "active" and create a second row with user2 as user_id, user1 as friend_id, status as 'active')
-            This is slightly non-normalied, but WAY easier to query things!
-Make Manage Friends route & page
-    add friends if you know their email address & it exists in User
-    Email friends to invite them to join Rendezvous
-Get better route data for user1 and user2 and put it in seed.py
-Add more tests
-Run those tests
-Improve Login
-    add some javascript to check for valid data w/out reloading page
-How about some login security?!
-    Do not display password when typing
-    Do some encryption or something of password?
-        No idea... what if i grab Bootstrap logins, will all this
-        be done for me?
-      place to start research?:
-        for the password hash for user login i used import hashlib salt = 'something' hash = hashlib.md5(salt + pword).hexdigest()
+Add SQLAlchemy relationships to tables that are missing them
 Design queries that will be used by app
+    Select invitations that are dated in the future
+    Select past invitations (last 5 days, last 30 days)
+    Select pending friend requests
+    Select list of Active friends
+    Select list of Inactive friends
+    Select list of Rejected friend requests
     Test those queries
-Add tests
-Add marker on destination point
-Add link on map to get back to Rendezvous pages?
-How can I supress the link to Homepage from the homepage, but have it everywhere else?
-Change color of User1/User2's routes
-Allow two users to see the same map
-    Color code "my" route vs "other" route
-    Maybe add a tag to the animation with their name all tiny
-Send alert to "other" user when one user arrives at destination
-Add tests!
-Display ETA of "other" user
-If traffic alert rec'd by one user, display that to other user
-Modify everything to allow n-users on an invitation (for loops!)
-    map display each route animation in different color/tag with name
-    map display "my" route in distinct color
+
+Make User landing page for after login
+    Shows "current" Invitations
+    Shows "pending" friend requests
+
+Make Manage Friends routes & pages
+    1) Form to ask somebody (by email address) to be your friend
+        If email exists:
+            If previously rejected by this person, do not allow request to continue
+            Else:
+                create record in relationships (user1 as user_id, user2 as friend_id,
+                status as 'pending')
+        Else: at this time, say "does not exist"
+            later: offer form to email your friend link to join Rendezvous
+    2) Page to see your "pending" friend requests & respond to them
+        user1 asks user2:
+            if rejected, mark status as "rejected"
+            if accepted, mark status as "active" and create a second row with user2 as user_id, user1 as friend_id, status as 'active')
+                This is slightly non-normalied, but WAY easier to query things!
+    3)Make app_route & page for managing existing "active" relationships
+        mark both users as "inactive" if either user revokes friendship
+    4)Make app_route & page for managing "inactive" relationships
+        allow user to re-initiate relationship (sends new friend request?)
+    5)Make app_route for managing requests you have rejected
+        allow user to remove the rejected record so that person can successfully
+        request friendship again
+
 Make Invitation route & form for creating new invitation
     Google Maps autofill to choose destination
     (later - Or select from a map?)
     Checkboxes to choose Friends to invite
     Date/time of Rendezvous
-Make User landing page for after login
-    Shows "current" Invitations
+    (don't forget to user session['login'] as created_by_id)
+Add tests
+
+Get better route data for user1 and user2 and put it in seed.py
+Allow two users to see the same map when logged in at same time
+    Color code "my" route vs "other" route
+    Maybe add a tag to the animation with their name all tiny
+Send alert to "other" user when one user arrives at destination
+Add tests!
+Display ETA of "other" user
+
+Add more tests
+Run those tests
+Improve Login
+    add some javascript to check for valid data w/out reloading page
+    How about some login security?!
+        Do not display password when typing
+        Do some encryption or something of password?
+            No idea... what if i grab Bootstrap logins, will all this
+            be done for me?
+          place to start research?:
+            for the password hash for user login i used import hashlib salt = 'something' hash = hashlib.md5(salt + pword).hexdigest()
+Add tests
+Add marker on destination point
+Add link on map to get back to Rendezvous pages?
+How can I supress the link to Homepage from the homepage, but have it everywhere else?
+Change color of User1/User2's routes
+If traffic alert rec'd by one user, display that to other user
+Modify everything to make it work when n-users on an invitation (for loops!)
+    map display each route animation in different color/tag with name
+    map display "my" route in distinct color
 Forgot User Name & Forgot Password stuff
 Make Invitation management route & page
     Accept or Decline invitation(s)
@@ -82,6 +105,10 @@ Way Future Features:
 ***DONE***
 ***********
 
+Added relationship test data to seed.py
+Created relationships table
+Created relationship_status (pending, rejected, active, inactive)
+Added created_by_id and created_date to invitations
 Tested Registration (allow only unique emails)
     Ran into "duplicate key value violates unique contraint" when manually adding users after seeding database,
         Fixed:  modifed seed.py to update seq_id for all tables with serialized keys

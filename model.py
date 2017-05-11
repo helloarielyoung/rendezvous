@@ -51,6 +51,7 @@ class Relationship(db.Model):
     relationship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    request_date = db.Column(db.DateTime)
     status = db.Column(db.String(3), db.ForeignKey('relationship_status.rel_status_id'), nullable=False)
 
     def __repr__(self):
@@ -63,6 +64,8 @@ class Invitation(db.Model):
     __tablename__ = "invitations"
 
     invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    created_by_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    created_date = db.Column(db.Datetime, nullable=False)
     destination_lat = db.Column(db.String(12), nullable=False)
     destination_long = db.Column(db.String(12), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
@@ -78,7 +81,10 @@ class Invitation(db.Model):
 
 
 class UserInvite(db.Model):
-    """Relate users to invitations"""
+    """Relate users to invitations.
+
+    You cannot tell from here who invited whom - see Invitation to find the
+    created_by_id:  that is the person who created the Invitation"""
 
     __tablename__ = "users_invites"
 

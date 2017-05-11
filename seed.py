@@ -1,7 +1,7 @@
 """Utility file to seed rendezvous database"""
 
 from sqlalchemy import func
-from model import User, Invitation, Waypoint, UserInvite, RelationshipStatus
+from model import User, Invitation, Waypoint, UserInvite, RelationshipStatus, Relationship
 
 from model import connect_to_db, db
 from server import app
@@ -39,17 +39,20 @@ def load_invitations():
 
     Invitation.query.delete()
 
-    invite1 = Invitation(invite_id=1, destination_lat=37.37901,
+    invite1 = Invitation(invite_id=1,
+                         created_by_id=1,
+                         created_date='2017 05 09 9:00:00',
+                         destination_lat=37.37901,
                          destination_long=-122.4070,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 09 09:00:00')
+                         rendezvous_date='2017 05 12 09:00:00')
     db.session.add(invite1)
 
     db.session.commit()
 
 
 def load_user_invites():
-    """load relationship between users and invitations."""
+    """load test relationships between users and invitations."""
 
     print "UserInvites"
 
@@ -76,6 +79,25 @@ def load_rel_status():
                             ('ina', 'inactive')]:
         rel = RelationshipStatus(rel_status_id=status, rel_status_description=descrip)
         db.session.add(rel)
+    db.session.commit()
+
+
+def load_relationships():
+    """Load test relationships into database.
+
+    Null request date means this record was created when user_id
+    accepted friend request initiated by friend_id"""
+
+    print "Relationshps"
+
+    Relationship.query.delete()
+
+    rel1 = Relationship(user_id=1, friend_id=2, status='act', request_date='2017 05 09 09:00:00')
+    rel2 = Relationship(user_id=2, friend_id=1, status='act')
+
+    db.session.add(rel1)
+    db.session.add(rel2)
+
     db.session.commit()
 
 
@@ -192,6 +214,8 @@ if __name__ == "__main__":
 
     # Import different types of data
     load_users()
+    load_rel_status()
+    load_relationships()
     load_invitations()
     load_waypoints()
     load_user_invites()

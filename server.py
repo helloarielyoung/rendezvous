@@ -99,9 +99,9 @@ def logout():
     return redirect('/')
 
 
-@app.route('/googlemap2')
+@app.route('/rendezvous-map')
 def googlemap2():
-    """Google map with animated route. Database version"""
+    """Google map with animated routes populated from database"""
 
     user1query = db.session.query(Waypoint.waypoint_lat,
                                   Waypoint.waypoint_long).filter(Waypoint.user_id == 1,
@@ -115,7 +115,7 @@ def googlemap2():
     # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
          # {'lat': 37.7482293, 'lng': -122.4182139}]
 
-    return render_template("google_maps_animation2.html",
+    return render_template("rendezvous_map.html",
                            user1query=user1query,
                            user2query=user2query)
 

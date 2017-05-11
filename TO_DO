@@ -4,7 +4,7 @@
 
 Add tests
 Test Login
-Test Registration
+Test Registration (allow only unique emails)
 Make Friends table(s?) in model.py
 Make Manage Friends route & page
     add friends if you know their email address & it exists in User
@@ -61,6 +61,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Created tests.py, made some tests of current routes
+^5/11^
+
 Modified model.py and seed.py to add email address of users
 Make registration route & page
 Make login process route
@@ -69,6 +72,8 @@ Modified animation so route1 and route2 go at different speeds
 Modified animation so route1 and route2 start at different times
 Animate second route
 Display user2's route on the map
+^5/10^
+
 Animate traveling along the route
 Display user1's route on the map
 Make web page that displays a map

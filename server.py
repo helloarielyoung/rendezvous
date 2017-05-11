@@ -4,9 +4,7 @@ from jinja2 import StrictUndefined
 
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session
-
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
-
 from decimal import Decimal
 
 app = Flask(__name__)
@@ -25,6 +23,81 @@ def index():
     """Homepage."""
 
     return render_template("homepage.html")
+
+
+@app.route('/login')
+def login():
+    """Display login form"""
+
+    return render_template("login_form.html")
+
+
+@app.route('/process-login', methods=["POST"])
+def authenticate_login():
+    """Authenticates user info and logs in if valid."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    if User.query.filter_by(email=email).first() is not None:
+        user = User.query.filter_by(email=email).first()
+        if user.password == password:
+            session['login'] = user.user_id
+            print session
+            flash('You were successfully logged in')
+            # not using this yet in this app...
+            # user_id = user.user_id
+            return redirect('/')
+        else:
+            flash('Bad password or user name')
+            return redirect('/login')
+    # we tried getting rid of what appears to be redundant else
+    # but it did not work if it was valid email and bad password
+    else:
+        flash('Bad password or user name')
+        return redirect('/login')
+
+
+@app.route('/register', methods=["GET"])
+def registration_form():
+    """Display form to register new user."""
+
+    return render_template("registration_form.html")
+
+
+@app.route('/register', methods=["POST"])
+def register_process():
+    """Create new user from registration form."""
+
+    email = request.form.get("email")
+    name = request.form.get("name")
+    password = request.form.get("password")
+
+    # check if email exists, and if not add to DB
+    if User.query.filter_by(email=email).first() is not None:
+        flash("You already have an account!")
+
+    else:
+        user = User(email=email,
+                    name=name,
+                    password=password)
+        db.session.add(user)
+        db.session.commit()
+        flash("You are registered!")
+
+    return redirect("/")
+
+
+@app.route('/logout')
+def logout():
+    """logs out user"""
+
+    del session['login']
+    print session
+    flash("You are logged out")
+
+    return redirect('/')
+
 
 @app.route('/googlemap2')
 def googlemap2():

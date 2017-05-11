@@ -5,10 +5,18 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body class="starter-template container">
-    <h4>Ratings</h4>
+    <h4>Rendezvous</h4>
     <hr>
+{% for message in get_flashed_messages() %}
+    <span> {{ message }}</span>
+{% endfor %}
 
     {% block content %} put your content here {% endblock %}
+
+{% if 'user_id' not in session %}
+  <a href="/login"><h3>Click here to log in.</h3></a>
+  <h3>Don't have an account yet? <a href="/register">Click here to register.</a></h3>
+{% endif %}
 
 </body>
 </html>

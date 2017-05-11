@@ -18,6 +18,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    email = db.Column(db.String(120), nullable=False)
     name = db.Column(db.String(64), nullable=False)
     origin_lat = db.Column(db.String(12))
     origin_long = db.Column(db.String(12))

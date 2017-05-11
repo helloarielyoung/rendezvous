@@ -1,7 +1,7 @@
 """Utility file to seed rendezvous database"""
 
 from sqlalchemy import func
-from model import User, Invitation, Waypoint, UserInvite
+from model import User, Invitation, Waypoint, UserInvite, RelationshipStatus
 
 from model import connect_to_db, db
 from server import app
@@ -18,8 +18,8 @@ def load_users():
     User.query.delete()
 
     # Here's some test users
-    user1 = User(user_id=1, 
-                 name='Test User 1', 
+    user1 = User(user_id=1,
+                 name='Test User 1',
                  email='user1@email.com',
                  password='Mypassword1')
     user2 = User(user_id=2,
@@ -42,14 +42,14 @@ def load_invitations():
     invite1 = Invitation(invite_id=1, destination_lat=37.37901,
                          destination_long=-122.4070,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 09')
+                         rendezvous_date='2017 05 09 09:00:00')
     db.session.add(invite1)
 
     db.session.commit()
 
 
 def load_user_invites():
-    """load relationship between users and invitations"""
+    """load relationship between users and invitations."""
 
     print "UserInvites"
 
@@ -60,6 +60,22 @@ def load_user_invites():
     db.session.add(ui1)
     db.session.add(ui2)
 
+    db.session.commit()
+
+
+def load_rel_status():
+    """Load relationship status table with statuses."""
+
+    print "Relationship Status"
+
+    RelationshipStatus.query.delete()
+
+    for status, descrip in [('pen', 'pending'),
+                            ('rej', 'rejected'),
+                            ('act', 'active'),
+                            ('ina', 'inactive')]:
+        rel = RelationshipStatus(rel_status_id=status, rel_status_description=descrip)
+        db.session.add(rel)
     db.session.commit()
 
 

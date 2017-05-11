@@ -34,8 +34,31 @@ class User(db.Model):
     waypts = db.relationship("Waypoint")
 
 
+class RelationshipStatus(db.Model):
+    """Create relationship statuses table."""
+
+    __tablename__ = "relationship_status"
+
+    rel_status_id = db.Column(db.String(3), primary_key=True)
+    rel_status_description = db.Column(db.String(15), nullable=False)
+
+
+class Relationship(db.Model):
+    """Create friends table."""
+
+    __tablename__ = "relationships"
+
+    relationship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    status = db.Column(db.String(3), db.ForeignKey('relationship_status.rel_status_id'), nullable=False)
+
+    def __repr__(self):
+        return "<friend_id=%s user_id=%s friend_user_id=%s>" % (self.friend_id, self.user_id, self.friend_user_id)
+
+
 class Invitation(db.Model):
-    """Create invitations table"""
+    """Create invitations table."""
 
     __tablename__ = "invitations"
 

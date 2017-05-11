@@ -2,11 +2,22 @@
 ***TO DO***
 ***********
 
-Make Friends table(s?) in model.py
+Make rel_status table (pending, rejected, active, inactive)
+    mark user1 as "rejected" if user2 declines friendship
+    mark both users as "inactive" if either user revokes friendship
+Make relationships table(s?) in model.py
+    user1 asks user2:
+        create record in relationships (user1 as user_id, user2 as friend_id,
+        status as 'pending')
+        if rejected, mark status as "rejected"
+        if accepted, mark status as "active" and create a second row with user2 as user_id, user1 as friend_id, status as 'active')
+            This is slightly non-normalied, but WAY easier to query things!
 Make Manage Friends route & page
     add friends if you know their email address & it exists in User
     Email friends to invite them to join Rendezvous
 Get better route data for user1 and user2 and put it in seed.py
+Add more tests
+Run those tests
 Improve Login
     add some javascript to check for valid data w/out reloading page
 How about some login security?!
@@ -59,6 +70,7 @@ Email reminders of Rendezvous at set intervals
         email notification of Invitation
         reminder frequency
 Handle timezone differences between users
+Friends management:  if someone un-friends, are they allowed to re-request?
 
 
 Way Future Features:

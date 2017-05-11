@@ -6,23 +6,36 @@
 </head>
 <body class="starter-template container">
     <h4>Rendezvous</h4>
-    <hr>
+   <hr>
 {% for message in get_flashed_messages() %}
     <span> {{ message }}</span>
 {% endfor %}
+    <hr>
 
     {% block content %} put your content here {% endblock %}
 
 <p>
     <br>
     <br>
+    <hr>
   <a href="/"><h5>Click here to go to homepage.</h5></a>
 </p>
 <p>
-{% if 'user_id' not in session %}
+{% if 'login' not in session %}
   <a href="/login"><h5>Click here to log in.</h5></a>
   <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
 {% endif %}
 </p>
+<hr>
+    <p>
+    {% if 'user_name' in session %}
+    <small>You are currently logged in as {{ session['user_name'] }}.</small>
+   <p>
+    <form action='/logout'>
+    <input type='submit' value='logout'>
+</form>
+</p> 
+    {% endif %}
+  </p>
 </body>
 </html>

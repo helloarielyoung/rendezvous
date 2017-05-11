@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-    <span> {{ message }}</span>
-{% endfor %}
-
   <h1>Rendezvous Home</h1>
 
 <p>
-Click <a href='/googlemap2'>here</a> for animated google map so far
+Click <a href='/rendezvous-map'>here</a> for animated google map so far
 </p>
 
 {% endblock %}

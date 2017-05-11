@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
-from decimal import Decimal
+
 
 app = Flask(__name__)
 
@@ -25,14 +25,14 @@ def index():
     return render_template("homepage.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET"])
 def login():
     """Display login form"""
 
     return render_template("login_form.html")
 
 
-@app.route('/process-login', methods=["POST"])
+@app.route('/login', methods=["POST"])
 def authenticate_login():
     """Authenticates user info and logs in if valid."""
 
@@ -43,6 +43,7 @@ def authenticate_login():
         user = User.query.filter_by(email=email).first()
         if user.password == password:
             session['login'] = user.user_id
+            session['user_name'] = user.name
             print session
             flash('You were successfully logged in')
             # not using this yet in this app...
@@ -83,9 +84,9 @@ def register_process():
                     password=password)
         db.session.add(user)
         db.session.commit()
-        flash("You are registered!")
+        flash("You are registered! Please login below.")
 
-    return redirect("/")
+    return redirect("/login")
 
 
 @app.route('/logout')
@@ -93,7 +94,8 @@ def logout():
     """logs out user"""
 
     del session['login']
-    print session
+    del session['user_name']
+
     flash("You are logged out")
 
     return redirect('/')

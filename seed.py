@@ -18,8 +18,14 @@ def load_users():
     User.query.delete()
 
     # Here's some test users
-    user1 = User(user_id=1, name='Test User 1', email='user1@hotmail.com')
-    user2 = User(user_id=2, name='Test User 2', email='user2@hotmail.com')
+    user1 = User(user_id=1, 
+                 name='Test User 1', 
+                 email='user1@email.com',
+                 password='Mypassword1')
+    user2 = User(user_id=2,
+                 name='Test User 2',
+                 email='user2@email.com',
+                 password='Mypassword1')
     db.session.add(user1)
     db.session.add(user2)
 
@@ -38,6 +44,21 @@ def load_invitations():
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 09')
     db.session.add(invite1)
+
+    db.session.commit()
+
+
+def load_user_invites():
+    """load relationship between users and invitations"""
+
+    print "UserInvites"
+
+    UserInvite.query.delete()
+
+    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1)
+    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2)
+    db.session.add(ui1)
+    db.session.add(ui2)
 
     db.session.commit()
 
@@ -95,54 +116,57 @@ def load_waypoints():
 
     db.session.commit()
 
-    #sample if doing manually:
-    #waypoint1 = Waypoint(waypoint_id=1,
-    #                     invite_id=1, user_id=1,
-    #                     current_date = now,
-    #                     waypoint+lat=some number, waypoint_long=some number)
 
-    # probably going to want to do this from a file even
-    # for my tiny sample data
+def set_val_user_id():
+    """Set value for the next user_id after seeding database"""
 
-    # for row in open("seed_data/u.data"):
-    #     row = row.rstrip()
-    #     user_id, movie_id, score, timestamp = row.split("\t")
+    # Get the Max user_id in the database
+    result = db.session.query(func.max(User.user_id)).one()
+    max_id = int(result[0])
 
-    #     rating = Rating(user_id=user_id, movie_id=movie_id, score=score)
-
-    #     db.session.add(rating)
-
-    # db.session.commit()
-
-
-def load_user_invites():
-    """load relationship between users and invitations"""
-
-    print "UserInvites"
-
-    UserInvite.query.delete()
-
-    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1)
-    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2)
-    db.session.add(ui1)
-    db.session.add(ui2)
-
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('users_user_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
     db.session.commit()
 
-# Need this?? Why was it only needed for User and not the other tables??
 
-# def set_val_user_id():
-#     """Set value for the next user_id after seeding database"""
+def set_val_invitations():
+    """Set value for the next invite_id after seeding database"""
 
-#     # Get the Max user_id in the database
-#     result = db.session.query(func.max(User.user_id)).one()
-#     max_id = int(result[0])
+    # Get the Max invite_id in the database
+    result = db.session.query(func.max(Invitation.invite_id)).one()
+    max_id = int(result[0])
 
-#     # Set the value for the next user_id to be max_id + 1
-#     query = "SELECT setval('users_user_id_seq', :new_id)"
-#     db.session.execute(query, {'new_id': max_id + 1})
-#     db.session.commit()
+    # Set the value for the next invite_id to be max_id + 1
+    query = "SELECT setval('invitations_invite_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.commit()
 
+
+def set_val_user_invites():
+    """Set value for the next user_invite after seeding database"""
+
+    # Get the Max ui_id in the database
+    result = db.session.query(func.max(UserInvite.ui_id)).one()
+    max_id = int(result[0])
+
+    # Set the value for the next users_invites ui_id to be max_id + 1
+    query = "SELECT setval('users_invites_ui_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.commit()
+
+
+def set_val_waypoint_id():
+    """Set value for the next waypoint_id after seeding database"""
+
+    # Get the Max waypoint_id in the database
+    result = db.session.query(func.max(Waypoint.waypoint_id)).one()
+    max_id = int(result[0])
+
+    # Set the value for the next waypoint_id to be max_id + 1
+    query = "SELECT setval('waypoints_waypoint_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.commit()
 
 if __name__ == "__main__":
     connect_to_db(app)
@@ -155,4 +179,7 @@ if __name__ == "__main__":
     load_invitations()
     load_waypoints()
     load_user_invites()
-    # set_val_user_id()
+    set_val_user_id()
+    set_val_invitations()
+    set_val_user_invites()
+    set_val_waypoint_id()

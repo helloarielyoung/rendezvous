@@ -74,6 +74,27 @@ def load_waypoints():
         db.session.add(waypoint)
 
     db.session.commit()
+
+    route2 = [{'lat': 37.7786337, 'lng': -122.4470632, 'time': '2017 05 09 8:30:15'},
+              {'lat': 37.7848573, 'lng': -122.4475605, 'time': '2017 05 09 8:30:25'},
+              {'lat': 37.7852903, 'lng': -122.4467609, 'time': '2017 05 09 8:30:30'},
+              {'lat': 37.7899599, 'lng': -122.4104554, 'time': '2017 05 09 8:30:35'},
+              {'lat': 37.7890236, 'lng': -122.4102744, 'time': '2017 05 09 8:30:50'},
+              {'lat': 37.7881866, 'lng': -122.4168552, 'time': '2017 05 09 8:31:20'}]
+
+    for item in route2:
+        waypoint_lat = item['lat']
+        waypoint_long = item['lng']
+        current_time = item['time']
+
+        waypoint = Waypoint(invite_id=1, user_id=2,
+                            current_time=current_time,
+                            waypoint_lat=waypoint_lat,
+                            waypoint_long=waypoint_long)
+        db.session.add(waypoint)
+
+    db.session.commit()
+
     #sample if doing manually:
     #waypoint1 = Waypoint(waypoint_id=1,
     #                     invite_id=1, user_id=1,

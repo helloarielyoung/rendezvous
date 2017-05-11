@@ -7,6 +7,8 @@ from flask import Flask, jsonify, render_template, redirect, request, flash, ses
 
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
 
+from decimal import Decimal
+
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -48,34 +50,28 @@ def map_steps():
 def googlemap():
     """Google map with animated route. Hardcoded version"""
 
-    return render_template("google_maps_animation2.html")
+    return render_template("google_maps_animation.html")
 
 
 @app.route('/googlemap2')
 def googlemap2():
     """Google map with animated route. Database version"""
 
-    user1path = []
-
     user1query = db.session.query(Waypoint.waypoint_lat,
                                   Waypoint.waypoint_long).filter(Waypoint.user_id == 1,
-                                                                Waypoint.invite_id == 1).all()
+                                                                 Waypoint.invite_id == 1).all()
 
-    for waypoint in user1query:
-        waypoint_dict = {}
-        waypoint_dict['lat'] = waypoint[0]
-        waypoint_dict['lng'] = waypoint[1]
-        user1path.append(waypoint_dict)
-
-    user2path = db.session.query(Waypoint.waypoint_lat,
-                                 Waypoint.waypoint_long).filter(Waypoint.user_id == 2,
-                                                                Waypoint.invite_id == 1).all()
+    user2query = db.session.query(Waypoint.waypoint_lat,
+                                  Waypoint.waypoint_long).filter(Waypoint.user_id == 2,
+                                                                 Waypoint.invite_id == 1).all()
 
     # to draw the polyline of route:
     # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
          # {'lat': 37.7482293, 'lng': -122.4182139}]
 
-    return render_template("google_maps_animation2.html", user1path=user1path, user2path=user2path)
+    return render_template("google_maps_animation2.html",
+                           user1query=user1query,
+                           user2query=user2query)
 
 
 if __name__ == "__main__":

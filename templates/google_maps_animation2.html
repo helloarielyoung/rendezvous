@@ -21,48 +21,100 @@
   <body>
     <div id="map"></div>
     <script>
-      // This example adds an animated symbol to a polyline.
 
+//TODO:  change center to Invite Destination
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {'lat': 37.7519918, 'lng': -122.4030731},
+          center: {'lat': 37.7881866, 'lng': -122.4168552},
           zoom: 13  ,
           mapTypeId: 'terrain'
         });
 
         // Define the symbol, using one of the predefined paths ('CIRCLE')
         // supplied by the Google Maps JavaScript API.
-        var lineSymbol = {
+        var user1lineSymbol = {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4,
+          strokeColor: '#393'
+        };
+
+        // Define the symbol, using one of the predefined paths ('CIRCLE')
+        // supplied by the Google Maps JavaScript API.
+        var user2lineSymbol = {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 4,
           strokeColor: '#393'
         };
 
         // Create the polyline using User1's data and add the symbol to it via the 'icons' property.
-        var line = new google.maps.Polyline({
-          path: {{ user1path }},
+        var user1line = new google.maps.Polyline({
+        path: [
+            {% for waypoint in user1query: %}
+              {'lat': {{ waypoint[0] }}, 'lng': {{ waypoint[1] }} },
+            {% endfor %}
+      ],
           icons: [{
-            icon: lineSymbol,
+            icon: user1lineSymbol,
             offset: '100%'
           }],
           map: map
         });
 
-        animateCircle(line);
+        var user2line = new google.maps.Polyline({
+        path: [
+            {% for waypoint in user2query: %}
+              {'lat': {{ waypoint[0] }}, 'lng': {{ waypoint[1] }} },
+            {% endfor %}
+      ],
+          icons: [{
+            icon: user2lineSymbol,
+            offset: '100%'
+          }],
+          map: map
+        });
+
+        setTimeout(animate2Circle(user2line), 4000)
+        animate1Circle(user1line);
       }
 
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
-      function animateCircle(line) {
+      var id1
+      function animate1Circle(line) {
           var count = 0;
-          window.setInterval(function() {
+          id1 = window.setInterval(function() {
             count = (count + 1) % 200;
 
             var icons = line.get('icons');
             icons[0].offset = (count / 2) + '%';
             line.set('icons', icons);
-        }, 30);
+            //make animation to stop at destination
+            if (line.get('icons')[0].offset == "99.5%") {
+                icons[0].offset = '100%';
+                line.set('icons', icons);
+                window.clearInterval(id1);
+
+        } }, 50);
       }
+
+      var id2;
+
+      function animate2Circle(line) {
+          var count = 0;
+          id2 = window.setInterval(function() {
+            count = (count + 1) % 200;
+
+            var icons = line.get('icons');
+            icons[0].offset = (count / 2) + '%';
+            line.set('icons', icons);
+            //make animation to stop at destination
+            if (line.get('icons')[0].offset == "99.5%") {
+                icons[0].offset = '100%';
+                line.set('icons', icons);
+                window.clearInterval(id2);
+              } }, 40);
+      }
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&callback=initMap">

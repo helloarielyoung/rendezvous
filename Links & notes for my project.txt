@@ -1,4 +1,51 @@
-Links for my project
+Links & notes for my project
+
+How to stop the animation when it reaches the end of the line?
+    http://stackoverflow.com/questions/16338774/show-a-moving-marker-on-the-map
+
+
+
+
+Things that I did to get Path formatted correctly:
+
+// what it looks like when you enter it manually (and it works):
+ //  path: [{'lat': 37.748915, 'lng': -122.4181515},
+ // {'lat': 37.7482293, 'lng': -122.4182139},
+ // {'lat': 37.7496136, 'lng': -122.4041771}],
+
+    in server.py:
+        user1path = []
+
+        user1query = db.session.query(Waypoint.waypoint_lat,
+                                      Waypoint.waypoint_long).filter(Waypoint.user_id == 1,
+                                                                    Waypoint.invite_id == 1).all()
+
+        for waypoint in user1query:
+            waypoint_dict = {}
+            waypoint_dict['lat'] = float(waypoint[0])
+            waypoint_dict['lng'] = float(waypoint[1])
+            user1path.append(waypoint_dict)
+    but when user1path was interpreted by jinja (in {{ user1path }} ) it was putting
+        the symbols for the single quotes around lat & lng instead of literal single quotes
+
+    so tried in the HTML:
+        tried this:
+           // but it was putting code instead of single quote round 'lat'
+          path: {{ user1path }},
+
+        tried this:
+         path: [
+          {% for waypoint in user1query: %}
+            {'lat': waypoint[0], 'lng': waypoint[1]},
+          {% endfor %}
+          ],
+
+***Fixed** I was so close.  Fixed by putting jinja {{}} around wayoint[0] and waypoint[1]
+      POSSIBLE ALTERNATIVE if this gets funky (since jinja within Javascript can
+        go south:  create a separate route that returns json with just the route
+        data and pass that back to the javascript as a separate thing.
+
+
 
 Google Maps
     API key:  AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0 

@@ -13,10 +13,16 @@
 
     {% block content %} put your content here {% endblock %}
 
+<p>
+    <br>
+    <br>
+  <a href="/"><h5>Click here to go to homepage.</h5></a>
+</p>
+<p>
 {% if 'user_id' not in session %}
-  <a href="/login"><h3>Click here to log in.</h3></a>
-  <h3>Don't have an account yet? <a href="/register">Click here to register.</a></h3>
+  <a href="/login"><h5>Click here to log in.</h5></a>
+  <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
 {% endif %}
-
+</p>
 </body>
 </html>

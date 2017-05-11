@@ -1,0 +1,77 @@
+***********
+***TO DO***
+***********
+
+Add tests
+Test Login
+Test Registration
+Make Friends table(s?) in model.py
+Make Manage Friends route & page
+    add friends if you know their email address & it exists in User
+    Email friends to invite them to join Rendezvous
+Get better route data for user1 and user2 and put it in seed.py
+Design queries that will be used by app
+    Test those queries
+Add tests
+Add marker on destination point
+Change color of User1/User2's routes
+Allow two users to see the same map
+    Color code "my" route vs "other" route
+    Maybe add a tag to the animation with their name all tiny
+Send alert to "other" user when one user arrives at destination
+Add tests!
+Display ETA of "other" user
+If traffic alert rec'd by one user, display that to other user
+Modify everything to allow n-users on an invitation (for loops!)
+    map display each route animation in different color/tag with name
+    map display "my" route in distinct color
+Make Invitation route & form for creating new invitation
+    Google Maps autofill to choose destination
+    (later - Or select from a map?)
+    Checkboxes to choose Friends to invite
+    Date/time of Rendezvous
+Make User landing page for after login
+    Shows "current" Invitations
+Make Invitation management route & page
+    Accept or Decline invitation(s)
+    Modify invitation (by user who created it)
+    Propose alternatives (by invited users)
+    Includes "Go" button which (idealy):
+        opens Google Maps w/destination from Invitation populated
+        prompts you with suggested routes
+        lets you choose a route
+        makes your chosen route information available to other user(2) on invitation
+    Includes a "Stop" button which turns off route sharing
+Expire Invitations when all users have arrived at destination
+Obtain geolocation info and update animation of routes & status info in real time
+Email Invitation announcement to invited users
+Email reminders of Rendezvous at set intervals
+    Make Settings route & page for user to manage settings
+        email notification of Invitation
+        reminder frequency
+Handle timezone differences between users
+
+
+Way Future Features:
+    For Rendezvous happening in x-minutes, when setting up invitation show other mutual friends that are nearby to prompt you to invite them (given permission from users to "share location for invites") ?? Can this even be done?? query geolocation of someone not logged in? probably not?
+    Be able to put in date/time of rendezvous and your departure location & method of travel and friend's likely departure location & method of travel & have it suggest places that are halfway between you not as the crow flies, but by how long it's going to take each of you to arrive.
+
+
+***********
+***DONE***
+***********
+
+Modified model.py and seed.py to add email address of users
+Make registration route & page
+Make login process route
+Make Login route and page
+Modified animation so route1 and route2 go at different speeds
+Modified animation so route1 and route2 start at different times
+Animate second route
+Display user2's route on the map
+Animate traveling along the route
+Display user1's route on the map
+Make web page that displays a map
+Build seed.py
+Start server.py
+Build model.py

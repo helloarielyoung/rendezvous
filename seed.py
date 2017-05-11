@@ -18,8 +18,8 @@ def load_users():
     User.query.delete()
 
     # Here's some test users
-    user1 = User(user_id=1, name='Test User 1')
-    user2 = User(user_id=2, name='Test User 2')
+    user1 = User(user_id=1, name='Test User 1', email='user1@hotmail.com')
+    user2 = User(user_id=2, name='Test User 2', email='user2@hotmail.com')
     db.session.add(user1)
     db.session.add(user2)
 

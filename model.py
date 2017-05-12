@@ -32,6 +32,11 @@ class User(db.Model):
                               secondary="users_invites",
                               backref="users")
 
+    pending_invites = db.relationship("Invitation",
+                                      secondary="and (User.user_id == UserInvite.user_id, "
+                                      "UserInvite.status=='pen')",
+                                      backref="users")
+
     #get all waypoints for this user - this is useless w/out invite info, right?
     waypts = db.relationship("Waypoint")
 
@@ -45,17 +50,33 @@ class User(db.Model):
                                            "Relationship.status=='act')")
 
 
-class RelationshipStatus(db.Model):
-    """Create relationship statuses table."""
+class Status(db.Model):
+    """Create statuses table.
 
-    __tablename__ = "relationship_status"
+    Used by Relationship and UsersInvites
 
-    rel_status_id = db.Column(db.String(3), primary_key=True)
-    rel_status_description = db.Column(db.String(15), nullable=False)
+    """
+
+    __tablename__ = "statuses"
+
+    status_id = db.Column(db.String(3), primary_key=True)
+    status_description = db.Column(db.String(15), nullable=False)
 
 
 class Relationship(db.Model):
-    """Create friends table."""
+    """Create friend relationships table.
+
+    user_id is the user who initiated the request for friendship
+    request_date is only populated for user who initiated the request
+    friend_id is the user they asked to be friends
+    statuses:  "pen" means friend has not answered
+               "act" means friend said yes - this action will create a second
+               row in this table with user_id/friend_id reversed and request_date
+               will be null.
+               "rej" means friend rejected (user will not be able to request again)
+               "ina" means one of the friends terminated the relationship
+
+    """
 
     __tablename__ = "relationships"
 
@@ -63,16 +84,17 @@ class Relationship(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     request_date = db.Column(db.DateTime)
-    status = db.Column(db.String(3), db.ForeignKey('relationship_status.rel_status_id'), nullable=False)
+    status = db.Column(db.String(3), db.ForeignKey('statuses.rel_status_id'), nullable=False)
 
     def __repr__(self):
-        return "<friend_id=%s user_id=%s friend_user_id=%s>" % (self.friend_id, self.user_id, self.friend_user_id)
+        return "<user_id=%s friend_id=%s>" % (self.user_id, self.friend_id)
 
     # get user info for this relationship
     usr = db.relationship("User", back_populates="all_relationships", foreign_keys='Relationship.user_id')
 
     #get friend info for this relationship
-    friend = db.relationship("User", back_populates='all_relationships', foreign_keys="Relationship.friend_id")
+    friend = db.relationship("User", back_populates='all_relationships',
+                             foreign_keys="Relationship.friend_id")
 
 
 class Invitation(db.Model):
@@ -109,6 +131,7 @@ class UserInvite(db.Model):
     ui_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     invite_id = db.Column(db.Integer, db.ForeignKey('invitations.invite_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    status = db.Column(db.String(3), db.ForeignKey('statuses.status_id'))
 
     def __repr__(self):
         return "<UsersInvites ui_id=%s invite_id=%s user_id=%s>" % (self.ui_id,

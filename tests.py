@@ -45,6 +45,12 @@ class RendezvousTests(unittest.TestCase):
         result = self.client.get("/login")
         self.assertIn("Login Form", str(result.data))
 
+    def test_user_landing(self):
+        """Does a user make it to their profile page after logging in?"""
+
+        #FIXME:  this is going to need session data in the setup
+        # to test logged in versus not logged in, right?
+
     def test_registration_route(self):
         """Do users make it to registration page when clicking registration link?"""
 

@@ -1,11 +1,17 @@
 ***********
 ***TO DO***
 ***********
+Need to add more seed data to be able to test if these things work
+Finish User landing page for after login
+    Shows "active" Invitations
+    Shows "pending" Invitations
+    Shows "pending" friend requests
+
 
 Need to test new SQLAlchemy relationships to make sure they're doing what I
-    think they're doing (HOW?):
+    think they're doing:
+    (HOW: python -i model.py. u# = User.query.get(user #), then play from there)
     all_relationships
-    active_relationships
     usr (backref on relationships, should show users data for user_id)
     friend (backref on relationships, should show users data for friend_id)
 Design queries that will be used by app (don't forget to use SQLAlchemy relationships)
@@ -19,13 +25,11 @@ Design queries that will be used by app (don't forget to use SQLAlchemy relation
 
 Import requests - gets error, so I am getting Google Maps data manually
 
-Review SQLAlchemy relationships are there any others missing?
-
-Make User landing page for after login
-    Shows "current" Invitations
-    Shows "pending" friend requests
+Improve Waypoints and Invitations table/class
+    store lat/long data in one field instead of two (see postgreSQL datatypes)
 
 Make Manage Friends routes & pages
+Scenario that should be tested:  what if two people ask each other (two pendings)
     1) Form to ask somebody (by email address) to be your friend
         If email exists:
             If previously rejected by this person, do not allow request to continue
@@ -68,7 +72,7 @@ Run those tests
 Improve Login
     add some javascript to check for valid data w/out reloading page
     How about some login security?!
-        Do not display password when typing
+        
         Do some encryption or something of password?
             No idea... what if i grab Bootstrap logins, will all this
             be done for me?
@@ -114,6 +118,15 @@ Way Future Features:
 ***DONE***
 ***********
 
+Added link on Base to get to your user profile page if you are logged in
+Created user profile landing page, but realized I had to add status to invites
+    as well as add more seed data to be able to test what is displayed
+Realized belatedly that UsersInvites needs to have status so friends can accept
+    or reject your invitation.
+active_relationships SQL Alchemy relationship works as desired
+Do not display password when typing (thank you, Aaron)
+^5/12^
+
 Added SQLAlchemy relationships:  all_relationships and active_relationships to model.py
 Added relationship test data to seed.py
 Created relationships table
@@ -122,7 +135,7 @@ Added created_by_id and created_date to invitations
 Tested Registration (allow only unique emails)
     Ran into "duplicate key value violates unique contraint" when manually adding users after seeding database,
         Fixed:  modifed seed.py to update seq_id for all tables with serialized keys
-Tested Login as it is now
+Tested Login
 Created tests.py, made some tests of current routes
 ^5/11^
 

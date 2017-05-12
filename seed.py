@@ -1,7 +1,7 @@
 """Utility file to seed rendezvous database"""
 
 from sqlalchemy import func
-from model import User, Invitation, Waypoint, UserInvite, RelationshipStatus, Relationship
+from model import User, Invitation, Waypoint, UserInvite, Status, Relationship
 
 from model import connect_to_db, db
 from server import app
@@ -18,16 +18,25 @@ def load_users():
     User.query.delete()
 
     # Here's some test users
-    user1 = User(user_id=1,
-                 name='Test User 1',
-                 email='user1@email.com',
-                 password='Mypassword1')
-    user2 = User(user_id=2,
-                 name='Test User 2',
-                 email='user2@email.com',
-                 password='Mypassword1')
-    db.session.add(user1)
-    db.session.add(user2)
+    users = [
+        User(user_id=1,
+             name='Test User 1',
+             email='user1@email.com',
+             password='pass'),
+        User(user_id=2,
+             name='Test User 2',
+             email='user2@email.com',
+             password='pass'),
+        User(user_id=3,
+             name='Test User 3',
+             email='user3@email.com',
+             password='pass'),
+        User(user_id=4,
+             name='Test User 4',
+             email='user4@email.com',
+             password='pass')]
+
+    db.session.add(users)
 
     db.session.commit()
 
@@ -66,18 +75,18 @@ def load_user_invites():
     db.session.commit()
 
 
-def load_rel_status():
-    """Load relationship status table with statuses."""
+def load_status():
+    """Load status table with statuses."""
 
-    print "Relationship Status"
+    print "Statuses"
 
-    RelationshipStatus.query.delete()
+    Status.query.delete()
 
     for status, descrip in [('pen', 'pending'),
                             ('rej', 'rejected'),
                             ('act', 'active'),
                             ('ina', 'inactive')]:
-        rel = RelationshipStatus(rel_status_id=status, rel_status_description=descrip)
+        rel = Status(status_id=status, status_description=descrip)
         db.session.add(rel)
     db.session.commit()
 
@@ -92,8 +101,11 @@ def load_relationships():
 
     Relationship.query.delete()
 
+    # active relationship
     rel1 = Relationship(user_id=1, friend_id=2, status='act', request_date='2017 05 09 09:00:00')
     rel2 = Relationship(user_id=2, friend_id=1, status='act')
+
+    # rejected relationship
 
     db.session.add(rel1)
     db.session.add(rel2)
@@ -214,7 +226,7 @@ if __name__ == "__main__":
 
     # Import different types of data
     load_users()
-    load_rel_status()
+    load_status()
     load_relationships()
     load_invitations()
     load_waypoints()

@@ -7,12 +7,33 @@
         Name: {{ user['name'] }} <br>
     </p>
 
-        <h2>Invitations:</h2>
-        <ul>{% for invite in user.invites|sort(attribute='invitation.rendezvous_date') %}  
+        <h2>Accepted Invitations:</h2>
+        (need to change this query to be accepted invitaitons instead of all)
+        <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %}  
         <li>
-here is where invitation information will display with link to manage invitation?
+            Short description with link to Invite management Date: {{ invite.rendezvous_date }}
         </li>
-        {% endfor %}
+            {% endfor %}
+        </ul>
+
+        <h2>Pending Invitations:</h2>
+        (need to change this query to be pending invitaitons instead of all)
+        <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %}  
+        <li>
+            Short description with link to Invite management Date: {{ invite.rendezvous_date }}
+        </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Add a link to see your Rejected invitations in case you want to see them</h2>
+
+        <h2>Friend Requests:</h2>
+        <ul>this will be a for loop to get any pending friend requests  
+        <li>
+            Short description with buttons to Accept or Reject
+            (maybe a note that if you reject, that person will not be able to ask you again)
+        </li>
+            end of for loop will go here
         </ul>
 
 {% endblock %}

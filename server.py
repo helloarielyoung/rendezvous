@@ -46,9 +46,9 @@ def authenticate_login():
             session['user_name'] = user.name
             print session
             flash('You were successfully logged in')
-            # not using this yet in this app...
-            # user_id = user.user_id
-            return redirect('/')
+
+            user_id = user.user_id
+            return redirect('/users/' + str(user_id))
         else:
             flash('Bad password or user name')
             return redirect('/login')
@@ -57,6 +57,15 @@ def authenticate_login():
     else:
         flash('Bad password or user name')
         return redirect('/login')
+
+
+@app.route('/users/<user_id>')
+def get_user(user_id):
+    """Display user page"""
+
+    user = User.query.get(user_id)
+
+    return render_template('user.html', user=user)
 
 
 @app.route('/register', methods=["GET"])

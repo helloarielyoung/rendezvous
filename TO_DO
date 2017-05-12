@@ -3,7 +3,7 @@
 ***********
 
 Need to test new SQLAlchemy relationships to make sure they're doing what I
-    think they're doing:
+    think they're doing (HOW?):
     all_relationships
     active_relationships
     usr (backref on relationships, should show users data for user_id)
@@ -16,6 +16,8 @@ Design queries that will be used by app (don't forget to use SQLAlchemy relation
     Select list of Inactive friends
     Select list of Rejected friend requests
     Test those queries
+
+Import requests - gets error, so I am getting Google Maps data manually
 
 Review SQLAlchemy relationships are there any others missing?
 

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>Your User Profile</h2>
+    <p>
+        Email: {{ user['email'] }} <br>
+        Name: {{ user['name'] }} <br>
+    </p>
+
+        <h2>Invitations:</h2>
+        <ul>{% for invite in user.invites|sort(attribute='invitation.rendezvous_date') %}  
+        <li>
+here is where invitation information will display with link to manage invitation?
+        </li>
+        {% endfor %}
+        </ul>
+
+{% endblock %}

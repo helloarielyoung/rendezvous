@@ -27,11 +27,22 @@ class User(db.Model):
     def __repr__(self):
         return "<User user_id=%s name=%s>" % (self.user_id, self.name)
 
+    #get all invitations for this user
     invites = db.relationship("Invitation",
                               secondary="users_invites",
                               backref="users")
 
+    #get all waypoints for this user - this is useless w/out invite info, right?
     waypts = db.relationship("Waypoint")
+
+    # #get all my friends of any status
+    all_relationships = db.relationship("Relationship", foreign_keys='Relationship.user_id')
+    # #necessary or desirable to have the inverse, when this user is "friend_id"??
+
+    #get all active relationships
+    active_relationships = db.relationship("Relationship",
+                                           primaryjoin="and_(User.user_id==Relationship.user_id, "
+                                           "Relationship.status=='act')")
 
 
 class RelationshipStatus(db.Model):
@@ -57,6 +68,12 @@ class Relationship(db.Model):
     def __repr__(self):
         return "<friend_id=%s user_id=%s friend_user_id=%s>" % (self.friend_id, self.user_id, self.friend_user_id)
 
+    # get user info for this relationship
+    usr = db.relationship("User", back_populates="all_relationships", foreign_keys='Relationship.user_id')
+
+    #get friend info for this relationship
+    friend = db.relationship("User", back_populates='all_relationships', foreign_keys="Relationship.friend_id")
+
 
 class Invitation(db.Model):
     """Create invitations table."""
@@ -65,11 +82,12 @@ class Invitation(db.Model):
 
     invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     created_by_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    created_date = db.Column(db.Datetime, nullable=False)
+    created_date = db.Column(db.DateTime, nullable=False)
     destination_lat = db.Column(db.String(12), nullable=False)
     destination_long = db.Column(db.String(12), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
 
+    #get all users who are on this invitation
     invite_users = db.relationship("User",
                                    secondary="users_invites",
                                    backref="invitations")
@@ -83,7 +101,7 @@ class Invitation(db.Model):
 class UserInvite(db.Model):
     """Relate users to invitations.
 
-    You cannot tell from here who invited whom - see Invitation to find the
+    You cannot tell from here who invited who - see Invitation to find the
     created_by_id:  that is the person who created the Invitation"""
 
     __tablename__ = "users_invites"
@@ -115,8 +133,10 @@ class Waypoint(db.Model):
             waypoint_long=%s current_time=%s>" % (self.waypoint_id, self.user_id, self.waypoint_lat,
                                                   self.waypoint_long, self.current_time)
 
+    #get user info for this waypoint
     waypoint_user = db.relationship('User')
 
+    #get invititation info for this waypoint (includes destination)
     invites = db.relationship('Invitation')
 
 

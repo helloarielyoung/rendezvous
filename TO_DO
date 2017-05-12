@@ -2,7 +2,6 @@
 ***TO DO***
 ***********
 
-Add SQLAlchemy relationships to tables that are missing them
 Need to test new SQLAlchemy relationships to make sure they're doing what I
     think they're doing:
     all_relationships
@@ -17,6 +16,8 @@ Design queries that will be used by app (don't forget to use SQLAlchemy relation
     Select list of Inactive friends
     Select list of Rejected friend requests
     Test those queries
+
+Review SQLAlchemy relationships are there any others missing?
 
 Make User landing page for after login
     Shows "current" Invitations

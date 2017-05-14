@@ -5,7 +5,6 @@ from model import User, Invitation, Waypoint, UserInvite, Status, Relationship
 
 from model import connect_to_db, db
 from server import app
-import datetime
 
 
 def load_users():
@@ -18,25 +17,28 @@ def load_users():
     User.query.delete()
 
     # Here's some test users
-    users = [
-        User(user_id=1,
-             name='Test User 1',
-             email='user1@email.com',
-             password='pass'),
-        User(user_id=2,
-             name='Test User 2',
-             email='user2@email.com',
-             password='pass'),
-        User(user_id=3,
-             name='Test User 3',
-             email='user3@email.com',
-             password='pass'),
-        User(user_id=4,
-             name='Test User 4',
-             email='user4@email.com',
-             password='pass')]
 
-    db.session.add(users)
+    u1 = User(user_id=1,
+              name='Test User 1',
+              email='user1@email.com',
+              password='pass')
+    u2 = User(user_id=2,
+              name='Test User 2',
+              email='user2@email.com',
+              password='pass')
+    u3 = User(user_id=3,
+              name='Test User 3',
+              email='user3@email.com',
+              password='pass')
+    u4 = User(user_id=4,
+              name='Test User 4',
+              email='user4@email.com',
+              password='pass')
+
+    db.session.add_all([u1, u2, u3, u4])
+    # db.session.add(u2)
+    # db.session.add(u3)
+    # db.session.add(u4)
 
     db.session.commit()
 
@@ -51,8 +53,8 @@ def load_invitations():
     invite1 = Invitation(invite_id=1,
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.37901,
-                         destination_long=-122.4070,
+                         destination_lat=37.7881866,
+                         destination_long=-122.4168552,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00')
     db.session.add(invite1)

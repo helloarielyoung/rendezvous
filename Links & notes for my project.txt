@@ -1,5 +1,7 @@
 Links & notes for my project
 
+Color Picker:  https://www.w3schools.com/colors/colors_picker.asp
+
 How to stop the animation when it reaches the end of the line?
     http://stackoverflow.com/questions/16338774/show-a-moving-marker-on-the-map
 

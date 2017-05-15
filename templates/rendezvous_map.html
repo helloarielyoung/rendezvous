@@ -23,7 +23,7 @@
     <div id="map"></div>
     <script>
 
-//TODO:  change center to Invite Destination
+
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           // center: {'lat': 37.7881866, 'lng': -122.4168552},
@@ -32,58 +32,60 @@
           mapTypeId: 'roadmap'
         });
 
-        // Define the symbol, using one of the predefined paths ('CIRCLE')
-        // supplied by the Google Maps JavaScript API.
-        var user1lineSymbol = {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 4,
-          strokeColor: '#000000'
-        };
 
-        // Define the symbol, using one of the predefined paths ('CIRCLE')
-        // supplied by the Google Maps JavaScript API.
-        var user2lineSymbol = {
+        // Define symbol for Self
+        var selflineSymbol = {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 4,
           strokeColor: '#393'
         };
 
+        // purple, orange, tomato, darkturquoise
+        var symbolcolors = colors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
+        // define symbol for User2
+        var otherlineSymbol = {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4,
+          strokeColor: symbolcolors[0]
+        };
+
         // Create the polyline using User1's data and add the symbol to it via the 'icons' property.
-        var user1line = new google.maps.Polyline({
+        var selfline = new google.maps.Polyline({
         path: [
-            {% for waypoint in user1query: %}
+            {% for waypoint in selfquery: %}
               {'lat': {{ waypoint[0] }}, 'lng': {{ waypoint[1] }} },
             {% endfor %}
           ],
-          strokeColor: '#8A2BE2',
+          strokeColor: '#000000',
           icons: [{
-            icon: user1lineSymbol,
+            icon: selflineSymbol,
             offset: '100%'
           }],
           map: map
         });
 
-        var user2line = new google.maps.Polyline({
+        var otherline = new google.maps.Polyline({
         path: [
-            {% for waypoint in user2query: %}
+            {% for waypoint in otherquery: %}
               {'lat': {{ waypoint[0] }}, 'lng': {{ waypoint[1] }} },
             {% endfor %}
       ],
+          strokeColor: '#999999',
           icons: [{
-            icon: user2lineSymbol,
+            icon: otherlineSymbol,
             offset: '100%'
           }],
           map: map
         });
 
-        setTimeout(animate2Circle(user2line), 4500)
-        animate1Circle(user1line);
+        setTimeout(animateOtherCircle(otherline), 4500)
+        animateSelfCircle(selfline);
       }
 
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
       var id1
-      function animate1Circle(line) {
+      function animateSelfCircle(line) {
           var count = 0;
           id1 = window.setInterval(function() {
             count = (count + 1) % 200;
@@ -101,8 +103,7 @@
       }
 
       var id2;
-
-      function animate2Circle(line) {
+      function animateOtherCircle(line) {
           var count = 0;
           id2 = window.setInterval(function() {
             count = (count + 1) % 200;

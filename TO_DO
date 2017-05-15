@@ -10,7 +10,8 @@ Finish User landing page for after login
 Rendezvous Map Improvements:
 
     Color code "my" route vs "other" route:
-        make Colors table with type (routes, something else?) and store color combos for routes and symbols in one field.  Set "self" colors to always be (line: '#8A2BE2', symbol:'#000000')
+        Make "my" route (line: '#8A2BE2', symbol:'#000000')
+        Make other routes grey with different color symbols (up to 4 right now - more than that needs a different solution, I think!) 
     Get better route data for user1 and user2 and put it in seed.py
     Do some calculation of the starting points of the routes and the destination
         point and adjust the zoom and center point of the map to include all of
@@ -28,6 +29,7 @@ Rendezvous Map Improvements:
     If traffic alert rec'd by one user, display that to other user
 
 Why is this test failing?  test_rendezvous_map_route
+Add more tests so I don't have to manually check if changes broke stuff.
 
 Allow two users to see the same map when logged in at same time
 

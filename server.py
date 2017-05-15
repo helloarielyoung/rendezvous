@@ -112,29 +112,44 @@ def logout():
 
 @app.route('/rendezvous-map')
 def googlemap2():
-    """Google map with animated routes populated from database"""
+    """Google map with animated routes populated from database.
 
-    # This will have to be changed to accept the user id and the invtation
-    # from session
-    user1query = db.session.query(Waypoint.waypoint_lat,
-                                  Waypoint.waypoint_long).filter(Waypoint.user_id == 1,
-                                                                 Waypoint.invite_id == 1).all()
+    Only display to a logged in user
+    """
 
-    user2query = db.session.query(Waypoint.waypoint_lat,
-                                  Waypoint.waypoint_long).filter(Waypoint.user_id == 2,
-                                                                 Waypoint.invite_id == 1).all()
+    if session.get('login') is None:
+        return redirect('/')
 
-    center = db.session.query(Invitation.destination_lat,
-                              Invitation.destination_long).filter(Invitation.invite_id == 1).first()
+    else:
+        login = session['login']
 
-    # to draw the polyline of route:
-    # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
-         # {'lat': 37.7482293, 'lng': -122.4182139}]
+        selfquery = db.session.query(Waypoint.waypoint_lat,
+                                      Waypoint.waypoint_long).filter(Waypoint.user_id == login,
+                                                                     Waypoint.invite_id == 1).all()
+        # This will have to be changed to accept the user id and the invtation
+        # from session
+        if login == 1:
+            other = 2
+        else:
+            other = 1
 
-    return render_template("rendezvous_map.html",
-                           user1query=user1query,
-                           user2query=user2query,
-                           center=center)
+        otherquery = db.session.query(Waypoint.waypoint_lat,
+                                      Waypoint.waypoint_long).filter(Waypoint.user_id == other,
+                                                                     Waypoint.invite_id == 1).all()
+
+        center = db.session.query(Invitation.destination_lat,
+                                  Invitation.destination_long).filter(Invitation.invite_id == 1).first()
+
+        login = session['login']
+        # to draw the polyline of route:
+        # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
+             # {'lat': 37.7482293, 'lng': -122.4182139}]
+
+        return render_template("rendezvous_map.html",
+                               selfquery=selfquery,
+                               otherquery=otherquery,
+                               center=center,
+                               login=login)
 
 
 if __name__ == "__main__":

@@ -99,6 +99,8 @@ Make Invitation management route & page
         makes your chosen route information available to other user(2) on invitation
     Includes a "Stop" button which turns off route sharing
 Expire Invitations when all users have arrived at destination
+
+Make sure restrictions are set on Google API key so it only works from my URL
 Obtain geolocation info and update animation of routes & status info in real time
 Email Invitation announcement to invited users
 Email reminders of Rendezvous at set intervals

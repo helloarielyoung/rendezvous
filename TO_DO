@@ -7,6 +7,38 @@ Finish User landing page for after login
     Shows "pending" Invitations
     Shows "pending" friend requests
 
+Rendezvous Map Improvements:
+
+    Color code "my" route vs "other" route:
+        make Colors table with type (routes, something else?) and store color combos for routes and symbols in one field.  Set "self" colors to always be (line: '#8A2BE2', symbol:'#000000')
+    Get better route data for user1 and user2 and put it in seed.py
+    Do some calculation of the starting points of the routes and the destination
+        point and adjust the zoom and center point of the map to include all of
+        both routes
+    Add marker on destination point
+    Map ledger of route colors (who is who) 
+        (https://developers.google.com/maps/documentation/javascript/adding-a-legend)
+    Can you add info pop-up to the sumbol with their name all tiny when cursor over it?
+    Display ETA of "other" user
+    Send alert to "other" user when one user arrives at destination
+    Put map on page with a header w/menu items
+        Go to homepage
+        Supress/Display other's routes
+        Cancel this Rendezvous (send notice to others)
+    If traffic alert rec'd by one user, display that to other user
+
+Why is this test failing?  test_rendezvous_map_route
+
+Allow two users to see the same map when logged in at same time
+
+Obtain geolocation info and update animation of routes & status info in real time
+    start here?  https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+
+Modify everything to make it work when n-users on an invitation (for loops!)
+    map display each route animation in different color/tag with name
+    map display "my" route in distinct color
+
+Add tests!
 
 Need to test new SQLAlchemy relationships to make sure they're doing what I
     think they're doing:
@@ -23,10 +55,8 @@ Design queries that will be used by app (don't forget to use SQLAlchemy relation
     Select list of Rejected friend requests
     Test those queries
 
-Import requests - gets error, so I am getting Google Maps data manually
-
 Improve Waypoints and Invitations table/class
-    store lat/long data in one field instead of two (see postgreSQL datatypes)
+    store lat/long data in one field instead of two (see postgreSQL datatypes)?
 
 Make Manage Friends routes & pages
 Scenario that should be tested:  what if two people ask each other (two pendings)
@@ -53,22 +83,12 @@ Scenario that should be tested:  what if two people ask each other (two pendings
 
 Make Invitation route & form for creating new invitation
     Google Maps autofill to choose destination
-    (later - Or select from a map?)
+        (Or select from a map?)
     Checkboxes to choose Friends to invite
     Date/time of Rendezvous
     (don't forget to user session['login'] as created_by_id)
 Add tests
 
-Get better route data for user1 and user2 and put it in seed.py
-Allow two users to see the same map when logged in at same time
-    Color code "my" route vs "other" route
-    Maybe add a tag to the animation with their name all tiny
-Send alert to "other" user when one user arrives at destination
-Add tests!
-Display ETA of "other" user
-
-Add more tests
-Run those tests
 Improve Login
     add some javascript to check for valid data w/out reloading page
     How about some login security?!
@@ -78,15 +98,11 @@ Improve Login
             be done for me?
           place to start research?:
             for the password hash for user login i used import hashlib salt = 'something' hash = hashlib.md5(salt + pword).hexdigest()
+    Add email authentication to new users...  that would be a whole big thing
+        requiring SMTP and don't know what else.
 Add tests
-Add marker on destination point
-Add link on map to get back to Rendezvous pages?
 How can I supress the link to Homepage from the homepage, but have it everywhere else?
-Change color of User1/User2's routes
-If traffic alert rec'd by one user, display that to other user
-Modify everything to make it work when n-users on an invitation (for loops!)
-    map display each route animation in different color/tag with name
-    map display "my" route in distinct color
+
 Forgot User Name & Forgot Password stuff
 Make Invitation management route & page
     Accept or Decline invitation(s)
@@ -99,16 +115,12 @@ Make Invitation management route & page
         makes your chosen route information available to other user(2) on invitation
     Includes a "Stop" button which turns off route sharing
 Expire Invitations when all users have arrived at destination
-
-Make sure restrictions are set on Google API key so it only works from my URL
-Obtain geolocation info and update animation of routes & status info in real time
 Email Invitation announcement to invited users
 Email reminders of Rendezvous at set intervals
     Make Settings route & page for user to manage settings
         email notification of Invitation
         reminder frequency
 Handle timezone differences between users
-Friends management:  if someone un-friends, are they allowed to re-request?
 
 
 Way Future Features:
@@ -119,6 +131,12 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Changed map type to roadmap.
+Re-organized To Do list.
+Fixed whatever I had broken on user landing page Friday.
+Import requests - gets error. Fixed by adding pip install requests to requirements.txt
+^5/13^
 
 Added link on Base to get to your user profile page if you are logged in
 Created user profile landing page, but realized I had to add status to invites

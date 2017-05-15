@@ -32,10 +32,11 @@ class User(db.Model):
                               secondary="users_invites",
                               backref="users")
 
-    pending_invites = db.relationship("Invitation",
-                                      secondary="and (User.user_id == UserInvite.user_id, "
-                                      "UserInvite.status=='pen')",
-                                      backref="users")
+# FIX ME!
+    # pending_invites = db.relationship("Invitation",
+    #                                   secondary="and (User.user_id == UserInvite.user_id, "
+    #                                   "UserInvite.status=='pen')",
+    #                                   backref="users")
 
     #get all waypoints for this user - this is useless w/out invite info, right?
     waypts = db.relationship("Waypoint")
@@ -84,7 +85,7 @@ class Relationship(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     request_date = db.Column(db.DateTime)
-    status = db.Column(db.String(3), db.ForeignKey('statuses.rel_status_id'), nullable=False)
+    status = db.Column(db.String(3), db.ForeignKey('statuses.status_id'), nullable=False)
 
     def __repr__(self):
         return "<user_id=%s friend_id=%s>" % (self.user_id, self.friend_id)

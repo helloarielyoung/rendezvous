@@ -63,8 +63,8 @@ class RendezvousTests(unittest.TestCase):
         """Do users make it to the rendezvous map page from link?"""
 
         #FIXME -- this is not working.  Tried several things on page, none work
-        # result = self.client.get("/rendezvous-map")
-        # self.assertIn("<meta name=\"viewport\"", str(result.data))
+        result = self.client.get("/rendezvous-map")
+        self.assertIn("Rendezvous Map", str(result.data))
 
         #This is going to have to be a lot more complex in future
         #since I only want users on an invitation to be able to see

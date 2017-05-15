@@ -19,15 +19,17 @@
     </style>
   </head>
   <body>
+    <h3>Rendezvous Map</h3>
     <div id="map"></div>
     <script>
 
 //TODO:  change center to Invite Destination
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {'lat': 37.7881866, 'lng': -122.4168552},
+          // center: {'lat': 37.7881866, 'lng': -122.4168552},
+          center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
           zoom: 13  ,
-          mapTypeId: 'terrain'
+          mapTypeId: 'roadmap'
         });
 
         // Define the symbol, using one of the predefined paths ('CIRCLE')
@@ -35,7 +37,7 @@
         var user1lineSymbol = {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 4,
-          strokeColor: '#393'
+          strokeColor: '#000000'
         };
 
         // Define the symbol, using one of the predefined paths ('CIRCLE')
@@ -52,7 +54,8 @@
             {% for waypoint in user1query: %}
               {'lat': {{ waypoint[0] }}, 'lng': {{ waypoint[1] }} },
             {% endfor %}
-      ],
+          ],
+          strokeColor: '#8A2BE2',
           icons: [{
             icon: user1lineSymbol,
             offset: '100%'

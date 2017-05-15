@@ -32,6 +32,12 @@
           mapTypeId: 'roadmap'
         });
 
+        // add marker for destination point
+        var marker = new google.maps.Marker({
+        position: {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
+        map: map,
+        title: 'Rendezvous point'
+        });
 
         // Define symbol for Self
         var selflineSymbol = {
@@ -48,6 +54,9 @@
           scale: 4,
           strokeColor: symbolcolors[0]
         };
+
+        // next iteration will be:  create an object to make the line
+        // and ass in query, color for line, color for symbol...
 
         // Create the polyline using User1's data and add the symbol to it via the 'icons' property.
         var selfline = new google.maps.Polyline({
@@ -78,17 +87,17 @@
           map: map
         });
 
-        setTimeout(animateOtherCircle(otherline), 4500)
-        animateSelfCircle(selfline);
+        setTimeout(animateSelfCircle(otherline, 45), 4500)
+        animateSelfCircle(selfline, 40);
       }
 
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
       var id1
-      function animateSelfCircle(line) {
+      function animateSelfCircle(line, speed) {
           var count = 0;
           id1 = window.setInterval(function() {
-            count = (count + 1) % 200;
+            count = (count + 1);
 
             var icons = line.get('icons');
             icons[0].offset = (count / 2) + '%';
@@ -99,24 +108,7 @@
                 line.set('icons', icons);
                 window.clearInterval(id1);
 
-        } }, 45);
-      }
-
-      var id2;
-      function animateOtherCircle(line) {
-          var count = 0;
-          id2 = window.setInterval(function() {
-            count = (count + 1) % 200;
-
-            var icons = line.get('icons');
-            icons[0].offset = (count / 2) + '%';
-            line.set('icons', icons);
-            //make animation to stop at destination
-            if (line.get('icons')[0].offset == "99.5%") {
-                icons[0].offset = '100%';
-                line.set('icons', icons);
-                window.clearInterval(id2);
-              } }, 40);
+        } }, speed);
       }
 
     </script>

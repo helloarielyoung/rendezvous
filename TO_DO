@@ -10,13 +10,11 @@ Finish User landing page for after login
 Rendezvous Map Improvements:
 
     Color code "my" route vs "other" route:
-        Make "my" route (line: '#8A2BE2', symbol:'#000000')
-        Make other routes grey with different color symbols (up to 4 right now - more than that needs a different solution, I think!) 
+        Modify to handle multiple "other" routes - user javaScript object
     Get better route data for user1 and user2 and put it in seed.py
     Do some calculation of the starting points of the routes and the destination
         point and adjust the zoom and center point of the map to include all of
         both routes
-    Add marker on destination point
     Map ledger of route colors (who is who) 
         (https://developers.google.com/maps/documentation/javascript/adding-a-legend)
     Can you add info pop-up to the sumbol with their name all tiny when cursor over it?
@@ -133,6 +131,16 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Code review with Leslie:
+    consolidated into one animation function
+    took out "% 200" from "count = (count + 1)" on animation - appeared to be leftover
+        from having the animation restart and loop
+Added marker on destination point
+Color codee "my" route vs "other" route:
+        Made "my" route (line: '#8A2BE2', symbol:'#000000')
+        Made single other route grey with different color symbol
+^5/14^
 
 Changed map type to roadmap.
 Re-organized To Do list.

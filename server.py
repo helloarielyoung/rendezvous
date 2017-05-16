@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask_debugtoolbar import DebugToolbarExtension
-from flask import Flask, jsonify, render_template, redirect, request, flash, session
+from flask import Flask, jsonify, render_template, redirect, request, flash, session, jsonify
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
 
 
@@ -152,15 +152,20 @@ def googlemap2():
                                login=login)
 
 
-@app.route('/map-data.json')
+@app.route('/map-data.json', methods=["GET"])
 def map_data():
     """returns waypoint data by invitation in json"""
 
     invite_id = request.args.get("invite_id")
 
-    queries = Invitation.query.get(invite_id).waypoints
+    all_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long, Waypoint.user_id, Waypoint.current_time).filter(Waypoint.invite_id == invite_id).order_by(Waypoint.user_id, Waypoint.current_time).all()
 
-    return queries
+    waypoints_by_user = {}
+
+    for item in all_waypoints:
+        waypoints_by_user.setdefault(item[2], []).append([str(item[0]), str(item[1]), str(item[3])])
+
+    return jsonify(waypoints_by_user)
 
 
 @app.route('/rendezvous-map-v2', methods=['POST'])
@@ -182,14 +187,14 @@ def googlemapv2():
         center = db.session.query(Invitation.destination_lat,
                                   Invitation.destination_long).filter(Invitation.invite_id == invite_id).first()
 
-        queries = Invitation.query.get(invite_id).waypoints  # ?? will this be a query of all the invitation objects?
+                  # Invitation.query.get(invite_id).waypoints  # ?? will this be a query of all the invitation objects?
                     #and then iterate through it in HTML picking out each
                     #user's route and assigning colors based on whether waypoint.user_id
                     # equals user_id or not?
 
         return render_template("rendezvous_map_v2.html",
                                center=center,
-                               queries=queries,
+                               invite_id=invite_id,
                                user_id=user_id)
 
 

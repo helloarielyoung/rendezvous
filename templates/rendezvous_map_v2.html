@@ -17,6 +17,7 @@
         padding: 0;
       }
     </style>
+      <script src="https://code.jquery.com/jquery.js"></script>
   </head>
   <body>
     <h3>Rendezvous Map</h3>
@@ -34,25 +35,16 @@
         // by user_id and assign colors based on whether this query is
         // the logged-in user or not...
 
-        //Make AJAX call to get this data:  Invitation.query.get(invite_id).waypoints 
-
-        $.ajax({
-          url:'/map-data.json',
-          type: 'get',
-          data: {
-            invite_id: {{ invite_id }}
-          },
-          success: function(response) {
-          // do stuf with the query data that is returned
-            alert="ajax call did something!"
-          },
-          error: function(xhr) {
-          alert="there was an error retrieving waypoint data!"
-          }
+        // this waits until the page is loaded
+        $(function() {
+          // then queries for the waypoint data for this invite
+          $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
+          console.log("post was sent");
         });
-
-        function DecideWhichUser(user_id, invite_id, queries) {
-          
+ 
+        function dataReceived(results) {
+          console.log("post was successful");
+          console.log(results);
         }
 
         function MakeLine(query, linecolor, symbolcolor) {

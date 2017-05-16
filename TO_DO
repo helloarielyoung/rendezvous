@@ -95,6 +95,7 @@ Make Invitation route & form for creating new invitation
 Add tests
 
 Improve Login
+    How do you get the cursor focus to be in the login box when page opens?
     add some javascript to check for valid data w/out reloading page
     How about some login security?!
         
@@ -137,6 +138,11 @@ Way Future Features:
 ***DONE***
 ***********
 
+struggled all day with getting data for multiple routes:
+    struggled with the ajax
+    struggled with querying the data and getting it into a format I can json
+^5/16^
+
 Got user page to got to map with POST request containing user_id and invite_id,
     and it displays the centerpoint w/marker from the invitation chosen on user page.
 Code review with Leslie:
@@ -147,13 +153,13 @@ Added marker on destination point
 Color codee "my" route vs "other" route:
         Made "my" route (line: '#8A2BE2', symbol:'#000000')
         Made single other route grey with different color symbol
-^5/14^
+^5/15^
 
 Changed map type to roadmap.
 Re-organized To Do list.
 Fixed whatever I had broken on user landing page Friday.
 Import requests - gets error. Fixed by adding pip install requests to requirements.txt
-^5/13^
+^5/14^
 
 Added link on Base to get to your user profile page if you are logged in
 Created user profile landing page, but realized I had to add status to invites

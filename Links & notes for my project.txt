@@ -1,5 +1,37 @@
 Links & notes for my project
 
+Things that were not working for AJAX call to get invitation waypoints data:
+        
+        Attempt #1:
+        success: function(data) {
+          // do stuf with the query data that is returned
+            alert="ajax call did something!"
+          },
+          error: function(xhr) {
+          alert="there was an error retrieving waypoint data!"
+          }
+        });
+
+        function DecideWhichUser(user_id, invite_id, queries) {
+          
+        }
+
+        Attempt #2 (I think the $.post stuff is right, but not sure how to actually
+            use this)  ARG!:
+        function() {
+          $.post('/map-data.json',
+          {
+            invite_id = {{ invite_id }}
+          },
+          function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+          });
+        }
+
+        Ideas to try:
+            $( window ).on( "load", function() { ... })
+            $( document ).ready(function() {}
+
 Color Picker:  https://www.w3schools.com/colors/colors_picker.asp
 
 How to stop the animation when it reaches the end of the line?

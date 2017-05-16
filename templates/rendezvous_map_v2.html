@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Rendezvous Map v2</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Rendezvous Map</h3>
+    <div id="map"></div>
+    <script>
+
+        // colors for the not-the-logged-in-user's symbols
+        // use in order
+        // purple, orange, tomato, darkturquoise
+        var symbolcolors = colors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
+
+        // this iteration will be:  create an object to make the line
+        // and pass in query, color for line, color for symbol...
+        // so i think i first need stuff to separate the query objects
+        // by user_id and assign colors based on whether this query is
+        // the logged-in user or not...
+
+        //Make AJAX call to get this data:  Invitation.query.get(invite_id).waypoints 
+
+        $.ajax({
+          url:'/map-data.json',
+          type: 'get',
+          data: {
+            invite_id: {{ invite_id }}
+          },
+          success: function(response) {
+          // do stuf with the query data that is returned
+            alert="ajax call did something!"
+          },
+          error: function(xhr) {
+          alert="there was an error retrieving waypoint data!"
+          }
+        });
+
+        function DecideWhichUser(user_id, invite_id, queries) {
+          
+        }
+
+        function MakeLine(query, linecolor, symbolcolor) {
+
+          // define the symbol
+          var lineSymbol = {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4,
+          strokeColor: symbolcolor
+          };
+
+
+        }
+
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
+          zoom: 13  ,
+          mapTypeId: 'roadmap'
+        });
+
+        // add marker for destination point
+        var marker = new google.maps.Marker({
+        position: {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
+        map: map,
+        title: 'Rendezvous point'
+        });
+
+
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&callback=initMap">
+    </script>
+    </body>
+</html>

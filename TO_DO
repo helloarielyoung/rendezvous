@@ -7,6 +7,11 @@ Finish User landing page for after login
     Shows "pending" Invitations
     Shows "pending" friend requests
 
+Web page design security question:
+    /users/<userid>
+    reveals user id's...  seems bad.  probably should pass from session data
+        instead.
+
 Rendezvous Map Improvements:
 
     Color code "my" route vs "other" route:
@@ -132,6 +137,8 @@ Way Future Features:
 ***DONE***
 ***********
 
+Got user page to got to map with POST request containing user_id and invite_id,
+    and it displays the centerpoint w/marker from the invitation chosen on user page.
 Code review with Leslie:
     consolidated into one animation function
     took out "% 200" from "count = (count + 1)" on animation - appeared to be leftover

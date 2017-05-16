@@ -161,7 +161,8 @@ class Waypoint(db.Model):
     waypoint_user = db.relationship('User')
 
     #get invititation info for this waypoint (includes destination)
-    invites = db.relationship('Invitation')
+    invites = db.relationship('Invitation',
+                              backref='waypoints')
 
 
 ##############################################################################

@@ -26,7 +26,6 @@
 
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          // center: {'lat': 37.7881866, 'lng': -122.4168552},
           center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
           zoom: 13  ,
           mapTypeId: 'roadmap'
@@ -39,6 +38,7 @@
         title: 'Rendezvous point'
         });
 
+        // displays just two users routes with hardcoded invite_id
         // Define symbol for Self
         var selflineSymbol = {
           path: google.maps.SymbolPath.CIRCLE,
@@ -54,9 +54,6 @@
           scale: 4,
           strokeColor: symbolcolors[0]
         };
-
-        // next iteration will be:  create an object to make the line
-        // and ass in query, color for line, color for symbol...
 
         // Create the polyline using User1's data and add the symbol to it via the 'icons' property.
         var selfline = new google.maps.Polyline({

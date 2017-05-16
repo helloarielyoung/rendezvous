@@ -152,6 +152,47 @@ def googlemap2():
                                login=login)
 
 
+@app.route('/map-data.json')
+def map_data():
+    """returns waypoint data by invitation in json"""
+
+    invite_id = request.args.get("invite_id")
+
+    queries = Invitation.query.get(invite_id).waypoints
+
+    return queries
+
+
+@app.route('/rendezvous-map-v2', methods=['POST'])
+def googlemapv2():
+    """Google map with animated routes populated from database.
+
+    Only display to a logged in user
+    Receives user_id and invite_id and displays routes accordingly
+    """
+
+    if session.get('login') is None:
+        return redirect('/')
+
+    else:
+        # this may be bad form:  got "user_id" from session in user.html...
+        user_id = request.form.get("user_id")
+        invite_id = request.form.get("invite_id")
+
+        center = db.session.query(Invitation.destination_lat,
+                                  Invitation.destination_long).filter(Invitation.invite_id == invite_id).first()
+
+        queries = Invitation.query.get(invite_id).waypoints  # ?? will this be a query of all the invitation objects?
+                    #and then iterate through it in HTML picking out each
+                    #user's route and assigning colors based on whether waypoint.user_id
+                    # equals user_id or not?
+
+        return render_template("rendezvous_map_v2.html",
+                               center=center,
+                               queries=queries,
+                               user_id=user_id)
+
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension

@@ -1,16 +1,6 @@
 ***********
 ***TO DO***
 ***********
-Need to add more seed data to be able to test if these things work
-Finish User landing page for after login
-    Shows "active" Invitations
-    Shows "pending" Invitations
-    Shows "pending" friend requests
-
-Web page design security question:
-    /users/<userid>
-    reveals user id's...  seems bad.  probably should pass from session data
-        instead.
 
 Rendezvous Map Improvements:
 
@@ -33,6 +23,20 @@ Rendezvous Map Improvements:
 
 Why is this test failing?  test_rendezvous_map_route
 Add more tests so I don't have to manually check if changes broke stuff.
+
+Add indexes in model.py on fields that are FK's
+
+Need to add more seed data to be able to test if these things work
+Finish User landing page for after login
+    Shows "active" Invitations
+    Shows "pending" Invitations
+    Shows "pending" friend requests
+
+Web page design security question:
+    /users/<userid>
+    reveals user id's...  seems bad.  probably should pass from session data
+        instead.
+
 
 Allow two users to see the same map when logged in at same time
 
@@ -138,6 +142,7 @@ Way Future Features:
 ***DONE***
 ***********
 
+Succeeded in getting waypoint data by user_id in json returned to map page!
 struggled all day with getting data for multiple routes:
     struggled with the ajax
     struggled with querying the data and getting it into a format I can json

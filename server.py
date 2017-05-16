@@ -154,8 +154,19 @@ def googlemap2():
 
 @app.route('/map-data.json', methods=["GET"])
 def map_data():
-    """returns waypoint data by invitation in json"""
+    """returns waypoint data by user_id for this invite_id in json
 
+    data is grouped by user_id and sorted by current_time
+
+    format of returned data is:
+    {user_id: [['lat', 'lng', 'current_time'], ['lat', 'lng', 'current_time']...],
+    user_id: [['lat', 'lng', 'current_time'], ['lat', 'lng', 'current_time']...],... }
+
+    """
+
+    # change this to have two objects in the dictionary, one "logged in user's data"
+    # and one "all the other users data"
+    
     invite_id = request.args.get("invite_id")
 
     all_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long, Waypoint.user_id, Waypoint.current_time).filter(Waypoint.invite_id == invite_id).order_by(Waypoint.user_id, Waypoint.current_time).all()

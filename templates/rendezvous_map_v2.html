@@ -24,16 +24,13 @@
     <div id="map"></div>
     <script>
 
-        // colors for the not-the-logged-in-user's symbols
-        // use in order
-        // purple, orange, tomato, darkturquoise
-        var symbolcolors = colors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
-
         // this iteration will be:  create an object to make the line
         // and pass in query, color for line, color for symbol...
         // so i think i first need stuff to separate the query objects
         // by user_id and assign colors based on whether this query is
         // the logged-in user or not...
+
+        var map;
 
         // this waits until the page is loaded
         $(function() {
@@ -41,27 +38,62 @@
           $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
           console.log("post was sent");
         });
- 
+
+         //this function should divy up the json into a separate object
+         // for each user, which is then passed to makeSymbol and makeLine 
+        var waypoints_by_user = {}
+
         function dataReceived(results) {
-          console.log("post was successful");
           console.log(results);
+          waypoints_by_user = results
+
+          //break waypoints_by_user into two objects
+          //one that has logged in user's waypoints
+          // a second that has dictionary of arrays with everybody else's data
+
+          //once i have that, i can make two "make line and makesymbol"
+          //one that just assigns colors for "this" user
+          //one that loops through and picks colors using var i = 0......
+
+          // colors for the not-the-logged-in-user's symbols
+         // use in order
+         //                   purple, orange, tomato, darkturquoise
+         var symbolcolors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
+//repeat this section once for LOGGED IN USER, looped for all others
+          //javascript loop through waypoints_by_user
+          n = 4 //number of colors allowed
+          for (var i = 0; i<n; i++) {
+
+              // Define symbol
+              var lineSymbol = {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 4,
+                // if login = user_id, else one of the colors above
+                strokeColor: (login == user_id) ? '#393' : symbolcolors[i]
+              };
+
+        // Create the polyline
+        var routeline = new google.maps.Polyline({
+        path: [
+            for waypoint in waypoints_by_user:
+              {'lat': waypoint[0], 'lng': waypoint[1] },
+          ],
+          //#000000 if login = user_id, else '#999999'
+          strokeColor: (login==user_id) ? '#000000' :'#999999',
+          icons: [{
+            icon: selflineSymbol,
+            offset: '100%'
+          }],
+          map: map
+        });
+      }
+//end javascript loop
         }
 
-        function MakeLine(query, linecolor, symbolcolor) {
-
-          // define the symbol
-          var lineSymbol = {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 4,
-          strokeColor: symbolcolor
-          };
-
-
-        }
-
-
+        // initMap will need to have a for loop that goes through the
+        // json and for each user calls makeSymbol and makeLine
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+         map = new google.maps.Map(document.getElementById('map'), {
           center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
           zoom: 13  ,
           mapTypeId: 'roadmap'
@@ -74,6 +106,39 @@
         title: 'Rendezvous point'
         });
 
+  //HERE is where looping needs to happen
+        // purple, orange, tomato, darkturquoise
+        var symbolcolors = colors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
+
+
+
+
+        });
+
+      //not sure how to animate them separately if i'm looping...
+        setTimeout(animateSelfCircle(otherline, 45), 4500)
+        animateSelfCircle(selfline, 40);
+      }
+
+      // Use the DOM setInterval() function to change the offset of the symbol
+      // at fixed intervals.
+      var id1
+      function animateSelfCircle(line, speed) {
+          var count = 0;
+          id1 = window.setInterval(function() {
+            count = (count + 1);
+
+            var icons = line.get('icons');
+            icons[0].offset = (count / 2) + '%';
+            line.set('icons', icons);
+            //make animation to stop at destination
+            if (line.get('icons')[0].offset == "99.5%") {
+                icons[0].offset = '100%';
+                line.set('icons', icons);
+                window.clearInterval(id1);
+
+        } }, speed);
+      }
 
       }
 

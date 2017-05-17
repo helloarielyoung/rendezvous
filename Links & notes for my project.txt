@@ -1,5 +1,10 @@
 Links & notes for my project
 
+Fancy IF in javascript:
+      strokeColor: (login == user_id) ? '#393' : symbolcolors[i]
+
+      where "i" was the i in a for loop... but it could be something else
+
 Things that were not working for AJAX call to get invitation waypoints data:
         
         Attempt #1:

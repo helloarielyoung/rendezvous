@@ -159,24 +159,29 @@ def map_data():
     data is grouped by user_id and sorted by current_time
 
     format of returned data is:
-    {user_id: [['lat', 'lng', 'current_time'], ['lat', 'lng', 'current_time']...],
-    user_id: [['lat', 'lng', 'current_time'], ['lat', 'lng', 'current_time']...],... }
+
+    {{'login': 'self', 'waypoints': [['lat', 'lng'], ['lat', 'lng']...]},
+        {'login': 'others', [user_id: [['lat', 'lng'], ['lat', 'lng']...],... }
 
     """
 
-    # change this to have two objects in the dictionary, one "logged in user's data"
-    # and one "all the other users data"
-    
     invite_id = request.args.get("invite_id")
+    login = session['login']
 
-    all_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long, Waypoint.user_id, Waypoint.current_time).filter(Waypoint.invite_id == invite_id).order_by(Waypoint.user_id, Waypoint.current_time).all()
+    self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == login).order_by(Waypoint.current_time).all()
+    all_waypoints = db.session.query(Waypoint.user_id, Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != login).order_by(Waypoint.user_id, Waypoint.current_time).all()
 
-    waypoints_by_user = {}
+    waypoints_for_self = {'login': 'self'}
+    waypoints_by_user = {'login': 'others'}
 
+    #populate dictionary for logged in user
+    waypoints_for_self['waypoints'] = self_waypoints
+
+    # populate dicitonary for everybody but logged in user
     for item in all_waypoints:
-        waypoints_by_user.setdefault(item[2], []).append([str(item[0]), str(item[1]), str(item[3])])
+        waypoints_by_user.setdefault(item[0], []).append([str(item[1]), str(item[2])])
 
-    return jsonify(waypoints_by_user)
+    return jsonify(waypoints_for_self, waypoints_by_user)
 
 
 @app.route('/rendezvous-map-v2', methods=['POST'])

@@ -30,6 +30,8 @@
         // by user_id and assign colors based on whether this query is
         // the logged-in user or not...
 
+        //define the map outside of the GoogleMaps stuff so that I can access it
+        // to add the symbols and lines for self and others in my callback function
         var map;
 
         // this waits until the page is loaded
@@ -39,17 +41,52 @@
           console.log("post was sent");
         });
 
-         //this function should divy up the json into a separate object
-         // for each user, which is then passed to makeSymbol and makeLine 
-        var waypoints_by_user = {}
-
+         //this is the callback function after json data is received.
+         //   it divies up the json into a separate object for self and
+         //   for others.  Add self line & symbol in one swoop, and iterate through
+         //   the others to add each one's line and symbol
         function dataReceived(results) {
-          console.log(results);
-          waypoints_by_user = results
+          waypoints_for_self = results[0]['waypoints'];
+          var waypointsForSelfLength = waypoints_for_self.length;
 
-          //break waypoints_by_user into two objects
-          //one that has logged in user's waypoints
-          // a second that has dictionary of arrays with everybody else's data
+           // for (var i = 0; i < waypointsForSelfLength; i++) {
+           //    console.log({'lat': waypoints_for_self[i][0], 'lng': waypoints_for_self[i][1] } );
+           //  }
+
+          waypoints_by_user = results[1];
+          // console.log(waypoints_by_user);
+
+          //first pass is for self (the user who is currently logged in)
+          // Define symbol
+          var lineSymbol = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 4,
+            // logged in user has a green dot
+            strokeColor: '#393'
+              };
+
+        //  NOTE:  to draw the polyline of route:
+        //  path = needs to be formated as: 
+        //    [{'lat': 37.748915, 'lng': -122.4181515}, {'lat': 37.7482293, 'lng': -122.4182139}...] 
+
+          var pathList = []
+          for (var i = 0; i < waypointsForSelfLength; i++) {
+            pathList.push({'lat': parseFloat(waypoints_for_self[i][0]), 'lng': parseFloat(waypoints_for_self[i][1])});
+              }
+          console.log(pathList)
+
+          // Create the polyline
+          var routeline = new google.maps.Polyline({
+          path: pathList,
+            //logged in user has a black line
+            strokeColor: '#000000',
+            icons: [{
+              icon: lineSymbol,
+              offset: '100%'
+            }],
+            map: map
+          });
+
 
           //once i have that, i can make two "make line and makesymbol"
           //one that just assigns colors for "this" user
@@ -58,35 +95,35 @@
           // colors for the not-the-logged-in-user's symbols
          // use in order
          //                   purple, orange, tomato, darkturquoise
-         var symbolcolors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
+         // var symbolcolors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
 //repeat this section once for LOGGED IN USER, looped for all others
           //javascript loop through waypoints_by_user
-          n = 4 //number of colors allowed
-          for (var i = 0; i<n; i++) {
+      //     n = 4 //number of colors allowed
+      //     for (var i = 0; i<n; i++) {
 
-              // Define symbol
-              var lineSymbol = {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 4,
-                // if login = user_id, else one of the colors above
-                strokeColor: (login == user_id) ? '#393' : symbolcolors[i]
-              };
+      //         // Define symbol
+      //         var lineSymbol = {
+      //           path: google.maps.SymbolPath.CIRCLE,
+      //           scale: 4,
+      //           // if login = user_id, else one of the colors above
+      //           strokeColor: (login == user_id) ? '#393' : symbolcolors[i]
+      //         };
 
-        // Create the polyline
-        var routeline = new google.maps.Polyline({
-        path: [
-            for waypoint in waypoints_by_user:
-              {'lat': waypoint[0], 'lng': waypoint[1] },
-          ],
-          //#000000 if login = user_id, else '#999999'
-          strokeColor: (login==user_id) ? '#000000' :'#999999',
-          icons: [{
-            icon: selflineSymbol,
-            offset: '100%'
-          }],
-          map: map
-        });
-      }
+      //   // Create the polyline
+      //   var routeline = new google.maps.Polyline({
+      //   path: [
+      //       for waypoint in waypoints_by_user:
+      //         {'lat': waypoint[0], 'lng': waypoint[1] },
+      //     ],
+      //     //#000000 if login = user_id, else '#999999'
+      //     strokeColor: (login==user_id) ? '#000000' :'#999999',
+      //     icons: [{
+      //       icon: selflineSymbol,
+      //       offset: '100%'
+      //     }],
+      //     map: map
+      //   });
+      // }
 //end javascript loop
         }
 
@@ -106,41 +143,31 @@
         title: 'Rendezvous point'
         });
 
-  //HERE is where looping needs to happen
-        // purple, orange, tomato, darkturquoise
-        var symbolcolors = colors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
-
-
-
-
-        });
-
       //not sure how to animate them separately if i'm looping...
-        setTimeout(animateSelfCircle(otherline, 45), 4500)
-        animateSelfCircle(selfline, 40);
-      }
+      //   setTimeout(animateSelfCircle(otherline, 45), 4500)
+      //   animateSelfCircle(selfline, 40);
+      // }
 
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
-      var id1
-      function animateSelfCircle(line, speed) {
-          var count = 0;
-          id1 = window.setInterval(function() {
-            count = (count + 1);
+      // var id1
+      // function animateSelfCircle(line, speed) {
+      //     var count = 0;
+      //     id1 = window.setInterval(function() {
+      //       count = (count + 1);
 
-            var icons = line.get('icons');
-            icons[0].offset = (count / 2) + '%';
-            line.set('icons', icons);
-            //make animation to stop at destination
-            if (line.get('icons')[0].offset == "99.5%") {
-                icons[0].offset = '100%';
-                line.set('icons', icons);
-                window.clearInterval(id1);
+      //       var icons = line.get('icons');
+      //       icons[0].offset = (count / 2) + '%';
+      //       line.set('icons', icons);
+      //       //make animation to stop at destination
+      //       if (line.get('icons')[0].offset == "99.5%") {
+      //           icons[0].offset = '100%';
+      //           line.set('icons', icons);
+      //           window.clearInterval(id1);
 
-        } }, speed);
+      //   } }, speed);
       }
 
-      }
 
     </script>
     <script async defer

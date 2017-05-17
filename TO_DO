@@ -21,8 +21,12 @@ Rendezvous Map Improvements:
         Cancel this Rendezvous (send notice to others)
     If traffic alert rec'd by one user, display that to other user
 
+Clean up code so javaScript uses camelCase.
+
 Why is this test failing?  test_rendezvous_map_route
 Add more tests so I don't have to manually check if changes broke stuff.
+
+Why is the cursor a weird circle when on my map?
 
 Add indexes in model.py on fields that are FK's
 
@@ -142,6 +146,11 @@ Way Future Features:
 ***DONE***
 ***********
 
+Got SELF's data to parse correctly and show the polyline!
+Changed format of json being passed to break data into two objects:
+    waypoints_for_self
+    waypoints_for_others
+    so can iterate over the "others" one to draw their routes
 Succeeded in getting waypoint data by user_id in json returned to map page!
 struggled all day with getting data for multiple routes:
     struggled with the ajax

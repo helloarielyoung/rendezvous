@@ -24,111 +24,103 @@
     <div id="map"></div>
     <script>
 
-        // this iteration will be:  create an object to make the line
-        // and pass in query, color for line, color for symbol...
-        // so i think i first need stuff to separate the query objects
-        // by user_id and assign colors based on whether this query is
-        // the logged-in user or not...
+      //define the map and lines outside of the GoogleMaps stuff so that I can access it
+      // to add the symbols and lines for self and others in my callback function
+      var map;
+      var selfLine;
+      var userLine;
+      var waypointsByUserLength;
 
-        //define the map outside of the GoogleMaps stuff so that I can access it
-        // to add the symbols and lines for self and others in my callback function
-        var map;
-
-        // this waits until the page is loaded
-        $(function() {
-          // then queries for the waypoint data for this invite
-          $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
-          console.log("post was sent");
+      // this waits until the page is loaded, then runs dataReceived
+      $(function() {
+        // then queries for the waypoint data for this invite
+        $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
         });
 
-         //this is the callback function after json data is received.
-         //   it divies up the json into a separate object for self and
-         //   for others.  Add self line & symbol in one swoop, and iterate through
-         //   the others to add each one's line and symbol
-        function dataReceived(results) {
-          waypoints_for_self = results[0]['waypoints'];
-          var waypointsForSelfLength = waypoints_for_self.length;
+       //this is the callback function after json data is received.
+       //   it divies up the json into a separate object for self and
+       //   for others.  Add self line & symbol in one swoop, and iterate through
+       //   the others to add each one's line and symbol
+      function dataReceived(results) {
+        waypoints_for_self = results[0]['waypoints'];
+        var waypointsForSelfLength = waypoints_for_self.length;
 
-           // for (var i = 0; i < waypointsForSelfLength; i++) {
-           //    console.log({'lat': waypoints_for_self[i][0], 'lng': waypoints_for_self[i][1] } );
-           //  }
+        waypoints_by_user = results[1];
+        waypointsbyUserLength  = waypoints_by_user.length;
+        console.log(waypoints_by_user);
+        console.log(waypointsbyUserLength);
 
-          waypoints_by_user = results[1];
-          // console.log(waypoints_by_user);
-
-          //first pass is for self (the user who is currently logged in)
-          // Define symbol
-          var lineSymbol = {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 4,
-            // logged in user has a green dot
-            strokeColor: '#393'
-              };
+        //first pass is for self (the user who is currently logged in)
+        // Define symbol
+        var selfLineSymbol = {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4,
+          // logged in user has a green dot
+          strokeColor: '#393'
+            };
 
         //  NOTE:  to draw the polyline of route:
         //  path = needs to be formated as: 
         //    [{'lat': 37.748915, 'lng': -122.4181515}, {'lat': 37.7482293, 'lng': -122.4182139}...] 
 
-          var pathList = []
-          for (var i = 0; i < waypointsForSelfLength; i++) {
-            pathList.push({'lat': parseFloat(waypoints_for_self[i][0]), 'lng': parseFloat(waypoints_for_self[i][1])});
-              }
-          console.log(pathList)
+        var pathList = []
+        for (var i = 0; i < waypointsForSelfLength; i++) {
+          pathList.push({'lat': parseFloat(waypoints_for_self[i][0]), 'lng': parseFloat(waypoints_for_self[i][1])});
+            }
+        console.log(pathList)
+
+        // Create the polyline
+        selfLine = new google.maps.Polyline({
+        path: pathList,
+          //logged in user has a black line
+          strokeColor: '#000000',
+          icons: [{
+            icon: selfLineSymbol,
+            offset: '100%'
+          }],
+          map: map
+        });
+
+        // colors for the not-the-logged-in-user's symbols
+        //                   purple, orange, tomato, darkturquoise
+        var symbolcolors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
+        //repeat this section for each other user, up to number of colors available
+        n = symbolcolors.length //number of colors allowed
+
+        //BEGIN loop for waypoints by user
+        for (var i = 0; i<n; i++) {
+
+          // Define symbol
+          var userLineSymbol = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 4,
+            strokeColor: symbolcolors[i]
+            };
 
           // Create the polyline
-          var routeline = new google.maps.Polyline({
-          path: pathList,
-            //logged in user has a black line
-            strokeColor: '#000000',
+          var pathListByUser = [];
+          //iterate through waypoints_by_user to get waypoints for user i
+          for (var i = 0; i < waypointsByUserLength; i++) {
+            pathListByUser.push({'lat': parseFloat(waypoints_by_user[i][0]),
+                               'lng': parseFloat(waypoints_by_user[i][1])});
+            }
+        console.log(pathListByUser)
+          
+          userLine = new google.maps.Polyline({
+            path: pathListByUser,
+            strokeColor: '#999999',
             icons: [{
-              icon: lineSymbol,
-              offset: '100%'
-            }],
-            map: map
-          });
+               icon: userLineSymbol,
+               offset: '100%'
+              }],
+             map: map
+            });
+        //END loop for waypoints by user
+          }
 
-
-          //once i have that, i can make two "make line and makesymbol"
-          //one that just assigns colors for "this" user
-          //one that loops through and picks colors using var i = 0......
-
-          // colors for the not-the-logged-in-user's symbols
-         // use in order
-         //                   purple, orange, tomato, darkturquoise
-         // var symbolcolors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
-//repeat this section once for LOGGED IN USER, looped for all others
-          //javascript loop through waypoints_by_user
-      //     n = 4 //number of colors allowed
-      //     for (var i = 0; i<n; i++) {
-
-      //         // Define symbol
-      //         var lineSymbol = {
-      //           path: google.maps.SymbolPath.CIRCLE,
-      //           scale: 4,
-      //           // if login = user_id, else one of the colors above
-      //           strokeColor: (login == user_id) ? '#393' : symbolcolors[i]
-      //         };
-
-      //   // Create the polyline
-      //   var routeline = new google.maps.Polyline({
-      //   path: [
-      //       for waypoint in waypoints_by_user:
-      //         {'lat': waypoint[0], 'lng': waypoint[1] },
-      //     ],
-      //     //#000000 if login = user_id, else '#999999'
-      //     strokeColor: (login==user_id) ? '#000000' :'#999999',
-      //     icons: [{
-      //       icon: selflineSymbol,
-      //       offset: '100%'
-      //     }],
-      //     map: map
-      //   });
-      // }
-//end javascript loop
         }
 
-        // initMap will need to have a for loop that goes through the
-        // json and for each user calls makeSymbol and makeLine
+      // initialize the map
       function initMap() {
          map = new google.maps.Map(document.getElementById('map'), {
           center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
@@ -143,15 +135,15 @@
         title: 'Rendezvous point'
         });
 
-      //not sure how to animate them separately if i'm looping...
-      //   setTimeout(animateSelfCircle(otherline, 45), 4500)
-      //   animateSelfCircle(selfline, 40);
-      // }
+        //animates the movement of the Symbols
+        // setTimeout(animateSymbol(userLine, 45), 4500)
+        // animateSymbol(selfLine, 40);
+        }
 
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
       // var id1
-      // function animateSelfCircle(line, speed) {
+      // function animateSymbol(line, speed) {
       //     var count = 0;
       //     id1 = window.setInterval(function() {
       //       count = (count + 1);
@@ -159,14 +151,14 @@
       //       var icons = line.get('icons');
       //       icons[0].offset = (count / 2) + '%';
       //       line.set('icons', icons);
-      //       //make animation to stop at destination
-      //       if (line.get('icons')[0].offset == "99.5%") {
+            //make animation to stop at destination
+            // if (line.get('icons')[0].offset == "99.5%") {
       //           icons[0].offset = '100%';
       //           line.set('icons', icons);
       //           window.clearInterval(id1);
 
       //   } }, speed);
-      }
+      // }
 
 
     </script>

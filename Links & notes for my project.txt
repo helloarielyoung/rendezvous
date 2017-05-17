@@ -46,6 +46,10 @@ How to stop the animation when it reaches the end of the line?
 
 
 Things that I did to get Path formatted correctly:
+  NOTE:  to draw the polyline of route:
+  path = needs to be formated as: 
+    [{'lat': 37.748915, 'lng': -122.4181515}, {'lat': 37.7482293, 'lng': -122.4182139}...] 
+
 
 // what it looks like when you enter it manually (and it works):
  //  path: [{'lat': 37.748915, 'lng': -122.4181515},

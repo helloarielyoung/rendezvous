@@ -24,12 +24,13 @@
     <div id="map"></div>
     <script>
 
-      //define the map and lines outside of the GoogleMaps stuff so that I can access it
-      // to add the symbols and lines for self and others in my callback function
+      //define the map and lines outside of the GoogleMaps stuff so that I can
+      //access them to add the symbols and lines for self and others in my
+      //callback function
       var map;
       var selfLine;
-      var userLine;
-      var waypointsByUserLength;
+      var userLines;
+      
 
       // this waits until the page is loaded, then runs dataReceived
       $(function() {
@@ -39,86 +40,94 @@
 
        //this is the callback function after json data is received.
        //   it divies up the json into a separate object for self and
-       //   for others.  Add self line & symbol in one swoop, and iterate through
-       //   the others to add each one's line and symbol
+       //   for others.  Draws the initial routes for all users on invite
+       //   and puts icon on their starting point
       function dataReceived(results) {
-        waypoints_for_self = results[0]['waypoints'];
-        var waypointsForSelfLength = waypoints_for_self.length;
+          // logged in user:
+          waypointsForSelf = results[0]['waypoints'];
+          var waypointsForSelfLength = waypointsForSelf.length;
 
-        waypoints_by_user = results[1];
-        waypointsbyUserLength  = waypoints_by_user.length;
-        console.log(waypoints_by_user);
-        console.log(waypointsbyUserLength);
+          // all other users on this invite:
+          waypointsByUser = results[1];
+          // console.log(waypointsByUser);
+          var waypointsByUserLength = waypointsByUser.length;
 
-        //first pass is for self (the user who is currently logged in)
-        // Define symbol
-        var selfLineSymbol = {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 4,
-          // logged in user has a green dot
-          strokeColor: '#393'
-            };
-
-        //  NOTE:  to draw the polyline of route:
-        //  path = needs to be formated as: 
-        //    [{'lat': 37.748915, 'lng': -122.4181515}, {'lat': 37.7482293, 'lng': -122.4182139}...] 
-
-        var pathList = []
-        for (var i = 0; i < waypointsForSelfLength; i++) {
-          pathList.push({'lat': parseFloat(waypoints_for_self[i][0]), 'lng': parseFloat(waypoints_for_self[i][1])});
-            }
-        console.log(pathList)
-
-        // Create the polyline
-        selfLine = new google.maps.Polyline({
-        path: pathList,
-          //logged in user has a black line
-          strokeColor: '#000000',
-          icons: [{
-            icon: selfLineSymbol,
-            offset: '100%'
-          }],
-          map: map
-        });
-
-        // colors for the not-the-logged-in-user's symbols
-        //                   purple, orange, tomato, darkturquoise
-        var symbolcolors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1']
-        //repeat this section for each other user, up to number of colors available
-        n = symbolcolors.length //number of colors allowed
-
-        //BEGIN loop for waypoints by user
-        for (var i = 0; i<n; i++) {
-
-          // Define symbol
-          var userLineSymbol = {
+          //Define symbol and polyline for logged in user
+          // Define symbol for logged in user
+          var selfLineSymbol = {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 4,
-            strokeColor: symbolcolors[i]
-            };
+            // logged in user has a green dot
+            strokeColor: '#393'
+              };
 
-          // Create the polyline
-          var pathListByUser = [];
-          //iterate through waypoints_by_user to get waypoints for user i
-          for (var i = 0; i < waypointsByUserLength; i++) {
-            pathListByUser.push({'lat': parseFloat(waypoints_by_user[i][0]),
-                               'lng': parseFloat(waypoints_by_user[i][1])});
-            }
-        console.log(pathListByUser)
-          
-          userLine = new google.maps.Polyline({
-            path: pathListByUser,
-            strokeColor: '#999999',
+          var selfPathList = []
+          for (var i = 0; i < waypointsForSelfLength; i++) {
+            selfPathList.push({'lat': parseFloat(waypointsForSelf[i][0]),
+                              'lng': parseFloat(waypointsForSelf[i][1])});
+              }
+          // console.log(selfPathList)
+
+          // Create the polyline for logged in user
+          selfLine = new google.maps.Polyline({
+          path: selfPathList,
+            //logged in user has a black line
+            strokeColor: '#000000',
             icons: [{
-               icon: userLineSymbol,
-               offset: '100%'
-              }],
-             map: map
-            });
-        //END loop for waypoints by user
-          }
+              icon: selfLineSymbol,
+              offset: '100%'
+            }],
+            map: map
+          });
 
+          // colors for the not-the-logged-in-user's symbols
+          //                   purple, orange, tomato, darkturquoise
+          var symbolColors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1'];
+          //repeat this section for each other user, up to number of colors available
+          n = symbolColors.length; //number of colors allowed
+
+          //BEGIN loop for waypoints by user
+          for (var i = 0; i<n; i++) {
+
+              // Define symbol for this user
+              var userLineSymbol = {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 4,
+                strokeColor: symbolColors[i]
+                };
+
+              // Create the polyline
+              var pathListByUser = [];
+              //iterate through waypoints_by_user to get waypoints for user i
+              for (var i = 0; i < waypointsByUserLength; i++) {
+                  var thisUserId = waypointsByUser[i][0];
+                  console.log(thisUserId);
+
+                  pathListByUser.push({'lat': parseFloat(waypointsByUser[i][0][0]),
+                                     'lng': parseFloat(waypointsByUser[i][0][1])});
+                  
+                  console.log(pathListByUser)
+                  
+                  userLine = new google.maps.Polyline({
+                    path: pathListByUser,
+                    strokeColor: '#999999',
+                    icons: [{
+                       icon: userLineSymbol,
+                       offset: '100%'
+                      }],
+                     map: map
+                    });
+                  //save userId and userLine in an object so I can update position
+                  //of the icon later
+                  userLines[thisUserId] = userLine
+                  console.log(userLines)
+                  }       
+          //END loop for waypoints by user
+            }
+        //END function dataReceived
         }
+
+        // var thisUser = userLines[user_id][icons][0][icon][strokeColor]
 
       // initialize the map
       function initMap() {

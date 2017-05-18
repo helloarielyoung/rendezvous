@@ -2,6 +2,13 @@
 ***TO DO***
 ***********
 
+Problems:
+    create date in seeded date to keep waypoints in order t'aint going to work
+        when getting data for reals live
+    for loop by user isn't looping (only gets first user in the object)
+    IMPORTANT QUESTION:  if dictionaries do not maintain order, are the waypoints
+        going to be in the right order?
+
 Rendezvous Map Improvements:
 
     Color code "my" route vs "other" route:
@@ -26,7 +33,14 @@ Clean up code so javaScript uses camelCase.
 Why is this test failing?  test_rendezvous_map_route
 Add more tests so I don't have to manually check if changes broke stuff.
 
-Why is the cursor a weird circle when on my map?
+Why is the cursor sometimes a weird circle when on my map?
+
+Refactor code especially @app.route('/map-data.json') where the format of the
+    data passed is unnecessarily complicated.  Pretty sure I could reduce it to:
+        {'self': [('lat', 'lng'), ('lat', 'lng')...],
+        '2: [('lat', 'lng'), ('lat', 'lng'),...],
+         3: [('lat', 'lng'), ('lat', 'lng'),...]
+         }
 
 Add indexes in model.py on fields that are FK's
 
@@ -145,6 +159,21 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Progress made:  ONE of the other user's routes shows up on the map!
+Learned:  when trying to insert data in a list in a dictionary using .setdefault(key, {}),
+    if you use .append, it will make a list inside the list, but .extend will
+    make just one list.
+Learned that my waypointsByUser json object is poorly designed for what I'm
+    trying to do with it.  Going back to drawing board for how that data should
+    be passed.
+Added lots of code to try and get users routes & symbols to display.  At some point
+    got error "gogle is not defined".  Fixed this by removing "async defer" from the 
+    <script></script> statement that loads googleapis.  Now map and logged in
+    user's route shows, but users still not, and logged-in user's symbol is at
+    destination rather than beginning of route. Fixed symbol by changing Offset
+    value in selfLine definition to 0% instead of 100%.
+^5/17^
 
 Got SELF's data to parse correctly and show the polyline!
 Changed format of json being passed to break data into two objects:

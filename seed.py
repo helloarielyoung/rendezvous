@@ -36,9 +36,6 @@ def load_users():
               password='pass')
 
     db.session.add_all([u1, u2, u3, u4])
-    # db.session.add(u2)
-    # db.session.add(u3)
-    # db.session.add(u4)
 
     db.session.commit()
 
@@ -71,8 +68,8 @@ def load_user_invites():
 
     ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1)
     ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2)
-    db.session.add(ui1)
-    db.session.add(ui2)
+    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3)
+    db.session.add_all([ui1, ui2, ui3])
 
     db.session.commit()
 
@@ -106,11 +103,10 @@ def load_relationships():
     # active relationship
     rel1 = Relationship(user_id=1, friend_id=2, status='act', request_date='2017 05 09 09:00:00')
     rel2 = Relationship(user_id=2, friend_id=1, status='act')
-
+    rel3 = Relationship(user_id=3, friend_id=1, status='act')
     # rejected relationship
 
-    db.session.add(rel1)
-    db.session.add(rel2)
+    db.session.add_all([rel1, rel2, rel3])
 
     db.session.commit()
 
@@ -161,6 +157,25 @@ def load_waypoints():
         current_time = item['time']
 
         waypoint = Waypoint(invite_id=1, user_id=2,
+                            current_time=current_time,
+                            waypoint_lat=waypoint_lat,
+                            waypoint_long=waypoint_long)
+        db.session.add(waypoint)
+
+    db.session.commit()
+
+    route3 = [{'lat': 37.786119, 'lng': -122.4181182, 'time': '2017 05 09 8:30:15'},
+              {'lat': 37.788913, 'lng': -122.4186869, 'time': '2017 05 09 8:30:25'},
+              {'lat': 37.7899599, 'lng': -122.4104554, 'time': '2017 05 09 8:30:30'},
+              {'lat': 37.7890236, 'lng': -122.4102744, 'time': '2017 05 09 8:30:35'},
+              {'lat': 37.7888568, 'lng': -122.4115372, 'time': '2017 05 09 8:30:50'}]
+
+    for item in route3:
+        waypoint_lat = item['lat']
+        waypoint_long = item['lng']
+        current_time = item['time']
+
+        waypoint = Waypoint(invite_id=1, user_id=3,
                             current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long)

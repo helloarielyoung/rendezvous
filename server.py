@@ -160,26 +160,44 @@ def map_data():
 
     format of returned data is:
 
-    {{'login': 'self', 'waypoints': [['lat', 'lng'], ['lat', 'lng']...]},
-        {'login': 'others', [user_id: [['lat', 'lng'], ['lat', 'lng']...],... }
+    {{'login': 'self', 'waypoints': [('lat', 'lng'), ('lat', 'lng')...]
+      },
+        {'userdata': {2: [('lat', 'lng'), ('lat', 'lng'),...],
+                      3: [('lat', 'lng'), ('lat', 'lng'),...]
+                      }
+         }
+     }
+        (note:  jsonify turns the tuples into arrays in javaScript)
 
     """
 
     invite_id = request.args.get("invite_id")
     login = session['login']
 
+    #query for logged in user's waypoints
     self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == login).order_by(Waypoint.current_time).all()
-    all_waypoints = db.session.query(Waypoint.user_id, Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != login).order_by(Waypoint.user_id, Waypoint.current_time).all()
-
-    waypoints_for_self = {'login': 'self'}
-    waypoints_by_user = {'login': 'others'}
 
     #populate dictionary for logged in user
+    waypoints_for_self = {'login': 'self'}
     waypoints_for_self['waypoints'] = self_waypoints
 
-    # populate dicitonary for everybody but logged in user
-    for item in all_waypoints:
-        waypoints_by_user.setdefault(item[0], []).append([str(item[1]), str(item[2])])
+    #populate dictoinary for all other users on this invitation
+
+        #this worked, but the data was in very poor format for use with javascript
+        # all_waypoints = db.session.query(Waypoint.user_id, Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != login).order_by(Waypoint.user_id, Waypoint.current_time).all()
+        # populate dicitonary for everybody but logged in user
+        # for item in all_waypoints:
+        #     waypoints_by_user.setdefault(users_waypoints, {}).append([str(item[1]), str(item[2])])
+    # Try different approach.
+    # Get list of users for this invitation
+    user_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != login).distinct().all()
+    user_list = [r[0] for r in user_list]
+    # make dictionary with those keys/values and waypoints for that user
+    waypoints_by_user = {'userdata': {}}
+
+    # loop through list of users and query for waypoints with this invite id
+    for user in user_list:
+        waypoints_by_user['userdata'].setdefault(user, []).extend(db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.current_time).all())
 
     return jsonify(waypoints_for_self, waypoints_by_user)
 

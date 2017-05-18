@@ -35,7 +35,12 @@ def load_users():
               email='user4@email.com',
               password='pass')
 
-    db.session.add_all([u1, u2, u3, u4])
+    u5 = User(user_id=5,
+              name='Test User 5',
+              email='user5@email.com',
+              password='pass')
+
+    db.session.add_all([u1, u2, u3, u4, u5])
 
     db.session.commit()
 
@@ -54,7 +59,23 @@ def load_invitations():
                          destination_long=-122.4168552,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00')
-    db.session.add(invite1)
+
+    invite2 = Invitation(invite_id=2,
+                         created_by_id=1,
+                         created_date='2017 05 09 9:00:00',
+                         destination_lat=37.7881866,
+                         destination_long=-122.4168552,
+                         #do I need datetime.datetime('2017 05 09')??
+                         rendezvous_date='2017 05 12 09:00:00')
+
+    invite3 = Invitation(invite_id=3,
+                         created_by_id=2,
+                         created_date='2017 05 09 9:00:00',
+                         destination_lat=37.7881866,
+                         destination_long=-122.4168552,
+                         #do I need datetime.datetime('2017 05 09')??
+                         rendezvous_date='2017 05 12 09:00:00')
+    db.session.add_all([invite1, invite2, invite3])
 
     db.session.commit()
 
@@ -66,10 +87,24 @@ def load_user_invites():
 
     UserInvite.query.delete()
 
-    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1)
-    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2)
-    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3)
-    db.session.add_all([ui1, ui2, ui3])
+    # created by 1:
+    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act')
+    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2, status='act')
+    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3, status='act')
+
+    #created by 1:
+    ui4 = UserInvite(ui_id=4, invite_id=2, user_id=1, status='act')
+    ui5 = UserInvite(ui_id=5, invite_id=2, user_id=3, status='act')
+    ui6 = UserInvite(ui_id=6, invite_id=2, user_id=4, status='act')
+    ui7 = UserInvite(ui_id=7, invite_id=2, user_id=5, status='pen')
+    ui8 = UserInvite(ui_id=8, invite_id=2, user_id=2, status='rej')
+    #created by 2:
+    ui9 = UserInvite(ui_id=9, invite_id=3, user_id=2, status='act')
+    ui10 = UserInvite(ui_id=10, invite_id=3, user_id=1, status='pen')
+    ui11 = UserInvite(ui_id=11, invite_id=3, user_id=3, status='rej')
+    ui12 = UserInvite(ui_id=12, invite_id=3, user_id=4, status='act')
+    ui13 = UserInvite(ui_id=13, invite_id=3, user_id=5, status='act')
+    db.session.add_all([ui1, ui2, ui3, ui4, ui5, ui6, ui7, ui8, ui9, ui10, ui11, ui12, ui13])
 
     db.session.commit()
 
@@ -164,11 +199,12 @@ def load_waypoints():
 
     db.session.commit()
 
-    route3 = [{'lat': 37.786119, 'lng': -122.4181182, 'time': '2017 05 09 8:30:15'},
-              {'lat': 37.788913, 'lng': -122.4186869, 'time': '2017 05 09 8:30:25'},
-              {'lat': 37.7899599, 'lng': -122.4104554, 'time': '2017 05 09 8:30:30'},
-              {'lat': 37.7890236, 'lng': -122.4102744, 'time': '2017 05 09 8:30:35'},
-              {'lat': 37.7888568, 'lng': -122.4115372, 'time': '2017 05 09 8:30:50'}]
+    route3 = [{'lat': 37.779741, 'lng': -122.4071746, 'time': '2017 05 09 8:30:15'},
+              {'lat': 37.7822043, 'lng': -122.4103305, 'time': '2017 05 09 8:30:20'},
+              {'lat': 37.7897577, 'lng': -122.412102, 'time': '2017 05 09 8:30:25'},
+              {'lat': 37.7899599, 'lng': -122.4104554, 'time': '2017 05 09 8:30:35'},
+              {'lat': 37.7890236, 'lng': -122.4102744, 'time': '2017 05 09 8:30:40'},
+              {'lat': 37.7888568, 'lng': -122.4115372, 'time': '2017 05 09 8:30:55'}]
 
     for item in route3:
         waypoint_lat = item['lat']

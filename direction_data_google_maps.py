@@ -12,7 +12,7 @@ import json
 #route for User 3:
 #r = requests.get('https://maps.googleapis.com/maps/api/directions/json?origin=37.786493, -122.416289&destination=683+sutter+str+san+francisco&mode=driving&key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0')
 
-f = open('user3data.json')
+f = open('user3data2.json')
 data = f.read()
 
 data = json.loads(data)

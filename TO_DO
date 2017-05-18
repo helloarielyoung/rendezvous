@@ -6,13 +6,9 @@ Problems:
     create date in seeded date to keep waypoints in order t'aint going to work
         when getting data for reals live
     for loop by user isn't looping (only gets first user in the object)
-    IMPORTANT QUESTION:  if dictionaries do not maintain order, are the waypoints
-        going to be in the right order?
 
 Rendezvous Map Improvements:
 
-    Color code "my" route vs "other" route:
-        Modify to handle multiple "other" routes - user javaScript object
     Get better route data for user1 and user2 and put it in seed.py
     Do some calculation of the starting points of the routes and the destination
         point and adjust the zoom and center point of the map to include all of
@@ -27,8 +23,6 @@ Rendezvous Map Improvements:
         Supress/Display other's routes
         Cancel this Rendezvous (send notice to others)
     If traffic alert rec'd by one user, display that to other user
-
-Clean up code so javaScript uses camelCase.
 
 Why is this test failing?  test_rendezvous_map_route
 Add more tests so I don't have to manually check if changes broke stuff.
@@ -160,7 +154,20 @@ Way Future Features:
 ***DONE***
 ***********
 
-Progress made:  ONE of the other user's routes shows up on the map!
+Added more data to seed.py
+Color code "my" route vs "other" route:
+    Modify to handle multiple "other" routes - user javaScript object
+Answered:  IMPORTANT QUESTION:  if dictionaries do not maintain order, are the waypoints
+    going to be in the right order?
+    I am passing the waypoints as a list within the dictionary, so they will stay
+    ordered.  The users may not be ordered, but that doesn't matter.
+
+^5/18^
+
+Clean up code so javaScript uses camelCase.
+Progress made:  ONE of the other user's routes shows up on the map! (was broken
+    not because of anything wrong with the for loop design, but because of bad
+    syntax of one of the lines within the loop)
 Learned:  when trying to insert data in a list in a dictionary using .setdefault(key, {}),
     if you use .append, it will make a list inside the list, but .extend will
     make just one list.

@@ -124,8 +124,8 @@ def googlemap2():
         login = session['login']
 
         selfquery = db.session.query(Waypoint.waypoint_lat,
-                                      Waypoint.waypoint_long).filter(Waypoint.user_id == login,
-                                                                     Waypoint.invite_id == 1).all()
+                                     Waypoint.waypoint_long).filter(Waypoint.user_id == login,
+                                                                    Waypoint.invite_id == 1).all()
         # This will have to be changed to accept the user id and the invtation
         # from session
         if login == 1:

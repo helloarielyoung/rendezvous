@@ -1,5 +1,11 @@
 Links & notes for my project
 
+Fancy Map styles in Google Maps API
+  https://snazzymaps.com/
+
+Fancy Google Maps marker customization:
+  https://pepsized.com/customize-your-google-map-markers/
+
 Fancy IF in javascript:
       strokeColor: (login == user_id) ? '#393' : symbolcolors[i]
 

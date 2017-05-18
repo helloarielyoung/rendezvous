@@ -29,9 +29,8 @@
       //callback function
       var map;
       var selfLine;
-      var userLines;
-      var symbolColors;
-      
+      var userLines = {};
+      var symbolColors
 
       // this waits until the page is loaded, then runs dataReceived
       $(function() {
@@ -81,18 +80,13 @@
           // colors for the not-the-logged-in-users' symbols
           //                   purple, orange, tomato, darkturquoise
           symbolColors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1'];
-          //repeat this section for each other user, up to number of colors available
-          var n = symbolColors.length; //number of colors allowed
-
-          //BEGIN loop for waypoints by user, limit by number of colors
-          for (var i = 0; i<n; i++) {
-              var pickColor = symbolColors[i];
-
+              var colorCount = 0;
               //iterate through waypoints_by_user to get users
               for (var user in waypointsByUser) {
                   //Save this user id for later
                   var thisUserId = user;
-
+                  var pickColor = symbolColors[colorCount];
+                  colorCount++;
                   // Define symbol for this user
                   var userLineSymbol = {
                     path: google.maps.SymbolPath.CIRCLE,
@@ -100,17 +94,14 @@
                     strokeColor: pickColor
                     };
                
-                  //then iterate through waypoints to get path for user user
                   // variable to hold the waypoints
                   var pathListByUser = [];
+
+                  //iterate through waypoints to get path for this user
                   for (var i=0; i<waypointsByUser[user].length; i++) {
                       pathListByUser.push({'lat': parseFloat(waypointsByUser[user][i][0]),
                                          'lng': parseFloat(waypointsByUser[user][i][1])});
-                    //END loop for waypoints by user  
-                      } 
-                      console.log("printing pathListByUser")
-                      console.log(pathListByUser);
-                    
+
                       userLine = new google.maps.Polyline({
                         path: pathListByUser,
                         strokeColor: '#999999',
@@ -120,19 +111,18 @@
                           }],
                          map: map
                         });
+
                       //save userId and userLine in an object so I can update position
                       //of the icon later
-                      userLines[thisUserId] = userLine
-                      console.log("printing userLines:")
-                      console.log(userLines)
-                          
+                      userLines[thisUserId] = userLine;                     
+                    //END loop for waypoints for this user
+                      } 
               //END loop for users in waypointsByUser
                 } 
-          //END loop that limits users by number of colors available  
+          //END function dataReceived
             }
-      //END function dataReceived
-        }
 
+//later will use this to update the the current location of the user along their route
         // var thisUser = userLines[user_id][icons][0][icon][strokeColor]
 
       // initialize the map
@@ -147,7 +137,7 @@
         var marker = new google.maps.Marker({
         position: {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
         map: map,
-        title: 'Rendezvous point'
+        title: 'Rendezvous Here'
         });
 
         //animates the movement of the Symbols
@@ -175,9 +165,10 @@
       //   } }, speed);
       // }
 
-
+// key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0
     </script>
     <script
+
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&callback=initMap">
     </script>
     </body>

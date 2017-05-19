@@ -76,6 +76,7 @@
             }],
             map: map
           });
+          userLines[ {{ session.login }} ] = selfLine;
 
           // colors for the not-the-logged-in-users' symbols
           //                   purple, orange, tomato, darkturquoise
@@ -129,7 +130,7 @@
       function initMap() {
          map = new google.maps.Map(document.getElementById('map'), {
           center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
-          zoom: 13  ,
+          zoom: 14  ,
           mapTypeId: 'roadmap'
         });
 

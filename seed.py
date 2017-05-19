@@ -55,26 +55,26 @@ def load_invitations():
     invite1 = Invitation(invite_id=1,
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.7881866,
-                         destination_long=-122.4168552,
+                         destination_lat=37.7888568,
+                         destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00')
 
     invite2 = Invitation(invite_id=2,
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.7881866,
-                         destination_long=-122.4168552,
+                         destination_lat=37.7888568,
+                         destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 12 09:00:00')
+                         rendezvous_date='2017 05 19 11:00:00')
 
     invite3 = Invitation(invite_id=3,
                          created_by_id=2,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.7881866,
-                         destination_long=-122.4168552,
+                         destination_lat=37.7888568,
+                         destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 12 09:00:00')
+                         rendezvous_date='2017 05 22 13:00:00')
     db.session.add_all([invite1, invite2, invite3])
 
     db.session.commit()
@@ -149,70 +149,83 @@ def load_relationships():
 def load_waypoints():
     """Load test waypoints into database."""
 
+# test addresses:
+# '683 Sutter St San Francisco'
+# '2340 Turk St San Francisco'
+# '221 4th St San Francisco'
+# '955 Howard St San Francisco'
+# '299 Octavia St San Francisco'
+# '2166 Chestnut St San Francisco'
+
     print "Waypoints"
 
     Waypoint.query.delete()
 
-    route1 = [
-        {'lat': 37.748915, 'lng': -122.4181515, 'time': '2017 05 09 8:30:00'},
-        {'lat': 37.7482293, 'lng': -122.4182139, 'time': '2017 05 09 8:30:10'},
-        {'lat': 37.7496136, 'lng': -122.4041771, 'time': '2017 05 09 8:30:15'},
-        {'lat': 37.7505216, 'lng': -122.4036993, 'time': '2017 05 09 8:30:25'},
-        {'lat': 37.7519918, 'lng': -122.4030731, 'time': '2017 05 09 8:30:30'},
-        {'lat': 37.7703559, 'lng': -122.4097319, 'time': '2017 05 09 8:30:35'},
-        {'lat': 37.7740446, 'lng': -122.4143887, 'time': '2017 05 09 8:30:45'},
-        {'lat': 37.7762332, 'lng': -122.4116211, 'time': '2017 05 09 8:30:50'},
-        {'lat': 37.7788903, 'lng': -122.4149656, 'time': '2017 05 09 8:31:00'},
-        {'lat': 37.7881866, 'lng': -122.4168552, 'time': '2017 05 09 8:31:15'}
-        ]
+# '2166 Chestnut St San Francisco'
+    route1 = [{'lat': 37.8004814, 'lng': -122.4390031},
+              {'lat': 37.8004112, 'lng': -122.4395479},
+              {'lat': 37.7938605, 'lng': -122.4382339},
+              {'lat': 37.7944957, 'lng': -122.4332994},
+              {'lat': 37.7873129, 'lng': -122.4318443},
+              {'lat': 37.7899599, 'lng': -122.4104554},
+              {'lat': 37.7890236, 'lng': -122.4102744},
+              {'lat': 37.7888568, 'lng': -122.4115372}]
 
     for item in route1:
         waypoint_lat = item['lat']
         waypoint_long = item['lng']
-        current_time = item['time']
+        # current_time = item['time']
 
         waypoint = Waypoint(invite_id=1, user_id=1,
-                            current_time=current_time,
+                            # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long)
         db.session.add(waypoint)
 
     db.session.commit()
 
-    route2 = [{'lat': 37.7786337, 'lng': -122.4470632, 'time': '2017 05 09 8:30:15'},
-              {'lat': 37.7848573, 'lng': -122.4475605, 'time': '2017 05 09 8:30:25'},
-              {'lat': 37.7852903, 'lng': -122.4467609, 'time': '2017 05 09 8:30:30'},
-              {'lat': 37.7899599, 'lng': -122.4104554, 'time': '2017 05 09 8:30:35'},
-              {'lat': 37.7890236, 'lng': -122.4102744, 'time': '2017 05 09 8:30:50'},
-              {'lat': 37.7881866, 'lng': -122.4168552, 'time': '2017 05 09 8:31:20'}]
+#helper_functions.get_route_data('299 Octavia St San Francisco','683 Sutter st San Francisco')
+
+    route2 = [{'lat': 37.7746434, 'lng': -122.4242785},
+              {'lat': 37.7738748, 'lng': -122.4241174},
+              {'lat': 37.7736814, 'lng': -122.42573},
+              {'lat': 37.7746043, 'lng': -122.4259057},
+              {'lat': 37.7752318, 'lng': -122.420976},
+              {'lat': 37.7882861, 'lng': -122.423617},
+              {'lat': 37.7899599, 'lng': -122.4104554},
+              {'lat': 37.7890236, 'lng': -122.4102744},
+              {'lat': 37.7888568, 'lng': -122.4115372}]
+
 
     for item in route2:
         waypoint_lat = item['lat']
         waypoint_long = item['lng']
-        current_time = item['time']
+        # current_time = item['time']
 
         waypoint = Waypoint(invite_id=1, user_id=2,
-                            current_time=current_time,
+                            # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long)
         db.session.add(waypoint)
 
     db.session.commit()
 
-    route3 = [{'lat': 37.779741, 'lng': -122.4071746, 'time': '2017 05 09 8:30:15'},
-              {'lat': 37.7822043, 'lng': -122.4103305, 'time': '2017 05 09 8:30:20'},
-              {'lat': 37.7897577, 'lng': -122.412102, 'time': '2017 05 09 8:30:25'},
-              {'lat': 37.7899599, 'lng': -122.4104554, 'time': '2017 05 09 8:30:35'},
-              {'lat': 37.7890236, 'lng': -122.4102744, 'time': '2017 05 09 8:30:40'},
-              {'lat': 37.7888568, 'lng': -122.4115372, 'time': '2017 05 09 8:30:55'}]
+# https://maps.googleapis.com/maps/api/directions/json?origin=221+4th+St+San+Francisco&destination=683+Sutter+St+San+Francisco&mode=driving&key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0get_route_data('221 4th St San Francisco','683 Sutter St San Francisco')
+# '221 4th St San Francisco'
+    route3 = [{'lat': 37.7831001, 'lng': -122.4025164},
+              {'lat': 37.7820395, 'lng': -122.4011837},
+              {'lat': 37.78380380000001, 'lng': -122.3989875},
+              {'lat': 37.7879767, 'lng': -122.4035082},
+              {'lat': 37.78982740000001, 'lng': -122.4038894},
+              {'lat': 37.7888568, 'lng': -122.4115372}]
 
     for item in route3:
         waypoint_lat = item['lat']
         waypoint_long = item['lng']
-        current_time = item['time']
+        # current_time = item['time']
 
         waypoint = Waypoint(invite_id=1, user_id=3,
-                            current_time=current_time,
+                            # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long)
         db.session.add(waypoint)

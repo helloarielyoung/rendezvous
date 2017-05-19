@@ -17,7 +17,7 @@ Click <a href='/rendezvous-map'>here</a> for animated google map so far
             <form action='/rendezvous-map-v2' method='POST' name='inviteform'>
                 <input type='hidden' name='user_id' value={{ session.login }}>
                 <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
-            <a href='#' onclick='document.inviteform.submit();'>Click here to go to rendezvous map for {{ invite.rendezvous_date }} </a>
+                <input type='submit'name='submit_button', value={{ invite.rendezvous_date }}>
             </form>
         </li>
             {% endfor %}

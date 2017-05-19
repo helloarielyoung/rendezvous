@@ -10,6 +10,8 @@ Problems:
 Rendezvous Map Improvements:
 
     Get better route data for user1 and user2 and put it in seed.py
+        discovered how I'm extracting data from google json is not accurate
+        need to fix that!
     Do some calculation of the starting points of the routes and the destination
         point and adjust the zoom and center point of the map to include all of
         both routes
@@ -154,7 +156,12 @@ Way Future Features:
 ***DONE***
 ***********
 
+Modifed model.py to remove created date from waypoints - Not going to use that
+    fake field.  moving the icon will have to come from a different table, and
+    they will always be inserted in order, so can use waypoints_id to sort them.
 Added more data to seed.py
+Noticed that my route info in seed data was wrong - not starting at start points
+    Fixed and created helper function to get formatted route data from two addresses
 Color code "my" route vs "other" route:
     Modify to handle multiple "other" routes - user javaScript object
 Answered:  IMPORTANT QUESTION:  if dictionaries do not maintain order, are the waypoints

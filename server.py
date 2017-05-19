@@ -4,10 +4,13 @@ from jinja2 import StrictUndefined
 
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session, jsonify
+from flask_bcrypt import Bcrypt
+
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
 from helper_functions import *
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "supersecretsecretkey2W00T"
@@ -41,7 +44,7 @@ def authenticate_login():
 
     if User.query.filter_by(email=email).first() is not None:
         user = User.query.filter_by(email=email).first()
-        if hash_pass(user.password, "that is some crazy bunch of salt") == password:
+        if bcrypt.check_password_hash(user.password, password):
             session['login'] = user.user_id
             session['user_name'] = user.name
             print session
@@ -89,7 +92,7 @@ def register_process():
 
     else:
         # hash password before storing
-        password = hash_pass(password, "that is some crazy bunch of salt")
+        password = hash_pass(password)
         user = User(email=email,
                     name=name,
                     password=password)
@@ -223,6 +226,14 @@ def googlemapv2():
                                invite_id=invite_id,
                                user_id=user_id)
 
+
+#Helper Functions
+def hash_pass(password):
+    """Hashes passwords"""
+
+    pw_hash = bcrypt.generate_password_hash(password)
+
+    return pw_hash
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

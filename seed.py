@@ -1,10 +1,10 @@
 """Utility file to seed rendezvous database"""
 
 from sqlalchemy import func
-from model import User, Invitation, Waypoint, UserInvite, Status, Relationship
+from model import *
 
-from model import connect_to_db, db
 from server import app
+from server import hash_pass
 
 from helper_functions import *
 
@@ -23,24 +23,24 @@ def load_users():
     u1 = User(user_id=1,
               name='Test User 1',
               email='user1@email.com',
-              password=hash_pass('pass', 'that is some crazy bunch of salt'))
+              password=hash_pass('pass'))
     u2 = User(user_id=2,
               name='Test User 2',
               email='user2@email.com',
-              password=hash_pass('pass', 'that is some crazy bunch of salt'))
+              password=hash_pass('pass'))
     u3 = User(user_id=3,
               name='Test User 3',
               email='user3@email.com',
-              password=hash_pass('pass', 'that is some crazy bunch of salt'))
+              password=hash_pass('pass'))
     u4 = User(user_id=4,
               name='Test User 4',
               email='user4@email.com',
-              password=hash_pass('pass', 'that is some crazy bunch of salt'))
+              password=hash_pass('pass'))
 
     u5 = User(user_id=5,
               name='Test User 5',
               email='user5@email.com',
-              password=hash_pass('pass', 'that is some crazy bunch of salt'))
+              password=hash_pass('pass'))
 
     db.session.add_all([u1, u2, u3, u4, u5])
 

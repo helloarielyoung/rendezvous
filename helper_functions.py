@@ -1,14 +1,6 @@
 """Helper Functions"""
 import json
 import requests
-import hashlib
-import binascii
-
-
-def hash_pass(password, salt):
-    """Hashes passwords"""
-
-    return binascii.hexlify(hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 10000)).decode()
 
 
 def get_route_data(start, end):

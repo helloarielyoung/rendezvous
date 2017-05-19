@@ -1,4 +1,6 @@
-Links & notes for my project
+****Links & notes for my project****
+
+Password hashing:  https://flask-bcrypt.readthedocs.io/en/latest/
 
 Fancy Map styles in Google Maps API
   https://snazzymaps.com/

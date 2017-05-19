@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang = "en">
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
     <title>Rendezvous Map v3</title>
-<script
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&callback=initMap">
-</script>
 <script src="https://code.jquery.com/jquery.js"></script>
-
-<script src="static/js/rendezvous-map.js"></script>
-
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -27,8 +21,32 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVj
   </head>
   <body>
     <h3>Rendezvous Map</h3>
-     <small><a href="/"><h5>Click here to go to homepage.</h5></a></small>
+    <small><a href="/"><h5>Click here to go to homepage.</h5></a></small>
     <div id="map"></div>
+
+<!-- makes data-login attribute, which can be read in JS as $('#map').data('login')-->
+    <script type="text/javascript">
+      $('#map').data( 'login', {{ session.login }})
+    </script>
+
+    <script src="static/js/rendezvous-map.js"></script>
+    <script type="text/javascript">
+        // this waits until the page is loaded, queries the database for waypoint data
+        // for users on this invitation, then runs dataReceived
+
+// add to this ajax call a request for center point from the invitation.
+
+        $(function() {
+            $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
+            });
+
+
+
+    </script>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&callback=initMap">
+    </script>
 
   </body>
 </html>

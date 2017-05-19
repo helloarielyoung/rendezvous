@@ -5,16 +5,8 @@
 Fix test_rendezvous_map_route (needs to be a POST)
 Add more tests so I don't have to manually check if changes broke stuff.
 
-BIG QUESTION:  bcrypt needs to be in flask app (server.py) but i want to keep my helper functions in another file.  can't use bcrypt in there w/out importing server.  can't use helper function in server
-w/out importing from helper functions - circular imports OK????
-
 Improve Login
-   
     Add some javascript to check for valid data w/out reloading page
-    How about some login security?!
-        Do some encryption or something of password? ( hashlibmd5 - not great to use, check with Sammie what she used)
-          place to start research?:
-            for the password hash for user login i used import hashlib salt = 'something' hash = hashlib.md5(salt + pword).hexdigest()
 
 Rendezvous Map Improvements:
     Animate the dots.
@@ -148,7 +140,12 @@ Way Future Features:
 ***DONE***
 ***********
 
-
+made map more dynamic changing viewport:
+    content="initial-scale=1.0, user-scalable=no"> to
+    content="width=device-width, initial-scale=1.0, user-scalable=yes">
+Did file cleanup (moving data to folder, moving documentation to folder, 
+    git rm files i'd deleted but ignored)
+Added password hashing using bcrypt.
 Got cursor focus to be in the login box when page opens
 ^5/19^
 

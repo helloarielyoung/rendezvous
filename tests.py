@@ -62,8 +62,8 @@ class RendezvousTests(unittest.TestCase):
     def test_rendezvous_map_route(self):
         """Do users make it to the rendezvous map page from link?"""
 
-        #FIXME -- this is not working.  Tried several things on page, none work
-        result = self.client.get("/rendezvous-map")
+        #FIXME -- make this a POST and it will work
+        result = self.client.get("/rendezvous-map-v2")
         self.assertIn("Rendezvous Map", str(result.data))
 
         #This is going to have to be a lot more complex in future

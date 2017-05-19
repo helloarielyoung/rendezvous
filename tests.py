@@ -5,7 +5,7 @@ import server
 
 
 class RendezvousTests(unittest.TestCase):
-    """Tests for my Rendezvous site."""
+    """Basic tests for my Rendezvous site app routes."""
 
     def setUp(self):
         """Code to run before every test."""

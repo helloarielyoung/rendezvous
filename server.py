@@ -5,8 +5,7 @@ from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session, jsonify
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
-import helper_functions
-
+from helper_functions import *
 
 app = Flask(__name__)
 
@@ -42,7 +41,7 @@ def authenticate_login():
 
     if User.query.filter_by(email=email).first() is not None:
         user = User.query.filter_by(email=email).first()
-        if user.password == password:
+        if hash_pass(user.password, "that is some crazy bunch of salt") == password:
             session['login'] = user.user_id
             session['user_name'] = user.name
             print session
@@ -89,6 +88,8 @@ def register_process():
         flash("You already have an account!")
 
     else:
+        # hash password before storing
+        password = hash_pass(password, "that is some crazy bunch of salt")
         user = User(email=email,
                     name=name,
                     password=password)

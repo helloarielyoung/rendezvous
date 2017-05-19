@@ -1,6 +1,6 @@
 "use strict";
 
-// Javascript for Rendezvous Map v2
+// Javascript for Rendezvous Map v3
 
 //define the map and lines as global variables
 var map;

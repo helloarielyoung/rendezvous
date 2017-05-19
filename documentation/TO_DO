@@ -9,7 +9,7 @@ Improve Login
    
     Add some javascript to check for valid data w/out reloading page
     How about some login security?!
-        Do some encryption or something of password? (hashlibmd5 - not great to use, check with Sammie what she used)
+        Do some encryption or something of password? ( hashlibmd5 - not great to use, check with Sammie what she used)
           place to start research?:
             for the password hash for user login i used import hashlib salt = 'something' hash = hashlib.md5(salt + pword).hexdigest()
 

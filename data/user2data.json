@@ -1,0 +1,204 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJuyASMUqHhYARTvh_g2_KVmo",
+         "types" : [ "establishment", "point_of_interest", "university" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJbwlXCo6AhYARWnjHoyiyQk0",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 37.7899599,
+               "lng" : -122.4102744
+            },
+            "southwest" : {
+               "lat" : 37.7785826,
+               "lng" : -122.4475733
+            }
+         },
+         "copyrights" : "Map data ©2017 Google",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "2.7 mi",
+                  "value" : 4282
+               },
+               "duration" : {
+                  "text" : "13 mins",
+                  "value" : 767
+               },
+               "end_address" : "683 Sutter St, San Francisco, CA 94102, USA",
+               "end_location" : {
+                  "lat" : 37.7888568,
+                  "lng" : -122.4115372
+               },
+               "start_address" : "2130 Fulton St, San Francisco, CA 94117, USA",
+               "start_location" : {
+                  "lat" : 37.7785826,
+                  "lng" : -122.4474403
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "112 ft",
+                        "value" : 34
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 8
+                     },
+                     "end_location" : {
+                        "lat" : 37.7786337,
+                        "lng" : -122.4470632
+                     },
+                     "html_instructions" : "Head \u003cb\u003eeast\u003c/b\u003e on \u003cb\u003eTurk St\u003c/b\u003e toward \u003cb\u003eMasonic Ave\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "csqeFnojjVIkA"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7785826,
+                        "lng" : -122.4474403
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.4 mi",
+                        "value" : 705
+                     },
+                     "duration" : {
+                        "text" : "3 mins",
+                        "value" : 153
+                     },
+                     "end_location" : {
+                        "lat" : 37.7848573,
+                        "lng" : -122.4475605
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e at the 1st cross street onto \u003cb\u003eMasonic Ave\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "msqeFbmjjV}C`@aCXUGwDb@c@FUBM@K?IAC?GAWGWGQE}@SUM[KSBQEIAEAGAG?E?C?G?I?I@OB{@JoAN}@LoBT]F"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7786337,
+                        "lng" : -122.4470632
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "302 ft",
+                        "value" : 92
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 17
+                     },
+                     "end_location" : {
+                        "lat" : 37.7852903,
+                        "lng" : -122.4467609
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eEuclid Ave\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "kzreFfpjjVa@SIIOQYoB"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7848573,
+                        "lng" : -122.4475605
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "2.0 mi",
+                        "value" : 3233
+                     },
+                     "duration" : {
+                        "text" : "9 mins",
+                        "value" : 513
+                     },
+                     "end_location" : {
+                        "lat" : 37.7899599,
+                        "lng" : -122.4104554
+                     },
+                     "html_instructions" : "Continue onto \u003cb\u003eBush St\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "a}reFfkjjVGa@I[c@yGi@iIi@iIi@aIAQg@eIi@gIi@iIi@gI[wEMoB?EC]e@cHe@sHCUg@iIk@eIi@iIA[C[_@cGC]i@yHg@eIYoEOyBMsB[uEWqDQuCYeEEm@KuAg@gI"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7852903,
+                        "lng" : -122.4467609
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "344 ft",
+                        "value" : 105
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 37
+                     },
+                     "end_location" : {
+                        "lat" : 37.7890236,
+                        "lng" : -122.4102744
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eMason St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "gzseFjhcjVzDe@"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7899599,
+                        "lng" : -122.4104554
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "371 ft",
+                        "value" : 113
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 39
+                     },
+                     "end_location" : {
+                        "lat" : 37.7888568,
+                        "lng" : -122.4115372
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at the 1st cross street onto \u003cb\u003eSutter St\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eDestination will be on the left\u003c/div\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "ktseFdgcjVPjCLpB"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7890236,
+                        "lng" : -122.4102744
+                     },
+                     "travel_mode" : "DRIVING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "csqeFnojjVIkA}C`@aCXUG{Ej@c@Da@C_Ci@q@YSBQEOCOA[?eD`@mDb@]Fa@SY[a@qCI[c@yGsAsS}Ba^mEuq@kDii@oE{q@sAqSzDe@PjCLpB"
+         },
+         "summary" : "Bush St",
+         "warnings" : [],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}

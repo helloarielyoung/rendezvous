@@ -193,7 +193,7 @@ def map_data():
     return jsonify(waypoints_for_self, waypoints_by_user)
 
 
-@app.route('/rendezvous-map-v2', methods=['POST'])
+@app.route('/rendezvous-map-v3', methods=['POST'])
 def googlemapv2():
     """Google map with animated routes populated from database.
 
@@ -217,7 +217,7 @@ def googlemapv2():
                     #user's route and assigning colors based on whether waypoint.user_id
                     # equals user_id or not?
 
-        return render_template("rendezvous_map_v2.html",
+        return render_template("rendezvous_map_v3.html",
                                center=center,
                                invite_id=invite_id,
                                user_id=user_id)

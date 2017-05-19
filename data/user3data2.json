@@ -1,0 +1,204 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "Ei83ODAtNzk4IEhvd2FyZCBTdCwgU2FuIEZyYW5jaXNjbywgQ0EgOTQxMDMsIFVTQQ",
+         "types" : [ "street_address" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJbwlXCo6AhYARWnjHoyiyQk0",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 37.7899599,
+               "lng" : -122.4025005
+            },
+            "southwest" : {
+               "lat" : 37.779741,
+               "lng" : -122.412102
+            }
+         },
+         "copyrights" : "Map data ©2017 Google",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "1.4 mi",
+                  "value" : 2202
+               },
+               "duration" : {
+                  "text" : "9 mins",
+                  "value" : 556
+               },
+               "end_address" : "683 Sutter St, San Francisco, CA 94102, USA",
+               "end_location" : {
+                  "lat" : 37.7888568,
+                  "lng" : -122.4115372
+               },
+               "start_address" : "780-798 Howard St, San Francisco, CA 94103, USA",
+               "start_location" : {
+                  "lat" : 37.7834562,
+                  "lng" : -122.4025005
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "0.4 mi",
+                        "value" : 583
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 104
+                     },
+                     "end_location" : {
+                        "lat" : 37.779741,
+                        "lng" : -122.4071746
+                     },
+                     "html_instructions" : "Head \u003cb\u003esouthwest\u003c/b\u003e on \u003cb\u003eHoward St\u003c/b\u003e toward \u003cb\u003e4th St\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eMay be closed at certain times or days\u003c/div\u003e",
+                     "polyline" : {
+                        "points" : "sqreFrvajVRXPTh@t@@@PRb@l@LPjA|AdDrEzBxCbF|G"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7834562,
+                        "lng" : -122.4025005
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 mi",
+                        "value" : 391
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 124
+                     },
+                     "end_location" : {
+                        "lat" : 37.7822043,
+                        "lng" : -122.4103305
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003e6th St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "kzqeFxsbjVwAnBkAzAqAjBwAjBgAzAy@dAKNCBABABABCFAH"
+                     },
+                     "start_location" : {
+                        "lat" : 37.779741,
+                        "lng" : -122.4071746
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.5 mi",
+                        "value" : 864
+                     },
+                     "duration" : {
+                        "text" : "4 mins",
+                        "value" : 225
+                     },
+                     "end_location" : {
+                        "lat" : 37.7897577,
+                        "lng" : -122.412102
+                     },
+                     "html_instructions" : "\u003cb\u003e6th St\u003c/b\u003e turns slightly \u003cb\u003eright\u003c/b\u003e and becomes \u003cb\u003eTaylor St\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "wireFpgcjVABADAB?DAFADYTeBRWDYDM@}Df@yDd@wDd@{Dd@w@HeAJ}@Lu@HcAL}@J}Dd@"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7822043,
+                        "lng" : -122.4103305
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "479 ft",
+                        "value" : 146
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 30
+                     },
+                     "end_location" : {
+                        "lat" : 37.7899599,
+                        "lng" : -122.4104554
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eBush St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "_yseFrrcjVg@gI"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7897577,
+                        "lng" : -122.412102
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "344 ft",
+                        "value" : 105
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 34
+                     },
+                     "end_location" : {
+                        "lat" : 37.7890236,
+                        "lng" : -122.4102744
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at the 1st cross street onto \u003cb\u003eMason St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "gzseFjhcjVzDe@"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7899599,
+                        "lng" : -122.4104554
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "371 ft",
+                        "value" : 113
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 39
+                     },
+                     "end_location" : {
+                        "lat" : 37.7888568,
+                        "lng" : -122.4115372
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at the 1st cross street onto \u003cb\u003eSutter St\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eDestination will be on the left\u003c/div\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "ktseFdgcjVPjCLpB"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7890236,
+                        "lng" : -122.4102744
+                     },
+                     "travel_mode" : "DRIVING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "sqreFrvajV`FxG`HlJbF|GwAnB}CfE_DfEkA|AIXERCLYTeBRq@JkEh@qJjAsFn@}Fp@{Fp@g@gIzDe@^|F"
+         },
+         "summary" : "Howard St and Taylor St",
+         "warnings" : [],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}

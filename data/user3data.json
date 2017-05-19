@@ -1,0 +1,181 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "Ei43OTUtNzk5IEdlYXJ5IFN0LCBTYW4gRnJhbmNpc2NvLCBDQSA5NDEwOSwgVVNB",
+         "types" : [ "street_address" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJbwlXCo6AhYARWnjHoyiyQk0",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 37.7899599,
+               "lng" : -122.4102744
+            },
+            "southwest" : {
+               "lat" : 37.786119,
+               "lng" : -122.4186869
+            }
+         },
+         "copyrights" : "Map data ©2017 Google",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "0.9 mi",
+                  "value" : 1431
+               },
+               "duration" : {
+                  "text" : "5 mins",
+                  "value" : 321
+               },
+               "end_address" : "683 Sutter St, San Francisco, CA 94102, USA",
+               "end_location" : {
+                  "lat" : 37.7888568,
+                  "lng" : -122.4115372
+               },
+               "start_address" : "795-799 Geary St, San Francisco, CA 94109, USA",
+               "start_location" : {
+                  "lat" : 37.7863543,
+                  "lng" : -122.4162621
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "0.1 mi",
+                        "value" : 165
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 37
+                     },
+                     "end_location" : {
+                        "lat" : 37.786119,
+                        "lng" : -122.4181182
+                     },
+                     "html_instructions" : "Head \u003cb\u003ewest\u003c/b\u003e on \u003cb\u003eGeary St\u003c/b\u003e toward \u003cb\u003eHyde St\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "ucseFrldjVBh@H`ARfDJ~A"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7863543,
+                        "lng" : -122.4162621
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 mi",
+                        "value" : 315
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 88
+                     },
+                     "end_location" : {
+                        "lat" : 37.788913,
+                        "lng" : -122.4186869
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at the 2nd cross street onto \u003cb\u003eLarkin St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "gbseFfxdjV}AP{AR}AP{AR}AP{AR"
+                     },
+                     "start_location" : {
+                        "lat" : 37.786119,
+                        "lng" : -122.4181182
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.5 mi",
+                        "value" : 733
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 123
+                     },
+                     "end_location" : {
+                        "lat" : 37.7899599,
+                        "lng" : -122.4104554
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eBush St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "usseFx{djVYoEOyBMsB[uEWqDQuCYeEEm@KuAg@gI"
+                     },
+                     "start_location" : {
+                        "lat" : 37.788913,
+                        "lng" : -122.4186869
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "344 ft",
+                        "value" : 105
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 34
+                     },
+                     "end_location" : {
+                        "lat" : 37.7890236,
+                        "lng" : -122.4102744
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eMason St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "gzseFjhcjVzDe@"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7899599,
+                        "lng" : -122.4104554
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "371 ft",
+                        "value" : 113
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 39
+                     },
+                     "end_location" : {
+                        "lat" : 37.7888568,
+                        "lng" : -122.4115372
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at the 1st cross street onto \u003cb\u003eSutter St\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eDestination will be on the left\u003c/div\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "ktseFdgcjVPjCLpB"
+                     },
+                     "start_location" : {
+                        "lat" : 37.7890236,
+                        "lng" : -122.4102744
+                     },
+                     "travel_mode" : "DRIVING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "ucseFrldjVl@rJsJjAyDd@i@iIsAqSsAqSzDe@PjCLpB"
+         },
+         "summary" : "Bush St",
+         "warnings" : [],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}

@@ -1,18 +1,15 @@
-// "use strict";
+"use strict";
 
 // Javascript for Rendezvous Map v2
 
-//define the map and lines as global variables so that I can
-//access them to add the symbols and lines for self and others in my
-//callback function
+//define the map and lines as global variables
 var map;
 var selfLine;
 var userLines = {};
 var symbolColors;
 
-// this waits until the page is loaded, queries the database
-// for waypoint data for users on this invitation, then runs
-//dataReceived
+// this waits until the page is loaded, queries the database for waypoint data
+// for users on this invitation, then runs dataReceived
 $(function() {
 $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
     });
@@ -20,7 +17,7 @@ $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
 //this is the callback function after json data is received.
 //   it divies up the json into a separate object for self and
 //   for others.  Draws the initial routes for all users on invite
-//   and puts different colored icons on their starting point
+//   and puts different colored icons on their starting points
 function dataReceived(results) {
       // logged in user:
       waypointsForSelf = results[0]['waypoints'];

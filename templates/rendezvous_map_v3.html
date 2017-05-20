@@ -24,26 +24,14 @@
     <small><a href="/"><h5>Click here to go to homepage.</h5></a></small>
     <div id="map"></div>
 
-<!-- makes data-login attribute, which can be read in JS as $('#map').data('login')-->
-    <script type="text/javascript">
-      $('#map').data( 'login', {{ session.login }})
+      <!-- to pass invite_id, login, and center position to the javascript -->
+      var login = {{ session.login }}
+      var invite_id = {{ invite_id }}
+      var center_lat = {{ center[0] }}
+      var center_lng = {{ center[1] }}
     </script>
 
     <script src="static/js/rendezvous-map.js"></script>
-    <script type="text/javascript">
-        // this waits until the page is loaded, queries the database for waypoint data
-        // for users on this invitation, then runs dataReceived
-
-// add to this ajax call a request for center point from the invitation.
-
-        $(function() {
-            $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
-            });
-
-
-
-    </script>
-
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&callback=initMap">
     </script>

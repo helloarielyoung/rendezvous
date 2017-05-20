@@ -1,5 +1,11 @@
 ****Links & notes for my project****
 
+Passing data from html to javascript.
+  Way I didn't do it that may work better than the way i did it:
+    <!-- makes data-login attribute, which can be read in JS as $('#map').data('login')-->
+    <script type="text/javascript">
+      $('#map').data( 'login', {{ session.login }})
+
 Password hashing:  https://flask-bcrypt.readthedocs.io/en/latest/
 
 Fancy Map styles in Google Maps API

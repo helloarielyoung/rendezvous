@@ -140,6 +140,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Finished moving javascript for map to js file.
+^5/20^
+
 made map more dynamic changing viewport:
     content="initial-scale=1.0, user-scalable=no"> to
     content="width=device-width, initial-scale=1.0, user-scalable=yes">

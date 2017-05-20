@@ -8,17 +8,24 @@ var selfLine;
 var userLines = {};
 var symbolColors;
 
+// this waits until the page is loaded, queries the database for waypoint data
+// for users on this invitation, then runs dataReceived
+
+$(function() {
+    $.get('/map-data.json', { invite_id }, dataReceived);
+    });
+
 //this is the callback function after json data is received.
 //   it divies up the json into a separate object for self and
 //   for others.  Draws the initial routes for all users on invite
 //   and puts different colored icons on their starting points
 function dataReceived(results) {
       // logged in user:
-      waypointsForSelf = results[0]['waypoints'];
+      var waypointsForSelf = results[0]['waypoints'];
       var waypointsForSelfLength = waypointsForSelf.length;
 
       // all other users on this invite:
-      waypointsByUser = results[1]['userdata'];
+      var waypointsByUser = results[1]['userdata'];
       var waypointsByUserLength = Object.keys(waypointsByUser).length;
 
       // Define symbol for logged in user
@@ -49,7 +56,7 @@ function dataReceived(results) {
 
 // get logged in userid from  $('#map').data('login') instead of session
 // can't use Jinja in js script!
-      userLines[ {{ session.login }} ] = selfLine;
+      userLines[ login ] = selfLine;
 
       // colors for the not-the-logged-in-users' symbols
       //                   purple, orange, tomato, darkturquoise
@@ -76,7 +83,7 @@ function dataReceived(results) {
                   pathListByUser.push({'lat': parseFloat(waypointsByUser[user][i][0]),
                                      'lng': parseFloat(waypointsByUser[user][i][1])});
 
-                  userLine = new google.maps.Polyline({
+                  var userLine = new google.maps.Polyline({
                     path: pathListByUser,
                     strokeColor: '#999999',
                     icons: [{
@@ -106,14 +113,14 @@ function initMap() {
       // change this to get the center point from the ajax call that's getting
       // the waypoints stuff
 
-      center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
+      center:  {'lat': center_lat, 'lng': center_lng },
       zoom: 14  ,
       mapTypeId: 'roadmap'
         });
 
     // add marker for destination point
     var marker = new google.maps.Marker({
-    position: {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
+    position: {'lat': center_lat, 'lng': center_lng },
     map: map,
     title: 'Rendezvous Here'
         });

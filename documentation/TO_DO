@@ -30,6 +30,11 @@ Refactor code especially @app.route('/map-data.json') where the format of the
         '2: [('lat', 'lng'), ('lat', 'lng'),...],
          3: [('lat', 'lng'), ('lat', 'lng'),...]
          }
+
+Refactor code:  remove query for center point of invitation destination from
+    the app route and incorporate it in the return from the AJAX call in
+    rendezvous-map.js
+    
 Refactor Waypoints and Invitations table/class
     store lat/long data in one field instead of two (see postgreSQL datatypes)?
 

@@ -114,7 +114,7 @@ function initMap() {
       // the waypoints stuff
 
       center:  {'lat': center_lat, 'lng': center_lng },
-      zoom: 14  ,
+      zoom: 13  ,
       mapTypeId: 'roadmap'
         });
 

@@ -2,11 +2,32 @@
 
 // Javascript for Rendezvous Map v3
 
+document.addEventListener('DOMContentLoaded', function () {
+  if (document.querySelectorAll('#map').length > 0)
+  {
+    if (document.querySelector('html').lang)
+      lang = document.querySelector('html').lang;
+    else
+      lang = 'en';
+
+    var js_file = document.createElement('script');
+    js_file.type = 'text/javascript';
+    js_file.src = 'https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0&language=' + lang;
+    document.getElementsByTagName('head')[0].appendChild(js_file);
+  }
+});
+
 //define the map and lines as global variables
 var map;
 var selfLine;
 var userLines = {};
 var symbolColors;
+
+// this waits until the page is loaded, queries the database for waypoint data
+// for users on this invitation, then runs dataReceived
+$(function() {
+    $.get('/map-data.json', { invite_id: {{ invite_id }} }, dataReceived);
+    });
 
 //this is the callback function after json data is received.
 //   it divies up the json into a separate object for self and
@@ -46,9 +67,6 @@ function dataReceived(results) {
           }],
         map: map
         });
-
-// get logged in userid from  $('#map').data('login') instead of session
-// can't use Jinja in js script!
       userLines[ {{ session.login }} ] = selfLine;
 
       // colors for the not-the-logged-in-users' symbols
@@ -102,10 +120,6 @@ function dataReceived(results) {
 // initialize the map
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-
-      // change this to get the center point from the ajax call that's getting
-      // the waypoints stuff
-
       center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
       zoom: 14  ,
       mapTypeId: 'roadmap'

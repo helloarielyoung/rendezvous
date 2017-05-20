@@ -6,12 +6,7 @@ Fix test_rendezvous_map_route (needs to be a POST)
 Add more tests so I don't have to manually check if changes broke stuff.
 
 Improve Login
-    How do you get the cursor focus to be in the login box when page opens?
     Add some javascript to check for valid data w/out reloading page
-    How about some login security?!
-        Do some encryption or something of password? (hashlibmd5 - not great to use, check with Sammie what she used)
-          place to start research?:
-            for the password hash for user login i used import hashlib salt = 'something' hash = hashlib.md5(salt + pword).hexdigest()
 
 Rendezvous Map Improvements:
     Animate the dots.
@@ -145,23 +140,29 @@ Way Future Features:
 ***DONE***
 ***********
 
-Got better route data for user1 and user2 & user3 and put it in seed.py
+made map more dynamic changing viewport:
+    content="initial-scale=1.0, user-scalable=no"> to
+    content="width=device-width, initial-scale=1.0, user-scalable=yes">
+Did file cleanup (moving data to folder, moving documentation to folder, 
+    git rm files i'd deleted but ignored)
+Added password hashing using bcrypt.
+Got cursor focus to be in the login box when page opens
+^5/19^
+
+Tried to move rendezvous map JS to separate file, and broke it.
+Got better route data for users and put it in seed.py
 Modifed model.py to remove created date from waypoints - Not going to use that
     fake field.  moving the icon will have to come from a different table, and
     they will always be inserted in order, so can use waypoints_id to sort them.
 Added more data to seed.py
 Noticed that my route info in seed data was wrong - not starting at start points
-    Fixed and created helper function to get formatted route data from two addresses
+    Fixed and created helper function to get formatted route data from two addresses to populate seed data.
 Color code "my" route vs "other" route:
     Modify to handle multiple "other" routes - user javaScript object
-Answered:  IMPORTANT QUESTION:  if dictionaries do not maintain order, are the waypoints
-    going to be in the right order?
-    I am passing the waypoints as a list within the dictionary, so they will stay
-    ordered.  The users may not be ordered, but that doesn't matter.
-
+Answered:  IMPORTANT QUESTION:  if dictionaries do not maintain order, are the waypoints going to be in the right order?  I am passing the waypoints as a list within the dict, so they will stay ordered.
 ^5/18^
 
-Clean up code so javaScript uses camelCase.
+Cleaned up code so javaScript uses camelCase.
 Progress made:  ONE of the other user's routes shows up on the map! (was broken
     not because of anything wrong with the for loop design, but because of bad
     syntax of one of the lines within the loop)

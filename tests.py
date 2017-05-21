@@ -63,7 +63,7 @@ class RendezvousTests(unittest.TestCase):
         """Do users make it to the rendezvous map page from link?"""
 
         #FIXME -- make this a POST and it will work
-        result = self.client.get("/rendezvous-map-v2")
+        result = self.client.get("/rendezvous-map-v3")
         self.assertIn("Rendezvous Map", str(result.data))
 
         #This is going to have to be a lot more complex in future

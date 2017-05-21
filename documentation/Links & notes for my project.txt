@@ -1,5 +1,9 @@
 ****Links & notes for my project****
 
+Trouble with sqlalchemy/jinja:
+              {% if user.invites.status == 'act' %} 
+  UndefinedError: 'sqlalchemy.orm.collections.InstrumentedList object' has no attribute 'status'
+
 Passing data from html to javascript.
   Way I didn't do it that may work better than the way i did it:
     <!-- makes data-login attribute, which can be read in JS as $('#map').data('login')-->

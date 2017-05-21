@@ -125,38 +125,38 @@ function initMap() {
     map: map,
     title: 'Rendezvous Here'
         });
-
+  }
 // debugger
 // why is userLines empty here when it is populated outside this function?
 // is it because dataReceived actually runs after this because it's waiting
 // for whole page to load?!!
 
-    animateSymbol(selfLine, count);
-    //animates the movement of the Symbols
-    for (var i in userLines) {
-      alert(i);
-      var count = 30;
-      setTimeout(animateSymbol(userLines[i], count), 4500);
-      count = count + 10;
-      } 
-    }
+//     animateSymbol(selfLine, count);
+//     //animates the movement of the Symbols
+//     for (var i in userLines) {
+//       alert(i);
+//       var count = 30;
+//       setTimeout(animateSymbol(userLines[i], count), 4500);
+//       count = count + 10;
+//       } 
+//     }
 
-// Use the DOM setInterval() function to change the offset of the symbol
-// at fixed intervals.
-var id1
-function animateSymbol(line, speed) {
-    var count = 0;
-    id1 = window.setInterval(function() {
-      count = (count + 1);
+// // Use the DOM setInterval() function to change the offset of the symbol
+// // at fixed intervals.
+// var id1
+// function animateSymbol(line, speed) {
+//     var count = 0;
+//     id1 = window.setInterval(function() {
+//       count = (count + 1);
 
-      var icons = line.get('icons');
-      icons[0].offset = (count / 2) + '%';
-      line.set('icons', icons);
-    // make animation to stop at destination
-    if (line.get('icons')[0].offset == "99.5%") {
-          icons[0].offset = '100%';
-          line.set('icons', icons);
-          window.clearInterval(id1);
+//       var icons = line.get('icons');
+//       icons[0].offset = (count / 2) + '%';
+//       line.set('icons', icons);
+//     // make animation to stop at destination
+//     if (line.get('icons')[0].offset == "99.5%") {
+//           icons[0].offset = '100%';
+//           line.set('icons', icons);
+//           window.clearInterval(id1);
 
-  } }, speed);
-}
+//   } }, speed);
+// }

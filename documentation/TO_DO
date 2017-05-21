@@ -7,6 +7,7 @@ Add more tests so I don't have to manually check if changes broke stuff.
 
 Improve Login
     Add some javascript to check for valid data w/out reloading page
+    do same for Registration form
 
 Rendezvous Map Improvements:
     Animate the dots.
@@ -34,7 +35,7 @@ Refactor code especially @app.route('/map-data.json') where the format of the
 Refactor code:  remove query for center point of invitation destination from
     the app route and incorporate it in the return from the AJAX call in
     rendezvous-map.js
-    
+
 Refactor Waypoints and Invitations table/class
     store lat/long data in one field instead of two (see postgreSQL datatypes)?
 

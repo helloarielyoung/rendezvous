@@ -2,12 +2,13 @@
 ***TO DO***
 ***********
 
-Fix test_rendezvous_map_route (needs to be a POST)
-Add more tests so I don't have to manually check if changes broke stuff.
+Question about testing: had to manually create "testdb".  Other ways?
+Add even more tests so I don't have to manually check if changes broke stuff.
 
 Improve Login
     Add some javascript to check for valid data w/out reloading page
     do same for Registration form
+    in app route, check to be sure session user ID matches route user id!
 
 Rendezvous Map Improvements:
     Animate the dots.
@@ -145,6 +146,10 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Fixed test_rendezvous_map_route (needs to be a POST)
+Added more tests so I don't have to manually check if changes broke stuff.
+^5/22^
 
 Finished moving javascript for map to js file.
 ^5/20^

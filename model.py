@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from helper_functions import *
+from server import hash_pass
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -165,15 +166,78 @@ class Waypoint(db.Model):
     invites = db.relationship('Invitation',
                               backref='waypoints')
 
-
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app):
+
+def example_data():
+    """create some sample data for testing"""
+
+    Status.query.delete()
+    Invitation.query.delete()
+    UserInvite.query.delete()
+    User.query.delete()
+
+    #populate statuses
+    for status, descrip in [('pen', 'pending'),
+                            ('rej', 'rejected'),
+                            ('act', 'active'),
+                            ('ina', 'inactive')]:
+        rel = Status(status_id=status, status_description=descrip)
+        db.session.add(rel)
+    db.session.commit()
+
+    #populate users
+    u1 = User(user_id=1,
+              name='Test User 1',
+              email='user1@email.com',
+              password=hash_pass('pass'))
+    u2 = User(user_id=2,
+              name='Test User 2',
+              email='user2@email.com',
+              password=hash_pass('pass'))
+    u3 = User(user_id=3,
+              name='Test User 3',
+              email='user3@email.com',
+              password=hash_pass('pass'))
+
+    #create invitations
+    invite1 = Invitation(invite_id=1,
+                         created_by_id=1,
+                         created_date='2017 05 09 9:00:00',
+                         destination_lat=37.7888568,
+                         destination_long=-122.4115372,
+                         #do I need datetime.datetime('2017 05 09')??
+                         rendezvous_date='2017 05 12 09:00:00')
+
+    invite2 = Invitation(invite_id=2,
+                         created_by_id=1,
+                         created_date='2017 05 09 9:00:00',
+                         destination_lat=37.7888568,
+                         destination_long=-122.4115372,
+                         #do I need datetime.datetime('2017 05 09')??
+                         rendezvous_date='2017 05 19 11:00:00')
+
+    #add users to invitations with statuses
+    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act')
+    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2, status='act')
+    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3, status='act')
+
+    db.session.add_all([u1, u2, u3])
+    db.session.commit()
+
+    db.session.add_all([invite1, invite2])
+    db.session.commit()
+
+    db.session.add_all([ui1, ui2, ui3])
+    db.session.commit()
+
+
+def connect_to_db(app, db_uri='postgresql:///rendezvous'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///rendezvous'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)

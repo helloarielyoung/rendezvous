@@ -54,9 +54,9 @@ function dataReceived(results) {
         map: map
         });
 
-// get logged in userid from  $('#map').data('login') instead of session
+// get logged in userid from  $('#map').data('user_id') instead of session
 // can't use Jinja in js script!
-      userLines[ login ] = selfLine;
+      userLines[ user_id ] = selfLine;
 
       // colors for the not-the-logged-in-users' symbols
       //                   purple, orange, tomato, darkturquoise

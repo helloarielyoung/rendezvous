@@ -3,10 +3,11 @@
 from jinja2 import StrictUndefined
 
 from flask_debugtoolbar import DebugToolbarExtension
-from flask import Flask, jsonify, render_template, redirect, request, flash, session, jsonify
+from flask import Flask, jsonify, render_template, redirect, request, flash, session
 from flask_bcrypt import Bcrypt
 
-from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
+from model import *
+#User, Invitation, Waypoint, UserInvite, connect_to_db, db
 from helper_functions import *
 
 app = Flask(__name__)
@@ -45,7 +46,7 @@ def authenticate_login():
     if User.query.filter_by(email=email).first() is not None:
         user = User.query.filter_by(email=email).first()
         if bcrypt.check_password_hash(user.password, password):
-            session['login'] = user.user_id
+            session['user_id'] = user.user_id
             session['user_name'] = user.name
             print session
             flash('You were successfully logged in')
@@ -98,7 +99,7 @@ def register_process():
                     password=password)
         db.session.add(user)
         db.session.commit()
-        flash("You are registered! Please login below.")
+        flash("You are now registered! Please login below.")
 
     return redirect("/login")
 
@@ -107,10 +108,10 @@ def register_process():
 def logout():
     """logs out user"""
 
-    del session['login']
+    del session['user_id']
     del session['user_name']
 
-    flash("You are logged out")
+    flash("You have logged out")
 
     return redirect('/')
 
@@ -122,18 +123,18 @@ def googlemap2():
     Only display to a logged in user
     """
 
-    if session.get('login') is None:
+    if session.get('user_id') is None:
         return redirect('/')
 
     else:
-        login = session['login']
+        user_id = session['user_id']
 
         selfquery = db.session.query(Waypoint.waypoint_lat,
-                                     Waypoint.waypoint_long).filter(Waypoint.user_id == login,
+                                     Waypoint.waypoint_long).filter(Waypoint.user_id == user_id,
                                                                     Waypoint.invite_id == 1).all()
         # This will have to be changed to accept the user id and the invtation
         # from session
-        if login == 1:
+        if user_id == 1:
             other = 2
         else:
             other = 1
@@ -143,7 +144,7 @@ def googlemap2():
                                                                      Waypoint.invite_id == 1).all()
         center = db.session.query(Invitation.destination_lat,
                                   Invitation.destination_long).filter(Invitation.invite_id == 1).first()
-        login = session['login']
+        user_id = session['user_id']
         # to draw the polyline of route:
         # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
              # {'lat': 37.7482293, 'lng': -122.4182139}]
@@ -151,7 +152,7 @@ def googlemap2():
                                selfquery=selfquery,
                                otherquery=otherquery,
                                center=center,
-                               login=login)
+                               user_id=user_id)
 
 
 @app.route('/map-data.json', methods=["GET"])
@@ -162,7 +163,7 @@ def map_data():
 
     format of returned data is:
 
-    {{'login': 'self', 'waypoints': [('lat', 'lng'), ('lat', 'lng')...]
+    {{'user_id': 'self', 'waypoints': [('lat', 'lng'), ('lat', 'lng')...]
       },
         {'userdata': {2: [('lat', 'lng'), ('lat', 'lng'),...],
                       3: [('lat', 'lng'), ('lat', 'lng'),...]
@@ -174,18 +175,18 @@ def map_data():
     """
 
     invite_id = request.args.get("invite_id")
-    login = session['login']
+    user_id = session['user_id']
 
     #query for logged in user's waypoints
-    self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == login).order_by(Waypoint.waypoint_id).all()
+    self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user_id).order_by(Waypoint.waypoint_id).all()
 
     #populate dictionary for logged in user
-    waypoints_for_self = {'login': 'self'}
+    waypoints_for_self = {'user_id': 'self'}
     waypoints_for_self['waypoints'] = self_waypoints
 
     #populate dictoinary for all other users on this invitation
     # Get list of users for this invitation
-    user_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != login).distinct().all()
+    user_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != user_id).distinct().all()
     user_list = [r[0] for r in user_list]
     # make dictionary with those keys/values and waypoints for that user
     waypoints_by_user = {'userdata': {}}
@@ -205,7 +206,7 @@ def googlemapv2():
     Receives user_id and invite_id and displays routes accordingly
     """
 
-    if session.get('login') is None:
+    if session.get('user_id') is None:
         return redirect('/')
 
     else:
@@ -246,3 +247,4 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     DebugToolbarExtension(app)
     app.run(port=5000, host='0.0.0.0')
+

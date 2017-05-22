@@ -1,13 +1,15 @@
 """Models and database functions for Ariel's project - db Rendezvous."""
 
 from flask_sqlalchemy import SQLAlchemy
-from helper_functions import *
+# from helper_functions import *
+import bcrypt
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
 
 db = SQLAlchemy()
+
 
 ##############################################################################
 # Model definitions
@@ -24,9 +26,6 @@ class User(db.Model):
     name = db.Column(db.String(64), nullable=False)
     origin_lat = db.Column(db.String(12))
     origin_long = db.Column(db.String(12))
-
-    def __repr__(self):
-        return "<User user_id=%s name=%s>" % (self.user_id, self.name)
 
     #get all invitations for this user
     invites = db.relationship("Invitation",
@@ -50,6 +49,21 @@ class User(db.Model):
     active_relationships = db.relationship("Relationship",
                                            primaryjoin="and_(User.user_id==Relationship.user_id, "
                                            "Relationship.status=='act')")
+
+    def hash_pass(self, password):
+        """Hashes passwords"""
+
+        pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        return pw_hash
+
+    def compare_hash(self, password1, password2):
+        """Compare submitted password to hashed password in db and return T or F"""
+
+        return bcrypt.hashpw(password1.encode('utf-8'), password2.encode('utf-8').decode() == password2)
+
+    def __repr__(self):
+        return "<User user_id=%s name=%s>" % (self.user_id, self.name)
 
 
 class Status(db.Model):
@@ -190,15 +204,20 @@ def example_data():
     u1 = User(user_id=1,
               name='Test User 1',
               email='user1@email.com',
-              password=('pass'))
+              password='pass')
     u2 = User(user_id=2,
               name='Test User 2',
               email='user2@email.com',
-              password=('pass'))
+              password='pass')
     u3 = User(user_id=3,
               name='Test User 3',
               email='user3@email.com',
-              password=('pass'))
+              password='pass')
+
+    #hash those passwords
+    u1.password = User.hash_pass(u1, u1.password)
+    u2.password = User.hash_pass(u2, u1.password)
+    u3.password = User.hash_pass(u3, u1. password)
 
     #create invitations
     invite1 = Invitation(invite_id=1,

@@ -1,8 +1,8 @@
 """Tests for Rendezvous Flask app."""
 
 from unittest import TestCase
-from model import connect_to_db, db, example_data
-from server import app, hash_pass
+from model import User, connect_to_db, db, example_data
+from server import app
 from flask import session
 
 
@@ -132,20 +132,24 @@ class TestsLogInLogOut(TestCase):
         db.session.close()
         db.drop_all()
 
-#Trouble:  cannot test login without a hashed password saved in example_data()
-#but could not hash data in model.py because cross imports broke all...
-    # def test_login(self):
-    #     """Test log in form."""
+    def test_login(self):
+        """Test log in form."""
 
-    #     login_info = {'email': "user1@email.com", 'password': ("pass")}
+#how do i fake an instance of User?
+        test_user = User(user_id=1,
+                         name='Test User 1',
+                         email='user1@email.com',
+                         password='pass')
 
-    #     with self.client as c:
-    #         result = c.post('/login',
-    #                         data=login_info,
-    #                         follow_redirects=True
-    #                         )
-    #         self.assertEqual(session['user_id'], '1')
-    #         self.assertIn("Your User Profile", result.data)
+        login_info = {'email': "user1@email.com", 'password': (User.hash_pass(test_user, "pass"))}
+
+        with self.client as c:
+            result = c.post('/login',
+                            data=login_info,
+                            follow_redirects=True
+                            )
+            self.assertEqual(session['user_id'], '1')
+            self.assertIn("Your User Profile", result.data)
 
     def test_logout(self):
         """Test logout route."""

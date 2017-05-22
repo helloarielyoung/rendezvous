@@ -6,9 +6,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session
 from flask_bcrypt import Bcrypt
 
-from model import *
-#User, Invitation, Waypoint, UserInvite, connect_to_db, db
-from helper_functions import *
+from model import Invitation, User, Waypoint, UserInvite, connect_to_db, db
+# from helper_functions import *
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)

@@ -147,6 +147,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Learned again that circular imports do not work.
+^5/23^
+
 Fixed test_rendezvous_map_route (needs to be a POST)
 Added more tests so I don't have to manually check if changes broke stuff.
 ^5/22^

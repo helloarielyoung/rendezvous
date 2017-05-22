@@ -2,7 +2,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from helper_functions import *
-from server import hash_pass
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -10,9 +9,9 @@ from server import hash_pass
 
 db = SQLAlchemy()
 
-
 ##############################################################################
 # Model definitions
+
 
 class User(db.Model):
     """User of Rendezvous website."""
@@ -191,15 +190,15 @@ def example_data():
     u1 = User(user_id=1,
               name='Test User 1',
               email='user1@email.com',
-              password=hash_pass('pass'))
+              password=('pass'))
     u2 = User(user_id=2,
               name='Test User 2',
               email='user2@email.com',
-              password=hash_pass('pass'))
+              password=('pass'))
     u3 = User(user_id=3,
               name='Test User 3',
               email='user3@email.com',
-              password=hash_pass('pass'))
+              password=('pass'))
 
     #create invitations
     invite1 = Invitation(invite_id=1,

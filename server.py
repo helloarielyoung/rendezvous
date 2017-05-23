@@ -7,11 +7,10 @@ from flask import Flask, jsonify, render_template, redirect, request, flash, ses
 
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
 from model import hash_pass, compare_hash
-
-# from helper_functions import *
+import os
 
 app = Flask(__name__)
-# bcrypt = Bcrypt(app)
+map_api_key = os.environ["GOOGLE_JS_API_KEY"]
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "supersecretsecretkey2W00T"
@@ -152,7 +151,8 @@ def googlemap2():
                                selfquery=selfquery,
                                otherquery=otherquery,
                                center=center,
-                               user_id=user_id)
+                               user_id=user_id,
+                               map_api_key=map_api_key)
 
 
 @app.route('/map-data.json', methods=["GET"])
@@ -225,8 +225,28 @@ def googlemapv2():
         return render_template("rendezvous_map_v3.html",
                                center=center,
                                invite_id=invite_id,
-                               user_id=user_id)
+                               user_id=user_id,
+                               map_api_key=map_api_key)
 
+
+@app.route('/invitation-new')
+def invitation_new():
+    """Page to create a new invitation.
+
+    Use google maps autofill to select destination (capture that waypoint)
+        (perhaps this is a link to a subsequent page then come back to invitation?)
+    Select date & time for rendezvous_map
+    Select Friends to invite
+
+    """
+
+    #only get here if you are logged in
+    if session.get('user_id') is None:
+        flash("You must be logged in to access this page")
+        return redirect('/')
+
+    else:
+        return render_template("invitation_new.html")
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

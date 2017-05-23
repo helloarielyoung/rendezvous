@@ -1,5 +1,18 @@
 ****Links & notes for my project****
 
+Google Maps Autofill
+  Enabled "Google Places API Web Service"
+
+Google Maps Map
+  Signed up for Google Maps JavaScript API
+  Saved key to secrets.sh
+  Must run "source secrets.sh" in bash to load up the key to environment variable
+  Key is then available in server.py using "import os" and setting value to varible, which I pass to the app_route that needs to access map API,
+  and then use jinja to stick that variable in the path that is passed:
+        <script
+    src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap">
+        </script>
+
 Trouble with "AssertionError: Popped wrong request context.  (None instead of <RequestContext 'http://localhost/' [GET] of server>)"
   Did not fix it:  adding to setup - app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False
   FIXED:  had the POST within the context of "with c.session_transaction() as sess:",
@@ -113,10 +126,6 @@ Things that I did to get Path formatted correctly:
         go south:  create a separate route that returns json with just the route
         data and pass that back to the javascript as a separate thing.
 
-
-
-Google Maps
-    API key:  AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0 
 
 Mapbox
     driving directions

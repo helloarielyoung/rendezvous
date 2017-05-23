@@ -168,6 +168,13 @@ Way Future Features:
 ***DONE***
 ***********
 
+Got (with Agne's help - not working perfectly for some reason) modal pop up to create invitation when you click on location marker.
+Got search working.  got onclick to capture lat/long.
+Worked on google maps places search for invitation creation.
+Got new google maps API key, put it in secrets, changed server.py and map pages to use key from secrets.
+^5/24^
+
+...lost info from evening work when git push failed
 Spent 2 HOURS with Leslie troubleshooting test /login error ("popped wrong
     request context") and then finally fixed it!
 Help from Agne, fixed hash passwords/testing conflict

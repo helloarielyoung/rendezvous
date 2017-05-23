@@ -1,5 +1,12 @@
 ****Links & notes for my project****
 
+Trouble with "AssertionError: Popped wrong request context.  (None instead of <RequestContext 'http://localhost/' [GET] of server>)"
+  Did not fix it:  adding to setup - app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False
+  FIXED:  had the POST within the context of "with c.session_transaction() as sess:",
+    which was not a valid context...  it let the post work (the login happened and
+    the redirect happened!) but when it poped out to the rest of the test, it
+    had the wrong context and threw that error.
+
 Trouble with sqlalchemy/jinja:
               {% if user.invites.status == 'act' %} 
   UndefinedError: 'sqlalchemy.orm.collections.InstrumentedList object' has no attribute 'status'

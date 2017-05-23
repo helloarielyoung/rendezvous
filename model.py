@@ -50,18 +50,6 @@ class User(db.Model):
                                            primaryjoin="and_(User.user_id==Relationship.user_id, "
                                            "Relationship.status=='act')")
 
-    def hash_pass(self, password):
-        """Hashes passwords"""
-
-        pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-        return pw_hash
-
-    def compare_hash(self, password1, password2):
-        """Compare submitted password to hashed password in db and return T or F"""
-
-        return bcrypt.hashpw(password1.encode('utf-8'), password2.encode('utf-8').decode() == password2)
-
     def __repr__(self):
         return "<User user_id=%s name=%s>" % (self.user_id, self.name)
 
@@ -102,15 +90,15 @@ class Relationship(db.Model):
     request_date = db.Column(db.DateTime)
     status = db.Column(db.String(3), db.ForeignKey('statuses.status_id'), nullable=False)
 
-    def __repr__(self):
-        return "<user_id=%s friend_id=%s>" % (self.user_id, self.friend_id)
-
     # get user info for this relationship
     usr = db.relationship("User", back_populates="all_relationships", foreign_keys='Relationship.user_id')
 
     #get friend info for this relationship
     friend = db.relationship("User", back_populates='all_relationships',
                              foreign_keys="Relationship.friend_id")
+
+    def __repr__(self):
+        return "<user_id=%s friend_id=%s>" % (self.user_id, self.friend_id)
 
 
 class Invitation(db.Model):
@@ -186,9 +174,9 @@ class Waypoint(db.Model):
 def example_data():
     """create some sample data for testing"""
 
-    Status.query.delete()
     Invitation.query.delete()
     UserInvite.query.delete()
+    Status.query.delete()
     User.query.delete()
 
     #populate statuses
@@ -204,20 +192,15 @@ def example_data():
     u1 = User(user_id=1,
               name='Test User 1',
               email='user1@email.com',
-              password='pass')
+              password=hash_pass('pass'))
     u2 = User(user_id=2,
               name='Test User 2',
               email='user2@email.com',
-              password='pass')
+              password=hash_pass('pass'))
     u3 = User(user_id=3,
               name='Test User 3',
               email='user3@email.com',
-              password='pass')
-
-    #hash those passwords
-    u1.password = User.hash_pass(u1, u1.password)
-    u2.password = User.hash_pass(u2, u1.password)
-    u3.password = User.hash_pass(u3, u1. password)
+              password=hash_pass('pass'))
 
     #create invitations
     invite1 = Invitation(invite_id=1,
@@ -259,6 +242,33 @@ def connect_to_db(app, db_uri='postgresql:///rendezvous'):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
+
+
+#these are here instead of in server.py or helper_functions.py because of issues
+#with needing to use them in multiple places and struggling to avoid problems
+#run into when trying to import from server into model while importing from model
+#into server.  This seemed the best solution.
+def hash_pass(password):
+    """Hashes passwords
+
+    Note: this will only work right with passwords up to 72char.  Would have to
+    add code to handle larger ones (see bcrypt documentation)
+    """
+
+    pswd = password.encode('utf-8')
+    pw_hash = bcrypt.hashpw(pswd, bcrypt.gensalt())
+
+    return pw_hash
+
+
+def compare_hash(password_submitted, db_password):
+    """Compare submitted password to hashed password in db and return T or F"""
+
+    #how Agne did it (where password1 is submitted, and password2 is in db:
+    # return bcrypt.hashpw(password1.encode('utf-8'), password2.encode('utf-8').decode() == password2)
+    pswd = password_submitted.encode('utf-8')
+
+    return bcrypt.checkpw(pswd, db_password.encode('utf-8'))
 
 
 if __name__ == "__main__":

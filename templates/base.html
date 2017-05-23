@@ -29,7 +29,7 @@
     <p>
     {% if 'user_name' in session %}
     <small>You are currently logged in as {{ session['user_name'] }}.<br>
-      <a href="/users/{{ session['login'] }}"> Click here to go to your profile</a>
+      <a href="/users/{{ session['user_id'] }}"> Click here to go to your profile</a>
     </small>
    <p>
     <form action='/logout'>

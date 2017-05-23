@@ -3,7 +3,6 @@
 ***********
 
 Question about testing: had to manually create "testdb".  Other ways?
-BLOCKER:  Testing problem:  hash passwords / example_data()
 
 Add even more tests so I don't have to manually check if changes broke stuff.
 
@@ -78,6 +77,7 @@ Allow two users to see the same map when logged in at same time
 
 Obtain geolocation info and update animation of routes & status info in real time
     start here?  https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+    ASK KRISTINE - she used html5_geolocator (or something like that) with google map
 
 Add tests!
 
@@ -159,6 +159,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Spent 2 HOURS with Leslie troubleshooting test /login error ("popped wrong
+    request context") and then finally fixed it!
+Help from Agne, fixed hash passwords/testing conflict
 Learned again that circular imports do not work.
 ^5/23^
 
@@ -174,6 +177,7 @@ made map more dynamic changing viewport:
     content="width=device-width, initial-scale=1.0, user-scalable=yes">
 Did file cleanup (moving data to folder, moving documentation to folder, 
     git rm files i'd deleted but ignored)
+Added bcrypt install to pip requirements.txt
 Added password hashing using bcrypt.
 Got cursor focus to be in the login box when page opens
 ^5/19^

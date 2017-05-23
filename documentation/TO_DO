@@ -7,11 +7,18 @@ Question about testing: had to manually create "testdb".  Other ways?
 Add even more tests so I don't have to manually check if changes broke stuff.
 
 Make Invitation route & form for creating new invitation
-    Google Maps autofill to choose destination
-        (Or select from a map?)
+    Google Maps "Places Search box" to choose destination
+        https://developers.google.com/places/web-service/autocomplete?csw=1#requirements
+
+        1) create an API key
+        2) Use ajax to manipulate this link (the "input" is what you will look for, the "location" is your latitude and longtitude - you should get it from the user's ip) https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=pasta&types=establishment&location=37.76999,-122.44696&radius=500&key=YOUR_API_KEY
+
     Checkboxes to choose Friends to invite
     Date/time of Rendezvous
     (don't forget to user session['user_id'] as created_by_id)
+
+Improve layout of User landing page
+    https://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp
 
 Make Time-To-Rendezvous page:
     Change User Profile page so clicking on Active Invitation brings you to
@@ -21,6 +28,8 @@ Make Time-To-Rendezvous page:
         THEN display the v3 rendezvous map and add code to check db for new users
         who are on this invitation joining this rendezvous, and display their
         routes when they join.  Think:  might have to modify model for this...?
+        Here's the google maps API for getting the directions:
+            https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions
 
 Improve Login
     Add some javascript to check for valid data w/out reloading page

@@ -246,7 +246,8 @@ def invitation_new():
         return redirect('/')
 
     else:
-        return render_template("invitation_new.html")
+        return render_template("invitation_new.html",
+                               map_api_key=map_api_key)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

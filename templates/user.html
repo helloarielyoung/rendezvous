@@ -11,6 +11,8 @@
 Click <a href='/rendezvous-map'>here</a> for animated google map so far
 </p>
 <script> console.log(user.invites)</script>
+
+    Click <a href="/invitation-new">here</a> to create a new Rendezvous
         <h2>Accepted Invitations:</h2>
         (need to change this query to be accepted invitaitons instead of all)
         <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %} 

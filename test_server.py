@@ -30,7 +30,7 @@ class TestsBasic(TestCase):
         self.assertIn("Login Form", str(result.data))
 
     def test_registration_route(self):
-        """Do users make it to registration page when clicking registration link?"""
+        """Can users make it to registration page?"""
 
         result = self.client.get("/register")
         self.assertIn("Registration Form", str(result.data))
@@ -46,6 +46,7 @@ class TestsLoggedIn(TestCase):
         app.config['SECRET_KEY'] = 'key'
         app.config['TESTING'] = True
 
+        #logged in as user 1
         with self.client as c:
             with c.session_transaction() as sess:
                 sess['user_id'] = 1
@@ -98,7 +99,12 @@ class TestsLoggedIn(TestCase):
 
 
 class TestsNotLoggedIn(TestCase):
-    """Test app routes by not-logged in user."""
+    """Test app routes by not-logged in user.
+
+    Make sure not-logged-in users cannot get to routes they should not see.
+    (Includes only routes that are not tested elsewhere.)
+
+    """
 
     def setUp(self):
         """Code to run before every test."""
@@ -133,24 +139,6 @@ class TestsNotLoggedIn(TestCase):
         self.assertNotIn("Rendezvous Map", str(result.data))
         self.assertIn("Rendezvous Home", str(result.data))
 
-    def test_user_page(self):
-        """Can not-logged-in users make it to Users page?
-
-        If not logged in, confirm cannot get to /Users & are redirected home
-
-        """
-
-        #NEED TO MODIFY /login before this will be accurate
-        #it should check that session data matches what is passed in post!
-        login_info = {'email': "user1@email.com", 'password': "pass"}
-
-        with self.client as c:
-            result = c.post('/login',
-                            data=login_info,
-                            follow_redirects=True
-                            )
-            #add asserts here - NOT users, and IS homepage
-
 
 class TestsLogInLogOut(TestCase):
     """Test log in and log out."""
@@ -177,7 +165,7 @@ class TestsLogInLogOut(TestCase):
     def test_login(self):
         """Test log in form."""
 
-        # pswd = hash_pass("pass")
+        # do not hash this pswd!  it's hashed by the route processing the login!
         login_info = {'email': "user1@email.com", 'password': "pass"}
 
         with self.client as c:

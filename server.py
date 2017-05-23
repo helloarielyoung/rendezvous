@@ -5,8 +5,7 @@ from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session
 
-from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db
-from model import hash_pass, compare_hash
+from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
 
 # from helper_functions import *
 
@@ -45,7 +44,7 @@ def authenticate_login():
 
     if User.query.filter_by(email=email).first() is not None:
         user = User.query.filter_by(email=email).first()
-        # what is the User instance here?
+
         if compare_hash(password, user.password):
             session['user_id'] = user.user_id
             session['user_name'] = user.name
@@ -65,11 +64,18 @@ def authenticate_login():
 
 @app.route('/users/<user_id>')
 def get_user(user_id):
-    """Display user page"""
+    """Display user page if user data matches session data"""
 
-    user = User.query.get(user_id)
+    #check that user_id passed to route matches session data
+    if session.get('user_id') == int(user_id):
 
-    return render_template('user.html', user=user)
+        user = User.query.get(user_id)
+
+        return render_template('user.html', user=user)
+
+    else:
+        flash('You must be logged in to access that page.')
+        return redirect('/')
 
 
 @app.route('/register', methods=["GET"])
@@ -206,6 +212,7 @@ def googlemapv2():
     Receives user_id and invite_id and displays routes accordingly
     """
 
+    #make sure you cannot get here if not logged in:
     if session.get('user_id') is None:
         return redirect('/')
 
@@ -239,4 +246,3 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     DebugToolbarExtension(app)
     app.run(port=5000, host='0.0.0.0')
-

@@ -6,6 +6,10 @@ Question about testing: had to manually create "testdb".  Other ways?
 
 Add even more tests so I don't have to manually check if changes broke stuff.
 
+Generate Flask secret key from random, save it in secrets file (and put that file in .gitignore)
+
+On User.html, inspect element reveals the user_id and invite_id values. Is there any way to hide that data and still pass it in the Post request?  Maybe can I save the invite ID to session when the button is clicked and then get it from there in the map route???
+
 Make Invitation route & form for creating new invitation
     Google Maps autofill to choose destination
         (Or select from a map?)
@@ -25,7 +29,6 @@ Make Time-To-Rendezvous page:
 Improve Login
     Add some javascript to check for valid data w/out reloading page
     Do same for Registration form
-    In app route, check to be sure session user ID matches route user id!
 
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
@@ -159,6 +162,8 @@ Way Future Features:
 ***DONE***
 ***********
 
+Added more tests.
+In /users app route, confirms session user ID matches route user id else redirects to / with "you must be logged in" flash.
 Spent 2 HOURS with Leslie troubleshooting test /login error ("popped wrong
     request context") and then finally fixed it!
 Help from Agne, fixed hash passwords/testing conflict

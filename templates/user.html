@@ -10,12 +10,10 @@
 <p>
 Click <a href='/rendezvous-map'>here</a> for animated google map so far
 </p>
-<script> console.log(user.invites)</script>
-        <h2>Accepted Invitations:</h2>
-        (need to change this query to be accepted invitaitons instead of all)
-        <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %} 
-<!-- invite status is in users_invites.  seems i need to AJAX call to get the
-    invite status? -->
+    <h2>Accepted Invitations:</h2>
+    (need to change this query to be accepted invitaitons instead of all)
+    <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %} 
+<!-- invite status is in users_invites.  seems i need to AJAX call to get the invite status? -->
 
         <li>
             <form action='/rendezvous-map-v3' method='POST' name='inviteform'>

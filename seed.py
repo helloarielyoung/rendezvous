@@ -60,7 +60,8 @@ def load_invitations():
                          destination_lat=37.7888568,
                          destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 12 09:00:00')
+                         rendezvous_date='2017 05 12 09:00:00',
+                         rendezvous_name='Girls coffee date')
 
     invite2 = Invitation(invite_id=2,
                          created_by_id=1,
@@ -68,7 +69,8 @@ def load_invitations():
                          destination_lat=37.7888568,
                          destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 19 11:00:00')
+                         rendezvous_date='2017 05 19 11:00:00',
+                         rendezvous_name='Coffee with Joe')
 
     invite3 = Invitation(invite_id=3,
                          created_by_id=2,
@@ -76,7 +78,8 @@ def load_invitations():
                          destination_lat=37.7888568,
                          destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 22 13:00:00')
+                         rendezvous_date='2017 05 22 13:00:00',
+                         rendezvous_name='Sue\'s Birthday')
     db.session.add_all([invite1, invite2, invite3])
 
     db.session.commit()

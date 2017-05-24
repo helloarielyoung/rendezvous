@@ -1,5 +1,7 @@
 ****Links & notes for my project****
 
+Bootstrap Forms example:  http://getbootstrap.com/css/#forms
+
 Google Maps Autofill
   Enabled "Google Places API Web Service"
 

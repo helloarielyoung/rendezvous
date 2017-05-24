@@ -17,6 +17,8 @@ Make Invitation route & form for creating new invitation
     Date/time of Rendezvous
     (don't forget to user session['user_id'] as created_by_id)
 
+    Look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals
+
 Improve layout of User landing page
     https://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp
 
@@ -168,6 +170,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+
+Fixed the modal issue by getting code from current version of bootstrap.
+Changed model.py and seed.py and example_data() to include a name for the invitation.
 Got (with Agne's help - not working perfectly for some reason) modal pop up to create invitation when you click on location marker.
 Got search working.  got onclick to capture lat/long.
 Worked on google maps places search for invitation creation.

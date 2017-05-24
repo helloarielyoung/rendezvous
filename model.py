@@ -112,6 +112,7 @@ class Invitation(db.Model):
     destination_lat = db.Column(db.String(12), nullable=False)
     destination_long = db.Column(db.String(12), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
+    rendezvous_name = db.Column(db.String(60), nullable=False)
 
     #get all users who are on this invitation
     invite_users = db.relationship("User",
@@ -209,7 +210,8 @@ def example_data():
                          destination_lat=37.7888568,
                          destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 12 09:00:00')
+                         rendezvous_date='2017 05 12 09:00:00',
+                         rendezvous_name='Outing with friends')
 
     invite2 = Invitation(invite_id=2,
                          created_by_id=1,
@@ -217,7 +219,8 @@ def example_data():
                          destination_lat=37.7888568,
                          destination_long=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 19 11:00:00')
+                         rendezvous_date='2017 05 19 11:00:00',
+                         rendezvous_name="Starbucks with Joe")
 
     #add users to invitations with statuses
     ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act')

@@ -249,6 +249,24 @@ def invitation_new():
         return render_template("invitation_new.html",
                                map_api_key=map_api_key)
 
+
+@app.route('/invitation-save', methods=['POST'])
+def invitation_save():
+    """Save invitation data to the database"""
+
+    if session.get('user_id') is None:
+        flash('You must be logged in to access that page')
+        return redirect('/')
+
+    else:
+        # do stuff to save things from the form submission
+
+        #then return... where?  to the places search map?
+        #is it possible to just close the modal and stay there without
+        #reloading?
+        return render_template("invitation_new.html",
+                               map_api_key=map_api_key)
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension

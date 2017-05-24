@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
+ 
+  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 
-  <h3>Create a new invitation</h3>
+
+<h4>Create a new invitation</h4>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Places Searchbox</title>
+    <title>Rendezvous Invitation Searchbox</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -89,21 +93,56 @@
       }
     </style>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    
-<div id="inviteForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--Invitation form pops up when one clicks on a marker on the map  -->
+<div class="modal fade" id="inviteForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Rendezvous Invitation</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="rendezvousName">Rendezvous Name</label>
+                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="rendezvousLocation">Location</label>
+                  <input type="location" class="form-control" id="rendezvousLocation" placeholder="This will be auto-populated with lat/long">
+            </div>
+             <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datepicker();
+                    });
+                </script> 
+            <div class="form-group">
+                    <div class='input-group date' >
+                        <input type='text' class="form-control" id='datetimepicker1'/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+            </div>
+               
+            This will be populated with user's active friends
+            <div class="checkbox">
+                <label>
+                   <input type="checkbox"> friend1
+                </label>
+                <label>
+                   <input type="checkbox"> friend1
+                </label>
+            </div>
+        </form>
 
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Modal header</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Invite Friends</button>
+      </div>
+    </div>
   </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Save changes</button>
-  </div>
-
 </div>
 
 <div id="map">
@@ -195,10 +234,6 @@
                 marker.addListener('click', function() {
                     console.log(marker.getPosition().lat(), marker.getPosition().lng());
                     launchModal();
-                    // $('#inviteForm').modal();
-                    // $('#inviteForm').removeClass('hide');
-                    // $('#inviteForm').css('background-color', 'white').css('width', '50%');
-                    // look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals
                 });
             });
 
@@ -208,9 +243,6 @@
 
 function launchModal(){
      $('#inviteForm').modal();
-     $('#inviteForm').removeClass('hide');
-     $('#inviteForm').css('background-color', 'white').css('width', '50%');
-     $('#inviteForm').css('height', '80%').css('margin', '20px auto');
 }
 
     </script>

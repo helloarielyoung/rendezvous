@@ -1,5 +1,5 @@
 REMINDER:  on startup:
-dropdb, createdb, seed.py, source secrets.sh
+    dropdb, createdb, seed.py, source secrets.sh, source env/bin/activate
 
 ***********
 ***TO DO***

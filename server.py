@@ -254,8 +254,11 @@ def invitation_new():
         return redirect('/')
 
     else:
+        user_query = User.query.get(user_id)
+
         return render_template("invitation_new.html",
-                               map_api_key=map_api_key)
+                               map_api_key=map_api_key,
+                               user_query=user_query)
 
 
 @app.route('/invitation-save', methods=['POST'])

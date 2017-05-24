@@ -116,7 +116,7 @@
 <!-- modify this code from users to list friends instead -->
 <!-- using checkboxes instead of buttons -->
 <!-- SQLAlchemy relationship is "act_relationships" -->
-       <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %} 
+       <ul>{% for friend in user.act_relationships|sort(attribute='rendezvous_date') %} 
 
     <script> console.log(user.invites)</script>
 

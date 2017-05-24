@@ -41,14 +41,14 @@ class User(db.Model):
     #get all waypoints for this user - this is useless w/out invite info, right?
     waypts = db.relationship("Waypoint")
 
-    # #get all my friends of any status
+    #get all my friends of any status
     all_relationships = db.relationship("Relationship", foreign_keys='Relationship.user_id')
     # #necessary or desirable to have the inverse, when this user is "friend_id"??
 
     #get all active relationships
-    active_relationships = db.relationship("Relationship",
-                                           primaryjoin="and_(User.user_id==Relationship.user_id, "
-                                           "Relationship.status=='act')")
+    act_relationships = db.relationship("Relationship",
+                                        primaryjoin="and_(User.user_id==Relationship.user_id, "
+                                        "Relationship.status=='act')")
 
     def __repr__(self):
         return "<User user_id=%s name=%s>" % (self.user_id, self.name)

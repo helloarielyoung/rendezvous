@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
  
-  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-
-
 <h4>Create a new invitation</h4>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -111,21 +107,30 @@
                 <label for="rendezvousLocation">Location</label>
                   <input type="location" class="form-control" id="rendezvousLocation" placeholder="This will be auto-populated with lat/long">
             </div>
-             <script type="text/javascript">
-                    $(function () {
-                        $('#datetimepicker1').datepicker();
-                    });
-                </script> 
+
             <div class="form-group">
-                    <div class='input-group date' >
-                        <input type='text' class="form-control" id='datetimepicker1'/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-            </div>
-               
+                <label for="rendezvousDatetime">Date and Time</label>
+                <input type="datetime-local" class="form-control" id="rendezvousDateTime">
+            </div>               
             This will be populated with user's active friends
+<!-- modify this code from users to list friends instead -->
+<!-- using checkboxes instead of buttons -->
+<!-- SQLAlchemy relationship is "act_relationships" -->
+       <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %} 
+
+    <script> console.log(user.invites)</script>
+
+            <li>
+                <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
+                    <input type='hidden' name='user_id' value={{ session.user_id }}>
+                    <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
+                    <input type='submit'name='submit_button', value={{ invite.rendezvous_date }}>
+                </form>
+            </li>
+
+                {% endfor %}
+            </ul>
+<!--  -->
             <div class="checkbox">
                 <label>
                    <input type="checkbox"> friend1

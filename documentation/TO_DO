@@ -1,6 +1,10 @@
+REMINDER:  on startup:
+dropdb, createdb, seed.py, source secrets.sh
+
 ***********
 ***TO DO***
 ***********
+
 
 Question about testing: had to manually create "testdb".  Other ways?
 
@@ -173,11 +177,9 @@ Way Future Features:
 ***DONE***
 ***********
 
-<<<<<<< HEAD
 
-=======
-
-Fixed the modal issue by getting code from current version of bootstrap.
+Made new Flask App secret key and saved it to secrets.sh
+Fixed the modal invitation form issue by getting code from current version of bootstrap.
 Changed model.py and seed.py and example_data() to include a name for the invitation.
 Got (with Agne's help - not working perfectly for some reason) modal pop up to
     create invitation when you click on location marker.

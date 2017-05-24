@@ -1,5 +1,7 @@
 ****Links & notes for my project****
 
+Simple HTML5 datetime input:  http://www.html5tutorial.info/html5-date.php
+
 Bootstrap Forms example:  http://getbootstrap.com/css/#forms
 
 Google Maps Autofill

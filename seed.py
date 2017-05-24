@@ -142,11 +142,15 @@ def load_relationships():
 
     # active relationship
     rel1 = Relationship(user_id=1, friend_id=2, status='act', request_date='2017 05 09 09:00:00')
-    rel2 = Relationship(user_id=2, friend_id=1, status='act')
-    rel3 = Relationship(user_id=3, friend_id=1, status='act')
+    rel2 = Relationship(user_id=1, friend_id=3, status='act', request_date='2017 05 09 09:00:00')
+    rel3 = Relationship(user_id=2, friend_id=1, status='act')
+    rel4 = Relationship(user_id=3, friend_id=1, status='act')
+    # pending relationship
+    rel5 = Relationship(user_id=1, friend_id=4, status='pen', request_date='2017 05 09 09:00:00')    
     # rejected relationship
+    rel6 = Relationship(user_id=1, friend_id=5, status='rej', request_date='2017 05 09 09:00:00')    
 
-    db.session.add_all([rel1, rel2, rel3])
+    db.session.add_all([rel1, rel2, rel3, rel4, rel5, rel6])
 
     db.session.commit()
 

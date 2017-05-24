@@ -112,35 +112,14 @@
                 <label for="rendezvousDatetime">Date and Time</label>
                 <input type="datetime-local" class="form-control" id="rendezvousDateTime">
             </div>               
-            This will be populated with user's active friends
-<!-- modify this code from users to list friends instead -->
-<!-- using checkboxes instead of buttons -->
-<!-- SQLAlchemy relationship is "act_relationships" -->
-       <ul>{% for friend in user.act_relationships|sort(attribute='rendezvous_date') %} 
-
-    <script> console.log(user.invites)</script>
-
-            <li>
-                <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
-                    <input type='hidden' name='user_id' value={{ session.user_id }}>
-                    <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
-                    <input type='submit'name='submit_button', value={{ invite.rendezvous_date }}>
-                </form>
-            </li>
-
+            <div class="form-group">
+              <label for="rendezvousFriends">Select Friends</label>
+               <ul>{% for friend in user_friends|sort(attribute='name') %} 
+                  <input type="checkbox" id="rendezvousFriends"> {{ friend.name }}
                 {% endfor %}
-            </ul>
-<!--  -->
-            <div class="checkbox">
-                <label>
-                   <input type="checkbox"> friend1
-                </label>
-                <label>
-                   <input type="checkbox"> friend1
-                </label>
+              </ul>
             </div>
         </form>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

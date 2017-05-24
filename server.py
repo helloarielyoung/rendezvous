@@ -254,11 +254,15 @@ def invitation_new():
         return redirect('/')
 
     else:
-        user_query = User.query.get(user_id)
+        user_id = session['user_id']
+        user = User.query.get(user_id)
+        #returns a list of User objects that are the user's active friends
+        # user.act_friends[0].name gets the name of first friend in list of active friends
+        user_friends = user.act_friends
 
         return render_template("invitation_new.html",
                                map_api_key=map_api_key,
-                               user_query=user_query)
+                               user_friends=user_friends)
 
 
 @app.route('/invitation-save', methods=['POST'])

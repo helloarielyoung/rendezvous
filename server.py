@@ -149,7 +149,7 @@ def googlemap2():
                                       Waypoint.waypoint_long).filter(Waypoint.user_id == other,
                                                                      Waypoint.invite_id == 1).all()
         center = db.session.query(Invitation.destination_lat,
-                                  Invitation.destination_long).filter(Invitation.invite_id == 1).first()
+                                  Invitation.destination_lng).filter(Invitation.invite_id == 1).first()
         user_id = session['user_id']
         # to draw the polyline of route:
         # user1path = needs to be formated as: [{'lat': 37.748915, 'lng': -122.4181515},
@@ -223,7 +223,7 @@ def googlemapv2():
         invite_id = request.form.get("invite_id")
 
         center = db.session.query(Invitation.destination_lat,
-                                  Invitation.destination_long).filter(Invitation.invite_id == invite_id).first()
+                                  Invitation.destination_lng).filter(Invitation.invite_id == invite_id).first()
 
                   # Invitation.query.get(invite_id).waypoints  # ?? will this be a query of all the invitation objects?
                     #and then iterate through it in HTML picking out each
@@ -281,35 +281,36 @@ def invitation_save():
         rendezvous_date = request.form.get("rendezvousDateTime")
         rendezvous_friends = request.form.get("rendezvousFriends")
         user_id = session['user_id']
-        # import pdb; pdb.set_trace()
-        print json.loads(rendezvous_friends)
-        print rendezvous_name
-        print rendezvous_date
+        destination_lat = str(request.form.get("destinationLat"))
+        destination_lng = str(request.form.get("destinationLng"))
 
-        #now make an instance ov Invitation with that data...
-#         invite1 = Invitation(created_by_id=user_id,
-#                              created_date=datetime.datetime.now(),
-# # need to get this into the data sent....
-#                              destination_lat=37.7888568,
-#                              destination_long=-122.4115372,
-#                              rendezvous_date=rendezvous_date,
-#                              rendezvous_name=rendezvous_name)
+        # print json.loads(rendezvous_friends)
+        # print rendezvous_name
+        # print rendezvous_date
 
-#         db.session.add(invite1)
-#         db.session.flush()
-#         print invite1.invite_id
+        #make an instance ov Invitation with that data...
+        invite1 = Invitation(created_by_id=user_id,
+                             created_date=datetime.datetime.now(),
+                             destination_lat=destination_lat,
+                             destination_lng=-destination_lng,
+                             rendezvous_date=rendezvous_date,
+                             rendezvous_name=rendezvous_name)
+
+        db.session.add(invite1)
+        db.session.flush()
+        print invite1.invite_id
 
 #         #add the user who created this invite to the ui table
-#         ui1 = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='act')
-#         db.session.add(ui1)
+        ui1 = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='act')
+        db.session.add(ui1)
 
 #         #add the other users
-#         for user in rendezvous_friends:
-#             ui = UserInvite(invite_id=invite1.invite_id, user_id=user, status='pen')
-#             db.session.add(ui)
+        for user in rendezvous_friends:
+            ui = UserInvite(invite_id=invite1.invite_id, user_id=user, status='pen')
+            db.session.add(ui)
 
 #         #don't commit until they are all added without error
-#         db.session.commit()
+        db.session.commit()
 
         success = {'status': 'successful'}
         return jsonify(success)

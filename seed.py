@@ -58,7 +58,7 @@ def load_invitations():
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00',
                          rendezvous_name='Girls coffee date')
@@ -67,7 +67,7 @@ def load_invitations():
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 19 11:00:00',
                          rendezvous_name='Coffee with Joe')
@@ -76,7 +76,7 @@ def load_invitations():
                          created_by_id=2,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 22 13:00:00',
                          rendezvous_name='Sue\'s Birthday')

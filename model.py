@@ -123,7 +123,7 @@ class Invitation(db.Model):
     created_by_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False)
     destination_lat = db.Column(db.String(12), nullable=False)
-    destination_long = db.Column(db.String(12), nullable=False)
+    destination_lng = db.Column(db.String(12), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
     rendezvous_name = db.Column(db.String(60), nullable=False)
 
@@ -134,8 +134,8 @@ class Invitation(db.Model):
 
     def __repr__(self):
         return "<Invitation invite_id=%s destination_lat=%s\
-                 destination_long=%s>" % (self.invite_id, self.destination_lat,
-                                          self.destination_long)
+                 destination_lng=%s>" % (self.invite_id, self.destination_lat,
+                                          self.destination_lng)
 
 
 class UserInvite(db.Model):
@@ -221,7 +221,7 @@ def example_data():
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00',
                          rendezvous_name='Outing with friends')
@@ -230,7 +230,7 @@ def example_data():
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 19 11:00:00',
                          rendezvous_name="Starbucks with Joe")

@@ -145,27 +145,15 @@
         }
         var data = {rendezvousName: $('#rendezvousName').val(),
                 rendezvousDateTime: $('#rendezvousDateTime').val(),
-                rendezvousFriends: JSON.stringify(friendList)};
+                rendezvousFriends: JSON.stringify(friendList),
+                destinationLat: destination_lat,
+                destinationLng: destination_lng
+                };
         $.post("/invitation-save.json", data, function(msg) {
                 console.log("got json");
                 $("#inviteModal").modal('hide');
             });
-        // $.ajax({
-        //     url: "/invitation-save.json",
-        //     type: "POST",
-        //     data: $("#newInvitation").serialize(),
-        //     // success: function(data){
-        //     //     $('#inviteForm').modal('hide');
-        //     //     alert("Successfully submitted.");
-        //     // }
-        //     success: function(msg) {
-        //         $("#inviteModal").modal('hide');
-        //     },
-        // error: function() {
-        //     $("#error").show();
-        // }
-        // });
-   }); 
+      }); 
 </script>
 
 <div id="map">
@@ -174,7 +162,9 @@
 
       //variable to hold place information outside of map
       var placeInfo
-
+      //save the rendezvous location to store in waypoints
+      var destination_lat
+      var destination_lng
       // add a search box to a map
       function initMap() {
         //set a default center
@@ -256,19 +246,14 @@
 
           });
           map.fitBounds(bounds);
-// debugger
             //add onclick event to markers to pass geometry of that place to invitation
-            // marker.getPlace() has objects location (lat/lng), placeID unique string,
-            // and query (description)
-
-            // markers.forEach(function(marker) {
-   // console.log(places[0].formatted_address);
-   //              });
             markers.forEach(function(marker) {
                 marker.addListener('click', function() {
                     console.log(marker.getPosition().lat(), marker.getPosition().lng());
+                    destination_lat = marker.getPosition().lat();
+                    destination_lng = marker.getPosition().lng();
                       $("#rendezvousLocationName").html(places[0].name);
-                      $('#rendezvousLocationAddress').html( places[0].formatted_address);
+                      $('#rendezvousLocationAddress').html(places[0].formatted_address);
                     launchModal();
                 });
             });

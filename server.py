@@ -6,6 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session, abort, json
 import datetime
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
+import ast
 
 import os
 
@@ -275,8 +276,7 @@ def invitation_save():
         return abort(400)
 
     else:
-        print "invitation saved"
-
+        # print "invitation saved"
         rendezvous_name = request.form.get("rendezvousName")
         rendezvous_date = request.form.get("rendezvousDateTime")
         rendezvous_friends = request.form.get("rendezvousFriends")
@@ -296,14 +296,19 @@ def invitation_save():
 
         db.session.add(invite1)
         db.session.flush()
-        print invite1.invite_id
+        # print invite1.invite_id
 
-#         #add the user who created this invite to the ui table
+        #add the user who created this invite to the ui table
         ui1 = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='act', created_date=created_date)
         db.session.add(ui1)
 
-#         #add the other users
+        #add the other users
+        rendezvous_friends = ast.literal_eval(rendezvous_friends)
+
+        print type(rendezvous_friends)
         for user in rendezvous_friends:
+            user_id = user
+            print user_id
             ui = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='pen', created_date=created_date)
             db.session.add(ui)
 

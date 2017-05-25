@@ -1,20 +1,11 @@
 ****Links & notes for my project****
 
-Submitting modal form:  https://stackoverflow.com/questions/32344699/how-to-close-a-bootstrap-modal-and-redirect-after-success-alert-displayed
-       $("#submitForm").click(function () {
-         $.ajax({
-             type: "POST",
-             url: "process.php",
-             data: $('#myform').serialize(),
-             success: function (msg) {
-                 $("#thanks").html(msg)
-                 $("#myModal").modal('hide');
-             },
-             error: function () {
-                 $("#error").show();
-             }
-         });
-     });
+Working with unicode:
+  omg, cleanest way to convert from unicode:
+  import ast
+  new_thing = ast.literal_eval(your_unicode_string)
+
+  and new_thing will BE whatever your unicode string looked like.  in my case, it looked like a string, and after ast.literal_eval, it IS a string.
 
 Simple HTML5 datetime input:  http://www.html5tutorial.info/html5-date.php
 
@@ -22,7 +13,6 @@ Bootstrap Forms example:  http://getbootstrap.com/css/#forms
 
 Google Maps "Places Search box" to choose destination
     https://developers.google.com/places/web-service/autocomplete?csw=1#requirements
-    Some marker data available:  console.log(place.name, place.formatted_address, marker.getPlace().placeID, marker.getPosition().lat(), marker.getPosition().lng());
 
 Google Maps Autofill
   Enabled "Google Places API Web Service"

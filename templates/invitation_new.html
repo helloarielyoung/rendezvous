@@ -89,6 +89,7 @@
         width: 345px;
       }
     </style>
+
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <!--Invitation form pops up when one clicks on a marker on the map  -->
 <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -108,7 +109,7 @@
 
             <div class="form-group">
                 <label for="rendezvousName">Rendezvous Name</label>
-                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name">
+                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name" autofocus>
             </div>
 
             <div class="form-group">
@@ -134,9 +135,21 @@
   </div>
 </div>
 
+<!-- on success of Invitaiton submission -->
+<div class="modal fade" id="inviteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="inviteSuccessModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="alert alert-success alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <strong>Success!</strong> Your invitation has been created.<br>
+          Click here to go to this invitation (add a link here)
+      </div>
+    </div>
+  </div>
+</div>
 <!-- script to submit the new invitation from the modal form -->
 <script>
-debugger
+// debugger
     $('#newInvitationSubmit').click( function(evt){
         evt.preventDefault();
         var friendList = [];
@@ -151,10 +164,12 @@ debugger
                 destinationLng: destination_lng
                 };
         $.post("/invitation-save.json", data, function(msg) {
-                console.log("got json");
                 $("#inviteModal").modal('hide');
+                $('#inviteSuccessModal').modal();
             });
-      }); 
+      });
+
+
 </script>
 
 <div id="map">
@@ -268,6 +283,11 @@ debugger
         });
 
       }
+
+$('#inviteModal').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+    $("#pac-input").val("")
+});
 
 function launchModal(){
      $('#inviteModal').modal();

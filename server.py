@@ -280,19 +280,17 @@ def invitation_save():
         rendezvous_name = request.form.get("rendezvousName")
         rendezvous_date = request.form.get("rendezvousDateTime")
         rendezvous_friends = request.form.get("rendezvousFriends")
+        destination_lat = request.form.get("destinationLat")
+        destination_lng = request.form.get("destinationLng")
+
         user_id = session['user_id']
-        destination_lat = str(request.form.get("destinationLat"))
-        destination_lng = str(request.form.get("destinationLng"))
+        created_date = datetime.datetime.now()
 
-        # print json.loads(rendezvous_friends)
-        # print rendezvous_name
-        # print rendezvous_date
-
-        #make an instance ov Invitation with that data...
+        #make an instance of Invitation with that data...
         invite1 = Invitation(created_by_id=user_id,
-                             created_date=datetime.datetime.now(),
+                             created_date=created_date,
                              destination_lat=destination_lat,
-                             destination_lng=-destination_lng,
+                             destination_lng=destination_lng,
                              rendezvous_date=rendezvous_date,
                              rendezvous_name=rendezvous_name)
 
@@ -301,12 +299,12 @@ def invitation_save():
         print invite1.invite_id
 
 #         #add the user who created this invite to the ui table
-        ui1 = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='act')
+        ui1 = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='act', created_date=created_date)
         db.session.add(ui1)
 
 #         #add the other users
         for user in rendezvous_friends:
-            ui = UserInvite(invite_id=invite1.invite_id, user_id=user, status='pen')
+            ui = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='pen', created_date=created_date)
             db.session.add(ui)
 
 #         #don't commit until they are all added without error

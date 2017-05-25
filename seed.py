@@ -93,22 +93,22 @@ def load_user_invites():
     UserInvite.query.delete()
 
     # created by 1:
-    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act')
-    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2, status='act')
-    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3, status='act')
+    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act', created_date='01/01/2017')
+    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2, status='act', created_date='01/01/2017')
+    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3, status='act', created_date='01/01/2017')
 
     #created by 1:
-    ui4 = UserInvite(ui_id=4, invite_id=2, user_id=1, status='act')
-    ui5 = UserInvite(ui_id=5, invite_id=2, user_id=3, status='act')
-    ui6 = UserInvite(ui_id=6, invite_id=2, user_id=4, status='act')
-    ui7 = UserInvite(ui_id=7, invite_id=2, user_id=5, status='pen')
-    ui8 = UserInvite(ui_id=8, invite_id=2, user_id=2, status='rej')
+    ui4 = UserInvite(ui_id=4, invite_id=2, user_id=1, status='act', created_date='01/01/2017')
+    ui5 = UserInvite(ui_id=5, invite_id=2, user_id=3, status='act', created_date='01/01/2017')
+    ui6 = UserInvite(ui_id=6, invite_id=2, user_id=4, status='act', created_date='01/01/2017')
+    ui7 = UserInvite(ui_id=7, invite_id=2, user_id=5, status='pen', created_date='01/01/2017')
+    ui8 = UserInvite(ui_id=8, invite_id=2, user_id=2, status='rej', created_date='01/01/2017')
     #created by 2:
-    ui9 = UserInvite(ui_id=9, invite_id=3, user_id=2, status='act')
-    ui10 = UserInvite(ui_id=10, invite_id=3, user_id=1, status='pen')
-    ui11 = UserInvite(ui_id=11, invite_id=3, user_id=3, status='rej')
-    ui12 = UserInvite(ui_id=12, invite_id=3, user_id=4, status='act')
-    ui13 = UserInvite(ui_id=13, invite_id=3, user_id=5, status='act')
+    ui9 = UserInvite(ui_id=9, invite_id=3, user_id=2, status='act', created_date='01/01/2017')
+    ui10 = UserInvite(ui_id=10, invite_id=3, user_id=1, status='pen', created_date='01/01/2017')
+    ui11 = UserInvite(ui_id=11, invite_id=3, user_id=3, status='rej', created_date='01/01/2017')
+    ui12 = UserInvite(ui_id=12, invite_id=3, user_id=4, status='act', created_date='01/01/2017')
+    ui13 = UserInvite(ui_id=13, invite_id=3, user_id=5, status='act', created_date='01/01/2017')
     db.session.add_all([ui1, ui2, ui3, ui4, ui5, ui6, ui7, ui8, ui9, ui10, ui11, ui12, ui13])
 
     db.session.commit()
@@ -188,7 +188,8 @@ def load_waypoints():
         waypoint = Waypoint(invite_id=1, user_id=1,
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
-                            waypoint_long=waypoint_long)
+                            waypoint_long=waypoint_long,
+                            created_date='01/01/2017')
         db.session.add(waypoint)
 
     db.session.commit()
@@ -214,7 +215,8 @@ def load_waypoints():
         waypoint = Waypoint(invite_id=1, user_id=2,
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
-                            waypoint_long=waypoint_long)
+                            waypoint_long=waypoint_long,
+                            created_date='01/01/2017')
         db.session.add(waypoint)
 
     db.session.commit()
@@ -236,7 +238,8 @@ def load_waypoints():
         waypoint = Waypoint(invite_id=1, user_id=3,
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
-                            waypoint_long=waypoint_long)
+                            waypoint_long=waypoint_long,
+                            created_date='01/01/2017')
         db.session.add(waypoint)
 
     db.session.commit()

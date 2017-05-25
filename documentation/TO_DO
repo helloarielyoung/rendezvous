@@ -5,29 +5,30 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
+Things that are most showable:
+    improve demo map:
+        more showable-routes
+        Legend WITH ETA updating
+        fix the zoom
+        ETA pop-up when hoover
+        can i animate the "traffic encountered" delay from googlemaps
+        pop up to user1 when user2 arrives at destination
+            (and remove their route)
+        User3 joins the rendezvous and route appears on the map
+        add comments from the user "stopped to get gas"
 
 Question about testing: had to manually create "testdb".  Other ways?
 
 Add even more tests so I don't have to manually check if changes broke stuff.
-
-Generate Flask secret key from random, save it in secrets file (and put that file in .gitignore)
+    confirm test that you can't get to users/id by brute force (try get and post)
+    And, should users/user_id be accessed only by one or the other?
 
 On User.html, inspect element reveals the user_id and invite_id values. Is there any way to hide that data and still pass it in the Post request?  Maybe can I save the invite ID to session when the button is clicked and then get it from there in the map route???
 
 Make Invitation route & form for creating new invitation
-    Google Maps "Places Search box" to choose destination
-        https://developers.google.com/places/web-service/autocomplete?csw=1#requirements
+     Look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals
 
-        1) create an API key
-        2) Use ajax to manipulate this link (the "input" is what you will look for, the "location" is your latitude and longtitude - you should get it from the user's ip) https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=pasta&types=establishment&location=37.76999,-122.44696&radius=500&key=YOUR_API_KEY
-
-    Checkboxes to choose Friends to invite
-    Date/time of Rendezvous
-    (don't forget to user session['user_id'] as created_by_id)
-
-    Look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals
-
-Improve layout of User landing page
+Improve layout of User landing page (tabs!?)
     https://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp
 
 Make Time-To-Rendezvous page:
@@ -177,7 +178,17 @@ Way Future Features:
 ***DONE***
 ***********
 
+Save the data on the form to the database
+    (don't forget to user session['user_id'] as created_by_id)
+With so much help from Ahmed, got json data from modal form into my route in usable formats
+Populate the Location from the marker data
+Invitation modal form:  Checkboxes to choose Friends to invite
+    required new SQLAlchemy relationship to get active friends
+^5/24^
 
+Generate Flask secret key from random, save it in secrets file (and put that file in .gitignore)
+Fixed git merge issues successfully.
+Got Date/time of Rendezvous field on Invitation form
 Made new Flask App secret key and saved it to secrets.sh
 Fixed the modal invitation form issue by getting code from current version of bootstrap.
 Changed model.py and seed.py and example_data() to include a name for the invitation.
@@ -187,7 +198,7 @@ Got search working.  got onclick to capture lat/long.
 Worked on google maps places search for invitation creation.
 Got new google maps API key, put it in secrets, changed server.py and map pages
     to use key from secrets.
-^5/24^
+^5/23^
 
 Added more tests.
 In /users app route, confirms session user ID matches route user id else redirects to / with "you must be logged in" flash.
@@ -195,11 +206,11 @@ Spent 2 HOURS with Leslie troubleshooting test /login error ("popped wrong
     request context") and then finally fixed it!
 Help from Agne, fixed hash passwords/testing conflict
 Learned again that circular imports do not work.
-^5/23^
+^5/22^
 
 Fixed test_rendezvous_map_route (needs to be a POST)
 Added more tests so I don't have to manually check if changes broke stuff.
-^5/22^
+^5/21^
 
 Finished moving javascript for map to js file.
 ^5/20^

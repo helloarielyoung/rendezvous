@@ -3,8 +3,8 @@
 from jinja2 import StrictUndefined
 
 from flask_debugtoolbar import DebugToolbarExtension
-from flask import Flask, jsonify, render_template, redirect, request, flash, session
-
+from flask import Flask, jsonify, render_template, redirect, request, flash, session, abort, json
+import datetime
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
 
 import os
@@ -265,22 +265,54 @@ def invitation_new():
                                user_friends=user_friends)
 
 
-@app.route('/invitation-save', methods=['POST'])
+@app.route('/invitation-save.json', methods=['POST'])
 def invitation_save():
     """Save invitation data to the database"""
 
+# need to add test (and manuall test this!)
     if session.get('user_id') is None:
-        flash('You must be logged in to access that page')
-        return redirect('/')
+        # flash('You must be logged in to access that page')
+        return abort(400)
 
     else:
-        # do stuff to save things from the form submission
+        print "invitation saved"
 
-        #then return... where?  to the places search map?
-        #is it possible to just close the modal and stay there without
-        #reloading?
-        return render_template("invitation_new.html",
-                               map_api_key=map_api_key)
+        rendezvous_name = request.form.get("rendezvousName")
+        rendezvous_date = request.form.get("rendezvousDateTime")
+        rendezvous_friends = request.form.get("rendezvousFriends")
+        user_id = session['user_id']
+        # import pdb; pdb.set_trace()
+        print json.loads(rendezvous_friends)
+        print rendezvous_name
+        print rendezvous_date
+
+        #now make an instance ov Invitation with that data...
+#         invite1 = Invitation(created_by_id=user_id,
+#                              created_date=datetime.datetime.now(),
+# # need to get this into the data sent....
+#                              destination_lat=37.7888568,
+#                              destination_long=-122.4115372,
+#                              rendezvous_date=rendezvous_date,
+#                              rendezvous_name=rendezvous_name)
+
+#         db.session.add(invite1)
+#         db.session.flush()
+#         print invite1.invite_id
+
+#         #add the user who created this invite to the ui table
+#         ui1 = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='act')
+#         db.session.add(ui1)
+
+#         #add the other users
+#         for user in rendezvous_friends:
+#             ui = UserInvite(invite_id=invite1.invite_id, user_id=user, status='pen')
+#             db.session.add(ui)
+
+#         #don't commit until they are all added without error
+#         db.session.commit()
+
+        success = {'status': 'successful'}
+        return jsonify(success)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

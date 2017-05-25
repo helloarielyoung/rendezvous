@@ -2,6 +2,7 @@
 {% block content %}
  
 <h4>Create a new invitation</h4>
+<p id="error"></p>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Rendezvous Invitation Searchbox</title>
@@ -90,7 +91,7 @@
     </style>
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <!--Invitation form pops up when one clicks on a marker on the map  -->
-<div class="modal fade" id="inviteForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -98,40 +99,81 @@
         <h4 class="modal-title" id="myModalLabel">New Rendezvous Invitation</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="newInvitation" action='/invitation-save.json', method='POST'>
+            <div class="form-group">
+                <label for="rendezvousLocation">Location</label>
+                  <p id="rendezvousLocationName"> </p>
+                  <p id="rendezvousLocationAddress"></p>
+            </div>
+
             <div class="form-group">
                 <label for="rendezvousName">Rendezvous Name</label>
                   <input type="name" class="form-control" id="rendezvousName" placeholder="Name">
             </div>
-            <div class="form-group">
-                <label for="rendezvousLocation">Location</label>
-                  <input type="location" class="form-control" id="rendezvousLocation" placeholder="This will be auto-populated with lat/long">
-            </div>
 
             <div class="form-group">
-                <label for="rendezvousDatetime">Date and Time</label>
+                <label for="rendezvousDateTime">Date and Time</label>
                 <input type="datetime-local" class="form-control" id="rendezvousDateTime">
             </div>               
             <div class="form-group">
               <label for="rendezvousFriends">Select Friends</label>
                <ul>{% for friend in user_friends|sort(attribute='name') %} 
-                  <input type="checkbox" id="rendezvousFriends"> {{ friend.name }}
+                  <input type="checkbox" class="rendezvousFriends" value = {{ friend.user_id }}> {{ friend.name }}
                 {% endfor %}
               </ul>
             </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Invite Friends</button>
+        <button type="button" class="btn btn-primary" id="newInvitationSubmit">Invite Friends</button>
+<!-- this way didn't work -->
+<!--         <input id="newInvitationSubmit" type="submit" value="Invite Friends" class="btn btn-primary"> -->
       </div>
+      </form>
     </div>
   </div>
 </div>
 
+<!-- script to submit the new invitation from the modal form -->
+<script>
+    $('#newInvitationSubmit').click( function(evt){
+        evt.preventDefault();
+        var friendList = [];
+
+        for ( var i=0; i< $('.rendezvousFriends').length; i++) {
+            friendList.push($('.rendezvousFriends')[i].value);
+        }
+        var data = {rendezvousName: $('#rendezvousName').val(),
+                rendezvousDateTime: $('#rendezvousDateTime').val(),
+                rendezvousFriends: JSON.stringify(friendList)};
+        $.post("/invitation-save.json", data, function(msg) {
+                console.log("got json");
+                $("#inviteModal").modal('hide');
+            });
+        // $.ajax({
+        //     url: "/invitation-save.json",
+        //     type: "POST",
+        //     data: $("#newInvitation").serialize(),
+        //     // success: function(data){
+        //     //     $('#inviteForm').modal('hide');
+        //     //     alert("Successfully submitted.");
+        //     // }
+        //     success: function(msg) {
+        //         $("#inviteModal").modal('hide');
+        //     },
+        // error: function() {
+        //     $("#error").show();
+        // }
+        // });
+   }); 
+</script>
+
 <div id="map">
     </div>
     <script>
+
+      //variable to hold place information outside of map
+      var placeInfo
 
       // add a search box to a map
       function initMap() {
@@ -211,22 +253,38 @@
             } else {
               bounds.extend(place.geometry.location);
             }
+
           });
           map.fitBounds(bounds);
+// debugger
             //add onclick event to markers to pass geometry of that place to invitation
+            // marker.getPlace() has objects location (lat/lng), placeID unique string,
+            // and query (description)
+
+            // markers.forEach(function(marker) {
+   // console.log(places[0].formatted_address);
+   //              });
             markers.forEach(function(marker) {
                 marker.addListener('click', function() {
                     console.log(marker.getPosition().lat(), marker.getPosition().lng());
+                      $("#rendezvousLocationName").html(places[0].name);
+                      $('#rendezvousLocationAddress').html( places[0].formatted_address);
                     launchModal();
                 });
             });
-
+            // add another listener on HOOVER to get place info.  start from this,
+            // but will have to look through markers as above:
+            // google.maps.event.addListener(marker, 'click', function() {
+            //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            //     place.formatted_address + '</div>');
+            //   infowindow.open(map, this);
+            // });
         });
 
       }
 
 function launchModal(){
-     $('#inviteForm').modal();
+     $('#inviteModal').modal();
 }
 
     </script>

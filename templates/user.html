@@ -13,12 +13,7 @@ Click <a href='/rendezvous-map'>here</a> for animated google map so far
     Click <a href="/invitation-new">here</a> to create a new Rendezvous
 
     <h2>Accepted Invitations:</h2>
-    (need to change this query to be accepted invitaitons instead of all)
-    <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %} 
-<!-- invite status is in users_invites.  seems i need to AJAX call to get the invite status? -->
-
-<script> console.log(user.invites)</script>
-
+    <ul>{% for invite in user.active_invites|sort(attribute='rendezvous_date') %} 
         <li>
             <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
                 <input type='hidden' name='user_id' value={{ session.user_id }}>
@@ -31,15 +26,20 @@ Click <a href='/rendezvous-map'>here</a> for animated google map so far
         </ul>
 
         <h2>Pending Invitations:</h2>
-        (need to change this query to be pending invitaitons instead of all)
-        <ul>{% for invite in user.invites|sort(attribute='rendezvous_date') %}
+        <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %}
         <li>
-        This will be a link to Invite management for invite Date: {{ invite.rendezvous_date }}
+        This will be a link to modal form to accept or decline {{ invite.rendezvous_date }}
         </li>
             {% endfor %}
         </ul>
 
         <h2>Add a link to see your Rejected invitations in case you want to see them</h2>
+        <ul>{% for invite in user.rejected_invites|sort(attribute='rendezvous_date') %}
+        <li>
+        This will be a link to modal form to view rejected invites {{ invite.rendezvous_date }}
+        </li>
+            {% endfor %}
+        </ul>
 
         <h2>Friend Requests:</h2>
         <ul>this will be a for loop to get any pending friend requests  

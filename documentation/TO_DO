@@ -17,6 +17,7 @@ Things that are most showable:
             (and remove their route)
         User3 joins the rendezvous and route appears on the map
         add comments from the user "stopped to get gas"
+        Cancel button
 
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
@@ -180,7 +181,10 @@ Way Future Features:
 ***DONE***
 ***********
 
+Added legend to my dynamic map, but need user name.
 Added a legend to my demo map.
+Added SQLAlchemy relationships for active, pending, rejected relationships
+Added SQLAlchemy relationships for active, pending, rejected invitations
 Also clears google map search box on hidden of the modal (either successful submission of invite or from closing it)
 Got modal form data cleared when it is hidden (.on('hidden.bs.modal')
 Learned how to manipulate unicode list into an actual list (import ast then ast.literal_eval()), and now invitation records are correctly created!

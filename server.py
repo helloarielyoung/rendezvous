@@ -182,7 +182,6 @@ def map_data():
 
      CHANGE THIS TO:
      {'data': [{'id': #, 'waypoints': [[lat, lng],[lat,lng]], 'name':name}, .....]}
-
         (note:  jsonify turns the tuples into arrays in javaScript)
 
     """
@@ -190,6 +189,7 @@ def map_data():
     invite_id = request.args.get("invite_id")
     user_id = session['user_id']
 
+    #####get rid of here to end when all_waypoints is working
     #query for logged in user's waypoints
     self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user_id).order_by(Waypoint.waypoint_id).all()
 
@@ -207,15 +207,17 @@ def map_data():
     # loop through list of users and query for waypoints with this invite id
     for user in user_list:
         waypoints_by_user['userdata'].setdefault(user, []).extend(db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all())
+    #####end of cleanup when all_waypoints is working
 
-    ################
-    #new query that combines these all together
+   ################
+    #new query that combines all users data in one nicely formatted dictionary
     #all_wayponts['data'] = a list of dictionaries with the user info in them
     all_waypoints = {'data': []}
 
     #list of ALL users on this invite, including "self"
     users_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id).distinct().all()
-    [i[0] for i in users_list]
+    #is this step necessary?  think the id will be a tuple if not done
+    users_list = [i[0] for i in users_list]
 
     for user in users_list:
         user_dict = {'id': 0, 'name': '', 'waypoints': []}
@@ -224,6 +226,7 @@ def map_data():
         user_dict['waypoints'] = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all()
         #append all the users dictionaries to all_waypoints
         all_waypoints['data'].append(user_dict)
+   ################
 
     return jsonify(waypoints_for_self, waypoints_by_user, all_waypoints)
 

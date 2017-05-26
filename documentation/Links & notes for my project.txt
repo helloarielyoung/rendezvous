@@ -1,5 +1,11 @@
 ****Links & notes for my project****
 
+Google maps legend:  https://developers.google.com/maps/documentation/javascript/adding-a-legend
+Google maps ALL the availble google icons: http://kml4earth.appspot.com/icons.html
+
+Google maps custom symbols:  https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-custom
+
+
 Working with unicode:
   omg, cleanest way to convert from unicode:
   import ast

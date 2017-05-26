@@ -59,8 +59,7 @@ function dataReceived(results) {
       userLines[ user_id ] = selfLine;
 
       // colors for the not-the-logged-in-users' symbols
-      //                   purple, orange, tomato, darkturquoise
-      symbolColors = ['#a862ea', '#ff944d', '#ff6347', '#00CED1'];
+      symbolColors = ['blue', 'purple', 'red', 'yellow'];
           var colorCount = 0;
           //iterate through waypoints_by_user to get users
           for (var user in waypointsByUser) {
@@ -99,7 +98,44 @@ function dataReceived(results) {
                 //END loop for waypoints for this user
                   } 
           //END loop for users in waypointsByUser
-            } 
+            }
+
+
+//NEED THE USER NAME FOR THIS - 
+//restructuring server.py to change waypoints_by_user to include the name
+//and have the data in a much more accessible format... then can modify this to work
+            // legend
+            //for loop here appending to dictionary an icon for each user in this format:
+                // { 2: {
+                //     name: 'User2',
+                //     icon: iconBase + 'blu-circle-lv.png'
+                //     }
+//           var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
+//           var icons = {};
+//           var colorCount = 0;
+//           var iconSymbolNames = ['blu', 'purple', 'red', 'ylw'];
+
+//           for (var user in waypointsByUser) {   
+//               var inside = {}
+//               thisUserId = user;
+//               inside['name'] = thisUserId;
+//               inside['icon'] = iconBase +iconSymbolNames[colorCount]+'-circle-lv.png';
+// // symbolColors[colorCount]
+//               icons[thisUserId] = inside
+//               colorCount++;
+//           }
+//             var legend = document.getElementById('legend');
+//             for (var key in icons) {
+//                 var type = icons[key];
+//                 var name = type.name;
+//                 var icon = type.icon;
+//                 var div = document.createElement('div');
+//                 div.innerHTML = '<img src="' + icon + '"> ' + name;
+//                 legend.appendChild(div);
+//               }
+
+//         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+
       //END function dataReceived
         }
 
@@ -125,7 +161,8 @@ function initMap() {
     map: map,
     title: 'Rendezvous Here'
         });
-  }
+      }
+ 
 // debugger
 // why is userLines empty here when it is populated outside this function?
 // is it because dataReceived actually runs after this because it's waiting

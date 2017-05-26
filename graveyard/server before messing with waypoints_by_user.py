@@ -190,9 +190,6 @@ def map_data():
     invite_id = request.args.get("invite_id")
     user_id = session['user_id']
 
-    # how to get the username when for - looping:
-    # user_name = User.query.get(user_id).name
-
     #query for logged in user's waypoints
     self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user_id).order_by(Waypoint.waypoint_id).all()
 
@@ -211,21 +208,7 @@ def map_data():
     for user in user_list:
         waypoints_by_user['userdata'].setdefault(user, []).extend(db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all())
 
-    #new query that combines these all together
-    all_waypoints = {'data': []}
-    inside_dict={}
-    #list of ALL users on this invite, including "self"
-    users_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id).distinct().all()
-    [i[0] for i in users_list]
-    for user in users_list:
-
-        
-
-
-    # loop through list of users and query for waypoints with this invite id
-    for user in user_list:
-        waypoints_by_user['userdata'].setdefault(user, []).extend(db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all())
-
+    # add the user name
 
     return jsonify(waypoints_for_self, waypoints_by_user)
 

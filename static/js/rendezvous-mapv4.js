@@ -11,6 +11,26 @@ var symbolColors;
 // this waits until the page is loaded, queries the database for waypoint data
 // for users on this invitation, then runs dataReceived
 
+// initialize the map
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+
+      // change this to get the center point from the ajax call that's getting
+      // the waypoints stuff
+
+      center:  {'lat': center_lat, 'lng': center_lng },
+      zoom: 13  ,
+      mapTypeId: 'roadmap'
+        });
+
+    // add marker for destination point
+    var marker = new google.maps.Marker({
+    position: {'lat': center_lat, 'lng': center_lng },
+    map: map,
+    title: 'Rendezvous Here'
+        });
+      }
+
 $(function() {
     $.get('/map-data.json', { invite_id }, dataReceived);
     });
@@ -34,8 +54,6 @@ function dataReceived(results) {
                 pickColor = symbolColors[colorCount];
                 colorCount++;
             }
-            
-
             // Define symbol for this user
             var lineSymbol = {
               path: google.maps.SymbolPath.CIRCLE,
@@ -56,22 +74,23 @@ function dataReceived(results) {
                       userLineColor = '#000000'; //black
                   } else {userLineColor = '#999999';} //gray
 
-            //use th pathListByUser to draw that user's route on the map
-            var userLine = new google.maps.Polyline({
-              path: pathListByUser,
-              strokeColor: userLineColor,
-              icons: [{
-                 icon: lineSymbol,
-                 offset: '0%'
-                  }],
-               map: map
-                });
+            //use the pathListByUser to draw that user's route on the map
+                  var userLine = new google.maps.Polyline({
+                    path: pathListByUser,
+                    strokeColor: userLineColor,
+                    icons: [{
+                       icon: lineSymbol,
+                       offset: '0%'
+                        }],
+                     map: map
+                      });
 
             //save userId and userLine in an object so I can update position
             //of the icon later
             userLines[thisUserId] = userLine;                     
             //END loop for waypoints for this user
               } 
+
         //END loop for users in waypointsByUser
           }
           console.log("end of return function");
@@ -80,25 +99,7 @@ function dataReceived(results) {
 //later will use this to update the the current location of the user along their route
     // var thisUser = userLines[user_id][icons][0][icon]  ??MAYBE [strokeColor]
 
-// initialize the map
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
 
-      // change this to get the center point from the ajax call that's getting
-      // the waypoints stuff
-
-      center:  {'lat': center_lat, 'lng': center_lng },
-      zoom: 13  ,
-      mapTypeId: 'roadmap'
-        });
-
-    // add marker for destination point
-    var marker = new google.maps.Marker({
-    position: {'lat': center_lat, 'lng': center_lng },
-    map: map,
-    title: 'Rendezvous Here'
-        });
-      }
  
 // debugger
 // why is userLines empty here when it is populated outside this function?

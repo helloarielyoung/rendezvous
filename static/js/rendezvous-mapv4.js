@@ -17,148 +17,66 @@ $(function() {
 
 //this is the callback function after json data is received.
 function dataReceived(results) {
-
+    console.log("inside js v4")
 // this will change to results['data'][0] when I am no longer sending the self & other waypoints lists
-      var allWaypoints = results[2]['data'];
-      var allWaypointsLength = Object.keys(allWaypoints).length;
-debugger
+    var allWaypoints = results[2]['data'];
 
-//frome here to end of here will be removed when allWaypoints works
-      // logged in user:
-      // var waypointsForSelf = results[0]['waypoints'];
-      // var waypointsForSelfLength = waypointsForSelf.length;
-
-      // all other users on this invite:
-      // var waypointsByUser = results[1]['userdata'];
-      // var waypointsByUserLength = Object.keys(waypointsByUser).length;
-
-      // Define symbol for logged in user
-      // var selfLineSymbol = {
-      //   path: google.maps.SymbolPath.CIRCLE,
-      //   scale: 4,
-      //   // logged in user has a black dot
-      //   strokeColor: 'black'
-      //     };
-
-      // var selfPathList = []
-      // for (var i = 0; i < waypointsForSelfLength; i++) {
-      //   selfPathList.push({'lat': parseFloat(waypointsForSelf[i][0]),
-      //                     'lng': parseFloat(waypointsForSelf[i][1])});
-      //     }
-
-      // Create the polyline for logged in user
-      // selfLine = new google.maps.Polyline({
-      // path: selfPathList,
-      //   //logged in user has a black line
-      //   strokeColor: '#000000',
-      //   icons: [{
-      //     icon: selfLineSymbol,
-      //     offset: '0%'
-      //     }],
-      //   map: map
-      //   });
-//end of section that will be removed when allWaypoints works
-
-      // get logged in userid from  $('#map').data('user_id') instead of session
-      // can't use Jinja in js script!
-
-// all_wyapoints looks like this:
-// {'data': [{'id': #, 'name': name, 'waypoints': [[lat, lng],[lat,lng]]}, .....]}
-// allWaypoints should be [{'id': #, , 'name': name, 'waypoints': [[lat, lng],[lat,lng]]}, .....]
-
-//will get rid of this, and add all users to userLines at end of this section
-      // userLines[ user_id ] = selfLine;
-//end of get rid of this
-
-      // colors for the not-the-logged-in-users' symbols
-      symbolColors = ['blue', 'purple', 'red', 'yellow'];
-          var colorCount = 0;
-          //iterate through waypoints_by_user to get users
-          for (var user in allWaypoints) {
-              //Save this user id for later
-              //how to get userid from allWaypoints:  allWaypoints[0]['id']
-              var thisUserId = allWaypoints[user]['id'];
-              if (thisUserId = user_id) { //this is the logged in user
-                  var pickColor = 'black'
-              else
-                  pickColor = symbolColors[colorCount];
-                  colorCount++;
-              }
-///here is where i got to Friday morning!  else is apparently not right for javaScript
-
-              // Define symbol for this user
-              var userLineSymbol = {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 4,
-                strokeColor: pickColor
-                };
-           
-              // variable to hold the waypoints
-              var pathListByUser = [];
-
-              //iterate through waypoints to get path for this user
-              for (var i=0; i<waypointsByUser[user].length; i++) {
-                  pathListByUser.push({'lat': parseFloat(waypointsByUser[user][i][0]),
-                                     'lng': parseFloat(waypointsByUser[user][i][1])});
-
-                  var userLine = new google.maps.Polyline({
-                    path: pathListByUser,
-                    strokeColor: '#999999',
-                    icons: [{
-                       icon: userLineSymbol,
-                       offset: '0%'
-                        }],
-                     map: map
-                      });
-
-                  //save userId and userLine in an object so I can update position
-                  //of the icon later
-                  userLines[thisUserId] = userLine;                     
-                //END loop for waypoints for this user
-                  } 
-          //END loop for users in waypointsByUser
+        symbolColors = ['blue', 'purple', 'red', 'yellow'];
+        var colorCount = 0;
+        var userLineColor;
+        //iterate through waypoints_by_user to get users
+        for (var user in allWaypoints) {
+            //Save this user id for later
+            var thisUserId = allWaypoints[user]['id'];
+            if (thisUserId == user_id) { //this is the logged in user
+                var pickColor = '#000000'; //black
+            } else {
+                pickColor = symbolColors[colorCount];
+                colorCount++;
             }
+            
 
+            // Define symbol for this user
+            var lineSymbol = {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 4,
+              strokeColor: pickColor
+              };
+         
+            // variable to hold the waypoints for this user
+            var pathListByUser = [];
 
-//NEED THE USER NAME FOR THIS - 
-//restructuring server.py to change waypoints_by_user to include the name
-//and have the data in a much more accessible format... then can modify this to work
-            // legend
-            //for loop here appending to dictionary an icon for each user in this format:
-                // { 2: {
-                //     name: 'User2',
-                //     icon: iconBase + 'blu-circle-lv.png'
-                //     }
-//           var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
-//           var icons = {};
-//           var colorCount = 0;
-//           var iconSymbolNames = ['blu', 'purple', 'red', 'ylw'];
+            //iterate through waypoints to get path for this user
+            for (var i=0; i<allWaypoints[user]['waypoints'].length; i++) {
+                  pathListByUser.push({'lat': parseFloat(allWaypoints[user]['waypoints'][0]),
+                                     'lng': parseFloat(allWaypoints[user]['waypoints'][1])});
 
-//           for (var user in waypointsByUser) {   
-//               var inside = {}
-//               thisUserId = user;
-//               inside['name'] = thisUserId;
-//               inside['icon'] = iconBase +iconSymbolNames[colorCount]+'-circle-lv.png';
-// // symbolColors[colorCount]
-//               icons[thisUserId] = inside
-//               colorCount++;
-//           }
-//             var legend = document.getElementById('legend');
-//             for (var key in icons) {
-//                 var type = icons[key];
-//                 var name = type.name;
-//                 var icon = type.icon;
-//                 var div = document.createElement('div');
-//                 div.innerHTML = '<img src="' + icon + '"> ' + name;
-//                 legend.appendChild(div);
-//               }
+                  //assign line color for logged in user
+                  if (thisUserId == user_id) {
+                      userLineColor = '#000000'; //black
+                  } else {userLineColor = '#999999';} //gray
 
-//         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+            //use th pathListByUser to draw that user's route on the map
+            var userLine = new google.maps.Polyline({
+              path: pathListByUser,
+              strokeColor: userLineColor,
+              icons: [{
+                 icon: lineSymbol,
+                 offset: '0%'
+                  }],
+               map: map
+                });
 
-      //END function dataReceived
-        }
+            //save userId and userLine in an object so I can update position
+            //of the icon later
+            userLines[thisUserId] = userLine;                     
+            //END loop for waypoints for this user
+              } 
+        //END loop for users in waypointsByUser
+          }
+          console.log("end of return function");
+}
 
-// console.log(userLines)
 //later will use this to update the the current location of the user along their route
     // var thisUser = userLines[user_id][icons][0][icon]  ??MAYBE [strokeColor]
 

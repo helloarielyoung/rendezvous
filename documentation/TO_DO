@@ -16,6 +16,7 @@ Things that are most showable:
             (and remove their route)
         User3 joins the rendezvous and route appears on the map
         add comments from the user "stopped to get gas"
+        Cancel button
 
 Question about testing: had to manually create "testdb".  Other ways?
 

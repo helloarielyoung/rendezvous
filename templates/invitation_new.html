@@ -89,6 +89,7 @@
         width: 345px;
       }
     </style>
+
     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <!--Invitation form pops up when one clicks on a marker on the map  -->
 <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -108,7 +109,7 @@
 
             <div class="form-group">
                 <label for="rendezvousName">Rendezvous Name</label>
-                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name">
+                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name" autofocus>
             </div>
 
             <div class="form-group">
@@ -134,8 +135,21 @@
   </div>
 </div>
 
+<!-- on success of Invitaiton submission -->
+<div class="modal fade" id="inviteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="inviteSuccessModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="alert alert-success alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <strong>Success!</strong> Your invitation has been created.<br>
+          Click here to go to this invitation (add a link here)
+      </div>
+    </div>
+  </div>
+</div>
 <!-- script to submit the new invitation from the modal form -->
 <script>
+// debugger
     $('#newInvitationSubmit').click( function(evt){
         evt.preventDefault();
         var friendList = [];
@@ -145,27 +159,17 @@
         }
         var data = {rendezvousName: $('#rendezvousName').val(),
                 rendezvousDateTime: $('#rendezvousDateTime').val(),
-                rendezvousFriends: JSON.stringify(friendList)};
+                rendezvousFriends: JSON.stringify(friendList),
+                destinationLat: destination_lat,
+                destinationLng: destination_lng
+                };
         $.post("/invitation-save.json", data, function(msg) {
-                console.log("got json");
                 $("#inviteModal").modal('hide');
+                $('#inviteSuccessModal').modal();
             });
-        // $.ajax({
-        //     url: "/invitation-save.json",
-        //     type: "POST",
-        //     data: $("#newInvitation").serialize(),
-        //     // success: function(data){
-        //     //     $('#inviteForm').modal('hide');
-        //     //     alert("Successfully submitted.");
-        //     // }
-        //     success: function(msg) {
-        //         $("#inviteModal").modal('hide');
-        //     },
-        // error: function() {
-        //     $("#error").show();
-        // }
-        // });
-   }); 
+      });
+
+
 </script>
 
 <div id="map">
@@ -174,7 +178,9 @@
 
       //variable to hold place information outside of map
       var placeInfo
-
+      //save the rendezvous location to store in waypoints
+      var destination_lat
+      var destination_lng
       // add a search box to a map
       function initMap() {
         //set a default center
@@ -256,19 +262,14 @@
 
           });
           map.fitBounds(bounds);
-// debugger
             //add onclick event to markers to pass geometry of that place to invitation
-            // marker.getPlace() has objects location (lat/lng), placeID unique string,
-            // and query (description)
-
-            // markers.forEach(function(marker) {
-   // console.log(places[0].formatted_address);
-   //              });
             markers.forEach(function(marker) {
                 marker.addListener('click', function() {
                     console.log(marker.getPosition().lat(), marker.getPosition().lng());
+                    destination_lat = marker.getPosition().lat();
+                    destination_lng = marker.getPosition().lng();
                       $("#rendezvousLocationName").html(places[0].name);
-                      $('#rendezvousLocationAddress').html( places[0].formatted_address);
+                      $('#rendezvousLocationAddress').html(places[0].formatted_address);
                     launchModal();
                 });
             });
@@ -282,6 +283,11 @@
         });
 
       }
+
+$('#inviteModal').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+    $("#pac-input").val("")
+});
 
 function launchModal(){
      $('#inviteModal').modal();

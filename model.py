@@ -122,10 +122,10 @@ class Invitation(db.Model):
     invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     created_by_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False)
-    destination_lat = db.Column(db.String(12), nullable=False)
-    destination_long = db.Column(db.String(12), nullable=False)
+    destination_lat = db.Column(db.String(30), nullable=False)
+    destination_lng = db.Column(db.String(30), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
-    rendezvous_name = db.Column(db.String(60), nullable=False)
+    rendezvous_name = db.Column(db.String(100), nullable=False)
 
     #get all users who are on this invitation
     invite_users = db.relationship("User",
@@ -134,8 +134,8 @@ class Invitation(db.Model):
 
     def __repr__(self):
         return "<Invitation invite_id=%s destination_lat=%s\
-                 destination_long=%s>" % (self.invite_id, self.destination_lat,
-                                          self.destination_long)
+                 destination_lng=%s>" % (self.invite_id, self.destination_lat,
+                                          self.destination_lng)
 
 
 class UserInvite(db.Model):
@@ -150,6 +150,7 @@ class UserInvite(db.Model):
     invite_id = db.Column(db.Integer, db.ForeignKey('invitations.invite_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     status = db.Column(db.String(3), db.ForeignKey('statuses.status_id'))
+    created_date = db.Column(db.DateTime, nullable=False)
 
     def __repr__(self):
         return "<UsersInvites ui_id=%s invite_id=%s user_id=%s>" % (self.ui_id,
@@ -168,6 +169,7 @@ class Waypoint(db.Model):
     # current_time = db.Column(db.DateTime, nullable=False)
     waypoint_lat = db.Column(db.String(17), nullable=False)
     waypoint_long = db.Column(db.String(17), nullable=False)
+    created_date = db.Column(db.DateTime, nullable=False)
 
     def __repr__(self):
         return "<Waypoint waypoint_id=%s user_id=%s waypoint_lat=%s \
@@ -221,7 +223,7 @@ def example_data():
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00',
                          rendezvous_name='Outing with friends')
@@ -230,15 +232,15 @@ def example_data():
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
                          destination_lat=37.7888568,
-                         destination_long=-122.4115372,
+                         destination_lng=-122.4115372,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 19 11:00:00',
                          rendezvous_name="Starbucks with Joe")
 
     #add users to invitations with statuses
-    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act')
-    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2, status='act')
-    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3, status='act')
+    ui1 = UserInvite(ui_id=1, invite_id=1, user_id=1, status='act', created_date='01/01/2017')
+    ui2 = UserInvite(ui_id=2, invite_id=1, user_id=2, status='act', created_date='01/01/2017')
+    ui3 = UserInvite(ui_id=3, invite_id=1, user_id=3, status='act', created_date='01/01/2017')
 
     db.session.add_all([u1, u2, u3])
     db.session.commit()

@@ -178,6 +178,9 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Added SQLAlchemy relationships for active, pending, rejected relationships
+Added SQLAlchemy relationships for active, pending, rejected invitations
 Also clears google map search box on hidden of the modal (either successful submission of invite or from closing it)
 Got modal form data cleared when it is hidden (.on('hidden.bs.modal')
 Learned how to manipulate unicode list into an actual list (import ast then ast.literal_eval()), and now invitation records are correctly created!

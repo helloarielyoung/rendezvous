@@ -32,14 +32,24 @@ class User(db.Model):
                               secondary="users_invites",
                               backref="users")
 
-# FIX ME!
-    # pending_invites = db.relationship("Invitation",
-    #                                   secondary="and (User.user_id == UserInvite.user_id, "
-    #                                   "UserInvite.status=='pen')",
-    #                                   backref="users")
+    #pending invitations
+    pending_invites = db.relationship("Invitation",
+                                      secondary="users_invites",
+                                      secondaryjoin="and_(User.user_id==UserInvite.user_id, "
+                                      "UserInvite.status=='pen')",
+                                      backref="pending_invite_users")
 
-    #get all waypoints for this user - this is useless w/out invite info, right?
-    waypts = db.relationship("Waypoint")
+    active_invites = db.relationship("Invitation",
+                                     secondary="users_invites",
+                                     secondaryjoin="and_(User.user_id==UserInvite.user_id, "
+                                     "UserInvite.status=='act')",
+                                     backref="active_invite_users")
+
+    rejected_invites = db.relationship("Invitation",
+                                       secondary="users_invites",
+                                       secondaryjoin="and_(User.user_id==UserInvite.user_id, "
+                                       "UserInvite.status=='rej')",
+                                       backref="rejected_invite_users")
 
     #get all relationships
     all_relationships = db.relationship("Relationship", foreign_keys='Relationship.user_id')
@@ -50,18 +60,23 @@ class User(db.Model):
                                         primaryjoin="and_(User.user_id==Relationship.user_id, "
                                         "Relationship.status=='act')")
 
-    #could not get this working
     #get friends data for active relationships
-    # act_relationships = db.relationship("Relationship",
-    #                                     primaryjoin="and_(User.user_id==Relationship.user_id, "
-    #                                     "Relationship.status=='act')",
-    #                                     secondary='users', foreign_keys='Relationship.friend_id')
+    active_friends = db.relationship("User",
+                                     primaryjoin="and_(User.user_id==Relationship.user_id, "
+                                     "Relationship.status=='act')",
+                                     secondary="relationships", secondaryjoin="User.user_id==Relationship.friend_id")
 
-    act_friends = db.relationship("User",
-                                  primaryjoin="and_(User.user_id==Relationship.user_id, "
-                                  "Relationship.status=='act')",
-                                  secondary="relationships", secondaryjoin="User.user_id==Relationship.friend_id")
+    #get friends data for pending relationships
+    pending_friends = db.relationship("User",
+                                      primaryjoin="and_(User.user_id==Relationship.user_id, "
+                                      "Relationship.status=='pen')",
+                                      secondary="relationships", secondaryjoin="User.user_id==Relationship.friend_id")
 
+    #get friends data for rejected relationships
+    rejected_friends = db.relationship("User",
+                                       primaryjoin="and_(User.user_id==Relationship.user_id, "
+                                       "Relationship.status=='rej')",
+                                       secondary="relationships", secondaryjoin="User.user_id==Relationship.friend_id")
 
     def __repr__(self):
         return "<User user_id=%s name=%s>" % (self.user_id, self.name)

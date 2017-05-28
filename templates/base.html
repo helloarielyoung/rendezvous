@@ -1,52 +1,57 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Rendezvous</title>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <head>
+    {% block head %}
+      <title>{% block title %}Rendezvous{% endblock %}</title>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</head>
-<body class="starter-template container">
-  
-    <h4>Rendezvous</h4>
-   <hr>
-{% for message in get_flashed_messages() %}
-    <span> {{ message }}</span>
-{% endfor %}
-    <hr>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    {% endblock %}
+    </head>
+  <body class="starter-template container"> <!-- what is this class for? -->
+      <h4>Rendezvous</h4>
+      <hr>
+        {% for message in get_flashed_messages() %}
+          <span> {{ message }}</span>
+          <hr>
+        {% endfor %}
+      <hr>  
+    <div id="content">
+    {% block content %}
+          <p>
+              {% if 'login' not in session %}
+              <a href="/login"><h5>Click here to log in.</h5></a>
+              <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
+              {% endif %}
+          </p>
+    {% endblock %}</div>
 
-    {% block content %} put your content here {% endblock %}
+    <div id="footer">
+    {% block footer %}
+        <hr>
+        <p>
+        {% if 'user_name' in session %}
+          <small>You are currently logged in as {{ session['user_name'] }}.<br>
+            <h5>Click <a href="/users/{{ session['user_id'] }}">here</a> to go to your profile</h5>
+          </small>
+          <form action='/logout'>
+              <input type='submit' value='logout'>
+          </form>
+        {% endif %}
+        </p>
+        <p>
+          <small><h5>Click <a href="/">here</a> to go to homepage</h5>
+          </small>
+        </p>
+    {% endblock %}
+    </div>
 
-<p>
-    <hr>
-  <a href="/"><h5>Click here to go to homepage.</h5></a>
-</p>
-<p>
-{% if 'login' not in session %}
-  <a href="/login"><h5>Click here to log in.</h5></a>
-  <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
-{% endif %}
-</p>
-<hr>
-    <p>
-    {% if 'user_name' in session %}
-    <small>You are currently logged in as {{ session['user_name'] }}.<br>
-      <a href="/users/{{ session['user_id'] }}"> Click here to go to your profile</a>
-    </small>
-   <p>
-    <form action='/logout'>
-    <input type='submit' value='logout'>
-</form>
-</p> 
-    {% endif %}
-  </p>
-
-</body>
+    </body>
 </html>

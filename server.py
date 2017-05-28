@@ -1,6 +1,7 @@
 """Rendezvous"""
 
-from jinja2 import StrictUndefined
+from jinja2 import StrictUndefined, nodes
+from jinja2.ext import Extension
 
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session, abort, json

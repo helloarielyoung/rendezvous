@@ -1,53 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2>Your User Profile</h2>
-    <p>
-        Email: {{ user['email'] }} <br>
-        Name: {{ user['name'] }} <br>
-    </p>
+<div class="container">
+      <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+    <li><a data-toggle="pill" href="#ActiveInvite">Active Invitations</a></li>
+    <li><a data-toggle="pill" href="#PendingInvite">Pending Invitations</a></li>
+    <li><a data-toggle="pill" href="#RejectedInvite">Rejected Invitations</a></li>
+    <li><a data-toggle="pill" href="#Friends">Friends</a></li>
+  </ul>
+  <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+          <h2>Your User Profile</h2>
+          <p> Click <a href='/rendezvous-map'>here</a> for animated google map
+          </p> 
+          <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
+          </p>
+        add query that makes buttons here for any active invitations that are today
+         <ul>{% for invite in user.pending_invites|selectattr("rendezvous_date", "equalto", _datetime)|sort(attribute='rendezvous_date') %}
+          <li>
+            {{ invite.rendezvous_date }}
+          </li>
+              {% endfor %}
+          </ul>
 
-<p>
-Click <a href='/rendezvous-map'>here</a> for animated google map so far
-</p>
-    Click <a href="/invitation-new">here</a> to create a new Rendezvous
-
-    <h2>Accepted Invitations:</h2>
-    <ul>{% for invite in user.active_invites|sort(attribute='rendezvous_date') %} 
-        <li>
-            <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
-                <input type='hidden' name='user_id' value={{ session.user_id }}>
-                <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
-                <input type='submit'name='submit_button', value={{ invite.rendezvous_date }}>
-            </form>
-        </li>
-
-            {% endfor %}
-        </ul>
-
-        <h2>Pending Invitations:</h2>
-        <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %}
-        <li>
-        This will be a link to modal form to accept or decline {{ invite.rendezvous_date }}
-        </li>
-            {% endfor %}
-        </ul>
-
-        <h2>Add a link to see your Rejected invitations in case you want to see them</h2>
-        <ul>{% for invite in user.rejected_invites|sort(attribute='rendezvous_date') %}
-        <li>
-        This will be a link to modal form to view rejected invites {{ invite.rendezvous_date }}
-        </li>
-            {% endfor %}
-        </ul>
-
-        <h2>Friend Requests:</h2>
-        <ul>this will be a for loop to get any pending friend requests  
-        <li>
-            Short description with buttons to Accept or Reject
-            (maybe a note that if you reject, that person will not be able to ask you again)
-        </li>
-            end of for loop will go here
-        </ul>
-
+        Add query that makes buttons here for any friend requests that are n-days
+        old.
+      </div>
+      <div id="ActiveInvite" class="tab-pane fade">
+          <h2>Accepted Invitations</h2>
+          <ul>{% for invite in user.active_invites|sort(attribute='rendezvous_date') %} 
+              <li>
+                  <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
+                      <input type='hidden' name='user_id' value={{ session.user_id }}>
+                      <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
+                      <input type='submit'name='submit_button', value={{ invite.rendezvous_date }}>
+                  </form>
+              </li>
+              {% endfor %}
+          </ul>
+      </div>
+      <div id="PendingInvite" class="tab-pane fade">
+          <h2>Pending Invitations</h2>
+          This will be a link to modal form to accept or decline
+          <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %}
+          <li>
+            {{ invite.rendezvous_date }}
+          </li>
+              {% endfor %}
+          </ul>
+      </div>
+      <div id="RejectedInvite" class="tab-pane fade">
+          <h2>Rejected Invitations</h2>
+          <p>This will be a link to modal form to view rejected invites</p>
+          <ul>{% for invite in user.rejected_invites|sort(attribute='rendezvous_date') %}
+          <li>
+            {{ invite.rendezvous_date }}
+          </li>
+              {% endfor %}
+          </ul>
+      </div>
+      <div id="Friends" class="tab-pane fade">
+          <h2>Friend Requests:</h2>
+          <p> Short description with buttons to Accept or Reject
+          (maybe a note that if you reject, that person will not be able to ask you again)
+          </p>
+          <ul> {% for friend in user.pending_friends|sort(attribute='request_date') %} 
+                  <li>
+                      {{ friend.name }}
+                  </li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+</div>
 {% endblock %}

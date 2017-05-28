@@ -4,10 +4,6 @@ REMINDER:  on startup:
 ***********
 ***TO DO***
 ***********
-Fix bug on /users :  1:43 Uncaught ReferenceError: user is not defined
-    at 1:43
-
-and AttributeError: 'User' object has no attribute 'act_friends'
 
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
@@ -175,6 +171,11 @@ Way Future Features:
 ***DONE***
 ***********
 
+Added bootstrap tabs to my user landing page.
+These errors stopped occurring on their own:
+    Fix bug on /users :  1:43 Uncaught ReferenceError: user is not defined
+    at 1:43
+    AttributeError: 'User' object has no attribute 'act_friends'
 Finished refactoring waypoint data/code.  Javascript is 70+ lines shorter and much
     easier to understand.
 ^5/28^

@@ -76,6 +76,7 @@ function dataReceived(results) {
            
               // variable to hold the waypoints
               var pathListByUser = [];
+debugger
 
               //iterate through waypoints to get path for this user
               for (var i=0; i<waypointsByUser[user].length; i++) {

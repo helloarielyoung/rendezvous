@@ -135,7 +135,7 @@ def googlemap2():
 
     else:
         user_id = session['user_id']
-
+        # this is for the demo map (rendezvous_map.html)
         selfquery = db.session.query(Waypoint.waypoint_lat,
                                      Waypoint.waypoint_long).filter(Waypoint.user_id == user_id,
                                                                     Waypoint.invite_id == 1).all()
@@ -171,50 +171,17 @@ def map_data():
 
     format of returned data is:
 
-    {{'user_id': 'self', 'waypoints': [('lat', 'lng'), ('lat', 'lng')...]
-      },
-        {'userdata': {2: [('lat', 'lng'), ('lat', 'lng'),...],
-                      3: [('lat', 'lng'), ('lat', 'lng'),...]
-                      }
-         }
-        {'usernames':{2: 'joe'}, {3: 'mary'}}
-     }
-
-     CHANGE THIS TO:
-     {'data': [{'id': #, 'waypoints': [[lat, lng],[lat,lng]], 'name':name}, .....]}
+    {'data': [{'id': #, 'waypoints': [[lat, lng],[lat,lng]], 'name':name}, .....]}
         (note:  jsonify turns the tuples into arrays in javaScript)
 
     """
 
     invite_id = request.args.get("invite_id")
-    user_id = session['user_id']
 
-    #####get rid of here to end when all_waypoints is working
-    #query for logged in user's waypoints
-    self_waypoints = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user_id).order_by(Waypoint.waypoint_id).all()
-
-    #populate dictionary for logged in user
-    waypoints_for_self = {'user_id': 'self'}
-    waypoints_for_self['waypoints'] = self_waypoints
-
-    #populate dictionary for all other users on this invitation
-    # Get list of users for this invitation
-    user_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id, Waypoint.user_id != user_id).distinct().all()
-    user_list = [r[0] for r in user_list]
-    # make dictionary with those keys/values and waypoints for that user
-    waypoints_by_user = {'userdata': {}}
-
-    # loop through list of users and query for waypoints with this invite id
-    for user in user_list:
-        waypoints_by_user['userdata'].setdefault(user, []).extend(db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all())
-    #####end of cleanup when all_waypoints is working
-
-   ################
-    #new query that combines all users data in one nicely formatted dictionary
-    #all_wayponts['data'] = a list of dictionaries with the user info in them
+    # dictionary to hold the waypoints for all users
     all_waypoints = {'data': []}
 
-    #list of ALL users on this invite, including "self"
+    #list of ALL users on this invite
     users_list = db.session.query(Waypoint.user_id).filter(Waypoint.invite_id == invite_id).distinct().all()
     #is this step necessary?  think the id will be a tuple if not done
     users_list = [i[0] for i in users_list]
@@ -226,9 +193,8 @@ def map_data():
         user_dict['waypoints'] = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all()
         #append all the users dictionaries to all_waypoints
         all_waypoints['data'].append(user_dict)
-   ################
 
-    return jsonify(waypoints_for_self, waypoints_by_user, all_waypoints)
+    return jsonify(all_waypoints)
 
 
 @app.route('/rendezvous-map-v3', methods=['POST'])

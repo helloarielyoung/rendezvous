@@ -98,10 +98,11 @@
           map: map
         });
 
+        //start animation
         setTimeout(animateSelfCircle(otherline, 45), 4500)
         animateSelfCircle(selfline, 40);
 
-
+      //legend
       var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
       var icons = {
         user2: {
@@ -123,7 +124,7 @@
       }
 
       // Use the DOM setInterval() function to change the offset of the symbol
-      // at fixed intervals.
+      // at fixed intervals for animation
       var id1
       function animateSelfCircle(line, speed) {
           var count = 0;

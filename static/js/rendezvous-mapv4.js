@@ -1,23 +1,15 @@
 "use strict";
 
-// Javascript for Rendezvous Map v3
+// Javascript for Rendezvous Map
 
 //define the map and lines as global variables
 var map;
-var selfLine;
 var userLines = {};
-var symbolColors;
-
-// this waits until the page is loaded, queries the database for waypoint data
-// for users on this invitation, then runs dataReceived
 
 // initialize the map
 function initMap() {
+    //initiates the map object
     map = new google.maps.Map(document.getElementById('map'), {
-
-      // change this to get the center point from the ajax call that's getting
-      // the waypoints stuff
-
       center:  {'lat': center_lat, 'lng': center_lng },
       zoom: 13  ,
       mapTypeId: 'roadmap'
@@ -29,19 +21,27 @@ function initMap() {
     map: map,
     title: 'Rendezvous Here'
         });
-      }
 
+//doesn't work becuase userLines isn't populated when the map is rendered....
+    //animate the symbols
+    for (var i=0; i<userLines.length; i++) {
+        var count = 30;
+        setTimeout(animateSymbol(userLines[i], count), 4500);
+        count = count + 10;
+      }    
+  }
+
+// this waits until the page is loaded, queries the database for waypoint data
+// for users on this invitation, then runs dataReceived
 $(function() {
     $.get('/map-data.json', { invite_id }, dataReceived);
     });
 
 //this is the callback function after json data is received.
 function dataReceived(results) {
-    console.log("inside js v4")
-// this will change to results['data'][0] when I am no longer sending the self & other waypoints lists
-    var allWaypoints = results[2]['data'];
+    var allWaypoints = results['data'];
 
-        symbolColors = ['blue', 'purple', 'red', 'yellow'];
+        var symbolColors = ['blue', 'purple', 'red', 'yellow'];
         var colorCount = 0;
         var userLineColor;
         //iterate through waypoints_by_user to get users
@@ -66,8 +66,8 @@ function dataReceived(results) {
 
             //iterate through waypoints to get path for this user
             for (var i=0; i<allWaypoints[user]['waypoints'].length; i++) {
-                  pathListByUser.push({'lat': parseFloat(allWaypoints[user]['waypoints'][0]),
-                                     'lng': parseFloat(allWaypoints[user]['waypoints'][1])});
+                  pathListByUser.push({'lat': parseFloat(allWaypoints[user]['waypoints'][i][0]),
+                                     'lng': parseFloat(allWaypoints[user]['waypoints'][i][1])});
 
                   //assign line color for logged in user
                   if (thisUserId == user_id) {
@@ -85,53 +85,60 @@ function dataReceived(results) {
                      map: map
                       });
 
-            //save userId and userLine in an object so I can update position
-            //of the icon later
-            userLines[thisUserId] = userLine;                     
+            //save userId and userLine so I can update icon position in realitme later
+            userLines[thisUserId] = userLine;
+
+              //legend
+              var iconColors = ['blu', 'purple', 'red', 'ylw'];
+              var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
+              
+              var icons = {
+                thisUserId: {
+                  name: allWaypoints[user]['name'],
+                  icon: iconBase + iconColors[i]+'-circle-lv.png'
+                }
+              };
+              var legend = document.getElementById('legend');
+              for (var key in icons) {
+                  var type = icons[key];
+                  var name = type.name;
+                  var icon = type.icon;
+                  var div = document.createElement('div');
+                  div.innerHTML = '<img src="' + icon + '"> ' + name;
+                  legend.appendChild(div);
+                }
+
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);                
             //END loop for waypoints for this user
               } 
-
-        //END loop for users in waypointsByUser
+        //END loop for users in allWaypoints
           }
-          console.log("end of return function");
+
+//END of dataReceived function
 }
 
 //later will use this to update the the current location of the user along their route
-    // var thisUser = userLines[user_id][icons][0][icon]  ??MAYBE [strokeColor]
+    // var thisUser = userLines[user_id][icons][0][icon]  and ??MAYBE [strokeColor]
 
 
- 
-// debugger
-// why is userLines empty here when it is populated outside this function?
-// is it because dataReceived actually runs after this because it's waiting
-// for whole page to load?!!
 
-//     animateSymbol(selfLine, count);
-//     //animates the movement of the Symbols
-//     for (var i in userLines) {
-//       alert(i);
-//       var count = 30;
-//       setTimeout(animateSymbol(userLines[i], count), 4500);
-//       count = count + 10;
-//       } 
-//     }
 
 // // Use the DOM setInterval() function to change the offset of the symbol
 // // at fixed intervals.
-// var id1
-// function animateSymbol(line, speed) {
-//     var count = 0;
-//     id1 = window.setInterval(function() {
-//       count = (count + 1);
+var id1
+function animateSymbol(line, speed) {
+    var count = 0;
+    id1 = window.setInterval(function() {
+      count = (count + 1);
 
-//       var icons = line.get('icons');
-//       icons[0].offset = (count / 2) + '%';
-//       line.set('icons', icons);
-//     // make animation to stop at destination
-//     if (line.get('icons')[0].offset == "99.5%") {
-//           icons[0].offset = '100%';
-//           line.set('icons', icons);
-//           window.clearInterval(id1);
+      var icons = line.get('icons');
+      icons[0].offset = (count / 2) + '%';
+      line.set('icons', icons);
+    // make animation to stop at destination
+    if (line.get('icons')[0].offset == "99.5%") {
+          icons[0].offset = '100%';
+          line.set('icons', icons);
+          window.clearInterval(id1);
 
-//   } }, speed);
-// }
+  } }, speed);
+}

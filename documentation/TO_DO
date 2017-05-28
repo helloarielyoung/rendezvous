@@ -6,6 +6,12 @@ REMINDER:  on startup:
 ***********
 Fix bug on /users :  1:43 Uncaught ReferenceError: user is not defined
     at 1:43
+
+and AttributeError: 'User' object has no attribute 'act_friends'
+
+Googlemap:  remove map/satelite option.  remove street view
+Legend still not working.
+
 Things that are most showable:
     improve demo map:
         more showable-routes
@@ -67,18 +73,6 @@ Improve Invitation form
 
 Refactor Waypoints and Invitations table/class
     why not store route lat/long data in one field formatted for google maps Path
-
-Refactor code especially @app.route('/map-data.json') where the format of the
-    data passed is unnecessarily complicated.  Pretty sure I could reduce it to:
-        {'self': [('lat', 'lng'), ('lat', 'lng')...],
-        '2: [('lat', 'lng'), ('lat', 'lng'),...],
-         3: [('lat', 'lng'), ('lat', 'lng'),...]
-         }
-
-Refactor code:  remove query for center point of invitation destination from
-    the app route and incorporate it in the return from the AJAX call in
-    rendezvous-map.js
-
 
 Add indexes in model.py on fields that are FK's
 
@@ -180,6 +174,15 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Finished refactoring waypoint data/code.  Javascript is 70+ lines shorter and much
+    easier to understand.
+^5/28^
+
+Starting trying to refactor code to improve waypoint data format.  Got the server-side
+    of the work done, but refactored javascript not working - no errors, just route
+    lines do not show up on map.
+^5/27^
 
 Added legend to my dynamic map, but need user name.
 Added a legend to my demo map.

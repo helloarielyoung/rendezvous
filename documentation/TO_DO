@@ -8,6 +8,9 @@ REMINDER:  on startup:
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
 
+Working on invite lists...  filter using Jinja?
+    {% for invite in user.pending_invites|selectattr("rendezvous_date", "equalto", _datetime)|sort(attribute='rendezvous_date') %} or something like that....
+
 Things that are most showable:
     improve demo map:
         more showable-routes

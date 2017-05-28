@@ -17,7 +17,7 @@
           <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
           </p>
         add query that makes buttons here for any active invitations that are today
-         <ul>{% for invite in user.pending_invites|selectattr("rendezvous_date", "equalto", _datetime)|sort(attribute='rendezvous_date') %}
+         <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %}
           <li>
             {{ invite.rendezvous_date }}
           </li>

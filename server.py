@@ -234,11 +234,6 @@ def googlemapv2():
 def invitation_new():
     """Page to create a new invitation.
 
-    Use google maps autofill to select destination (capture that waypoint)
-        (perhaps this is a link to a subsequent page then come back to invitation?)
-    Select date & time for rendezvous_map
-    Select Friends to invite
-
     """
 
     #only get here if you are logged in

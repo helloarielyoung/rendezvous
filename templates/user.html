@@ -42,12 +42,20 @@
       </div>
       <div id="PendingInvite" class="tab-pane fade">
           <h2>Pending Invitations</h2>
-          This will be a link to modal form to accept or decline
-          <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %}
-          <li>
-            {{ invite.rendezvous_date }}
-          </li>
-              {% endfor %}
+          <ul>{% for invite in invitation_data if invite[0] == 'pen' %}
+            <li>
+              Name: {{ invite[1] }} <br>
+              Invited by: {{ invite[6] }} <br>
+              Date and time: {{ invite[3] }} <br>
+              How do I get the google maps location here?{{ invite[4] }}, {{ invite[5] }}
+              <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value={{ invite[0] }}>
+                  <input type='submit'name='pending_submit_button' value= 'Accept' >
+                  <input type='submit'name='peiding_submit_button' value= 'Decline' >
+
+              </form>
+            </li>
+          {% endfor %}
           </ul>
       </div>
       <div id="RejectedInvite" class="tab-pane fade">

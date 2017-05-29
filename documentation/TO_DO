@@ -11,6 +11,8 @@ Legend still not working.
 Working on invite lists...  filter using Jinja?
     {% for invite in user.pending_invites|selectattr("rendezvous_date", "equalto", _datetime)|sort(attribute='rendezvous_date') %} or something like that....
 
+    trying textual SQL:  http://docs.sqlalchemy.org/en/latest/orm/tutorial.html#orm-tutorial-literal-sql
+
 Things that are most showable:
     improve demo map:
         more showable-routes

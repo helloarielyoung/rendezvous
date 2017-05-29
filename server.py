@@ -74,7 +74,48 @@ def get_user(user_id):
 
         user = User.query.get(user_id)
 
-        return render_template('user.html', user=user)
+        #what I want here:
+        # for this user in users_invites, get list of all invites
+        # and pull back the data for all their invites...
+
+        # NOTE:  this means I will need to exclude those created by THIS USER
+        #  from display in all but the Accepted list... does that make sense?
+        #  maybe if i leave that display coming from the active_invites relationship
+
+        # SELECT ui.status, ui.invite_id, i.destination_lat, i.destination_long,
+        # u.name
+        # FROM users_invites ui
+        # JOIN invitations i on ui.invite_id = i.invite_id
+        # JOIN users u on u.user_id = i.created_by
+        # WHERE ui.user_id = This session user_id
+
+        stmt = db.text("SELECT ui.status,\
+                               ui.invite_id,\
+                               i.rendezvous_name,\
+                               i.rendezvous_date,\
+                               i.destination_lat,\
+                               i.destination_lng,\
+                               u.name \
+        FROM users_invites ui\
+        JOIN invitations i on ui.invite_id = i.invite_id \
+        JOIN users u on u.user_id = i.created_by_id \
+        WHERE ui.user_id = :user_id\
+        ORDER BY rendezvous_date, rendezvous_name")
+        stmt = stmt.columns(UserInvite.status,
+                            UserInvite.invite_id,
+                            Invitation.rendezvous_name,
+                            Invitation.rendezvous_date,
+                            Invitation.destination_lat,
+                            Invitation.destination_lng,
+                            User.name)
+        invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
+            Invitation.rendezvous_name, Invitation.rendezvous_date,\
+            Invitation.destination_lat, Invitation.destination_lng, User.name).\
+            from_statement(stmt).params(user_id=session['user_id']).all()
+
+        return render_template('user.html',
+                               user=user,
+                               invitation_data=invitation_data)
 
     else:
         flash('You must be logged in to access that page.')
@@ -306,6 +347,23 @@ def invitation_save():
         success = {'status': 'successful'}
         return jsonify(success)
 
+# don't need this I don't think = just putting deets & accept/decline buttons
+# on the users page
+# @app.route('/invitation-pending-manage')
+# def invitation_manage_pending():
+#     """Accept or reject pending invitations"""
+
+#     if session.get('user_id') is None:
+#         return redirect('/')
+
+#     else:
+#         user_id = session["user_id"]
+#         invite_id = request.form.get("invite_id")
+
+#         return render_template("invitation_manage_pending.html",
+#                                 user_id=user_id,
+#                                 invite_id=invite_id)
+
 
 @app.route('/invitation-accept-reject.json', methods=['POST'])
 def invitation_update():
@@ -319,7 +377,7 @@ def invitation_update():
     else:
         rendezvous_id = request.form.get("invite_id")
         user_id = session['user_id']
-        status = request.form.get("submit_button")
+        status = request.form.get("pending_submit_button")
 
         if status == "Accept":
             status = "act"
@@ -327,14 +385,6 @@ def invitation_update():
             status = 'rej'
 
         #then update the record with status
-        Users_Invites.update().where(users_invites.user_id == user_id).\
-            where(users_invites.invite_id == rendezvous_id).\
-            values(status=status)
-
-        db.session.commit()
-
-        # if this does not work, try retrieving the users_invite object with a
-        # query and then modify that object and commit.  example:
         # admin = User.query.filter_by(username='admin').first()
         # admin.email = 'my_new_email@example.com'
         # db.session.commit()
@@ -342,11 +392,19 @@ def invitation_update():
         # user = User.query.get(5)
         # user.name = 'New Name'
         # db.session.commit()
+        update_invite = UserInvite.query.filter_by(UserInvite.user_id == user_id,
+                        UserInvite.invite_id == invite_id).one()
+
+        update_invite.status = status
+
+        db.session.commit()
+
+        # if this does not work, try bulk update
+        # Users_Invites.query.filter_by(User_invites.user_id == user_id,\
+        #     User_Invites.invite_id == invite_id).update(status=status)
 
         success = {'status': 'successful'}
         return jsonify(success)
-
-
 
 
 if __name__ == "__main__":

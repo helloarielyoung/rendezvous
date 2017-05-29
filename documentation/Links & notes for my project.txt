@@ -1,5 +1,12 @@
 ****Links & notes for my project****
 
+Jinja2 conditional for loop that works on data from a query:
+        <ul>{% for invite in invitation_data if invite[0] == 'pen' %}
+    if trying to do the same thing but using an SQLAlchemy relationship instead of query,
+    i think you use attribute instead, for example here is sorting using SQLA
+    relationship from model.py called "active_invites"
+        {% for invite in user.active_invites|sort(attribute='rendezvous_date') %}
+
 Google maps legend:  https://developers.google.com/maps/documentation/javascript/adding-a-legend
 Google maps ALL the availble google icons: http://kml4earth.appspot.com/icons.html
 

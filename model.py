@@ -141,6 +141,7 @@ class Invitation(db.Model):
     destination_lng = db.Column(db.String(30), nullable=False)
     rendezvous_date = db.Column(db.DateTime, nullable=False)
     rendezvous_name = db.Column(db.String(100), nullable=False)
+    rendezvous_location = db.Column(db.String(120))
 
     #get all users who are on this invitation
     invite_users = db.relationship("User",

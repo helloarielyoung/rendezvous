@@ -5,9 +5,6 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Need help:
-    modified my base.html, and now map does not show
-
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
 
@@ -177,7 +174,10 @@ Way Future Features:
 ***DONE***
 ***********
 
-
+Spent an hour troubleshooting broken maps due to changes I had made to base.html,
+    then another 20 minutes undoing the changes made by the person who helped me
+    with troubleshooting and restoring original base.html.  Will revisit those
+    changes later given time.
 Got date, time and full name on button (active invitations)
 ^5/29^
 

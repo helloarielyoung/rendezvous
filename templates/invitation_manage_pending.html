@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!-- need to add route in server.py for this page -->
+
       <div id="PendingInvite" class="tab-pane fade">
           <h2>Pending Invitations</h2>
           <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %} 

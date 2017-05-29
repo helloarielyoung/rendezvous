@@ -13,6 +13,7 @@ import os
 
 app = Flask(__name__)
 map_api_key = os.environ["GOOGLE_JS_API_KEY"]
+# session['google_key'] = map_api_key
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = os.environ["FLASK_APP_SECRET_KEY"]
@@ -326,7 +327,26 @@ def invitation_update():
             status = 'rej'
 
         #then update the record with status
-        #then return success
+        Users_Invites.update().where(users_invites.user_id == user_id).\
+            where(users_invites.invite_id == rendezvous_id).\
+            values(status=status)
+
+        db.session.commit()
+
+        # if this does not work, try retrieving the users_invite object with a
+        # query and then modify that object and commit.  example:
+        # admin = User.query.filter_by(username='admin').first()
+        # admin.email = 'my_new_email@example.com'
+        # db.session.commit()
+
+        # user = User.query.get(5)
+        # user.name = 'New Name'
+        # db.session.commit()
+
+        success = {'status': 'successful'}
+        return jsonify(success)
+
+
 
 
 if __name__ == "__main__":

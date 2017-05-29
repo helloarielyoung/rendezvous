@@ -246,7 +246,7 @@ def invitation_new():
         user = User.query.get(user_id)
         #returns a list of User objects that are the user's active friends
         # user.act_friends[0].name gets the name of first friend in list of active friends
-        user_friends = user.act_friends
+        user_friends = user.active_friends
 
         return render_template("invitation_new.html",
                                map_api_key=map_api_key,
@@ -304,6 +304,30 @@ def invitation_save():
 
         success = {'status': 'successful'}
         return jsonify(success)
+
+
+@app.route('/invitation-accept-reject.json', methods=['POST'])
+def invitation_update():
+    """Update invitation as accepted or rejected"""
+
+# need to add test (and manuall test this!)
+    if session.get('user_id') is None:
+        # flash('You must be logged in to access that page')
+        return abort(400)
+
+    else:
+        rendezvous_id = request.form.get("invite_id")
+        user_id = session['user_id']
+        status = request.form.get("submit_button")
+
+        if status == "Accept":
+            status = "act"
+        else:
+            status = 'rej'
+
+        #then update the record with status
+        #then return success
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

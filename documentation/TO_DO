@@ -5,6 +5,9 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
+Need help:
+    modified my base.html, and now map does not show
+
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
 
@@ -173,6 +176,10 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+
+Got date, time and full name on button (active invitations)
+^5/29^
 
 Added bootstrap tabs to my user landing page.
 These errors stopped occurring on their own:

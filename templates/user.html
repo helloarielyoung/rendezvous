@@ -3,14 +3,14 @@
 
 <div class="container">
       <ul class="nav nav-pills">
-    <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+    <li class="active"><a data-toggle="pill" href="#profile">Profile</a></li>
     <li><a data-toggle="pill" href="#ActiveInvite">Active Invitations</a></li>
     <li><a data-toggle="pill" href="#PendingInvite">Pending Invitations</a></li>
     <li><a data-toggle="pill" href="#RejectedInvite">Rejected Invitations</a></li>
     <li><a data-toggle="pill" href="#Friends">Friends</a></li>
   </ul>
   <div class="tab-content">
-      <div id="home" class="tab-pane fade in active">
+      <div id="profile" class="tab-pane fade in active">
           <h2>Your User Profile</h2>
           <p> Click <a href='/rendezvous-map'>here</a> for animated google map
           </p> 
@@ -34,7 +34,7 @@
                   <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
                       <input type='hidden' name='user_id' value={{ session.user_id }}>
                       <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
-                      <input type='submit'name='submit_button', value={{ invite.rendezvous_date }}>
+                      <input type='submit'name='submit_button' value= '{{ invite.rendezvous_date }} {{ invite.rendezvous_name }}' style='width:auto' >
                   </form>
               </li>
               {% endfor %}

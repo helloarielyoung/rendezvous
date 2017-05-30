@@ -24,12 +24,26 @@
           </p> 
           <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
           </p>
-        add query that makes buttons here for any active invitations that are today
+        <h3>Click to go!</h3>
          <ul>{% for invite in active_invitation_data if invite[0] == 'act' %}
+              {% if session.user_id == invite[7] %}
           <li>
-            {{ invite.invite_id }} {{ invite.rendezvous_date }}
+              <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
+                <input type='hidden' name='user_id' value={{ session.user_id }}>
+                <input type='hidden' name='invite_id' value={{ invite[1] }}>
+                <input type='submit'name='submit_button' value= 'ID: {{invite[1] }} {{ invite[3] }} {{ invite[2] }}' style='width:auto' >
+              </form>
           </li>
-              {% endfor %}
+              {% else %}
+          <li>
+              <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
+                <input type='hidden' name='user_id' value={{ session.user_id }}>
+                <input type='hidden' name='invite_id' value={{ invite[1] }}>
+                <input type='submit'name='submit_button' value= 'ID: {{invite[1] }} {{ invite[3] }} {{ invite[2] }} with {{ invite.name }}' style='width:auto' >
+              </form>
+          </li>
+              {% endif %}
+             {% endfor %}
           </ul>
 
         Add query that makes buttons here for any friend requests that are n-days

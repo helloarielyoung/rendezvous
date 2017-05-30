@@ -91,13 +91,15 @@ def get_user(user_id):
         today = "%s-%s-%s 00:00:00" % (today.year, today.month, today.day)
 
         #active invitations that are today
+# and list other active users if it's created by self
         stmt = db.text("SELECT ui.status,\
                                ui.invite_id,\
                                i.rendezvous_name,\
                                i.rendezvous_date,\
                                u.name, \
                                i.rendezvous_location_name,\
-                               i.rendezvous_location_address\
+                               i.rendezvous_location_address,\
+                               u.user_id\
         FROM users_invites ui\
         JOIN invitations i on ui.invite_id = i.invite_id \
         JOIN users u on u.user_id = i.created_by_id \
@@ -110,11 +112,12 @@ def get_user(user_id):
                             Invitation.rendezvous_date,
                             User.name,
                             Invitation.rendezvous_location_name,
-                            Invitation.rendezvous_location_address)
+                            Invitation.rendezvous_location_address,
+                            User.user_id)
         active_invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
             Invitation.rendezvous_name, Invitation.rendezvous_date,\
             User.name, Invitation.rendezvous_location_name,\
-            Invitation.rendezvous_location_address).\
+            Invitation.rendezvous_location_address, User.user_id).\
             from_statement(stmt).params(user_id=session['user_id'],
                                         today=today, tomorrow=tomorrow).all()
 

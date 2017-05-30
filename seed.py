@@ -42,7 +42,17 @@ def load_users():
               email='user5@email.com',
               password=hash_pass('pass'))
 
-    db.session.add_all([u1, u2, u3, u4, u5])
+    u6 = User(user_id=6,
+              name='Test User 6',
+              email='user6@email.com',
+              password=hash_pass('pass'))
+
+    u7 = User(user_id=7,
+              name='Test User 7',
+              email='user7@email.com',
+              password=hash_pass('pass'))
+
+    db.session.add_all([u1, u2, u3, u4, u5, u6, u7])
 
     db.session.commit()
 
@@ -60,7 +70,7 @@ def load_invitations():
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 29 09:00:00',
+                         rendezvous_date='2017 05 30 09:00:00',
                          rendezvous_name='Girls coffee date',
                          rendezvous_location_name='Test location 1',
                          rendezvous_location_address='123 Street')
@@ -70,7 +80,6 @@ def load_invitations():
                          created_date='2017 05 15 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 30 11:00:00',
                          rendezvous_name='Coffee with Joe',
                          rendezvous_location_name='Test location 2',
@@ -81,12 +90,21 @@ def load_invitations():
                          created_date='2017 05 20 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 06 02 13:00:00',
                          rendezvous_name='Sue\'s Birthday',
                          rendezvous_location_name='Test location',
                          rendezvous_location_address='678 Street')
-    db.session.add_all([invite1, invite2, invite3])
+
+    invite4 = Invitation(invite_id=4,
+                         created_by_id=3,
+                         created_date='2017 05 20 9:00:00',
+                         destination_lat=37.7888754,
+                         destination_lng=-122.411542,
+                         rendezvous_date='2017 06 02 15:00:00',
+                         rendezvous_name='Drinks with Allison',
+                         rendezvous_location_name='A Bar',
+                         rendezvous_location_address='8910 Street')
+    db.session.add_all([invite1, invite2, invite3, invite4])
 
     db.session.commit()
 
@@ -115,7 +133,14 @@ def load_user_invites():
     ui11 = UserInvite(ui_id=11, invite_id=3, user_id=3, status='rej', created_date='01/01/2017')
     ui12 = UserInvite(ui_id=12, invite_id=3, user_id=4, status='act', created_date='01/01/2017')
     ui13 = UserInvite(ui_id=13, invite_id=3, user_id=5, status='act', created_date='01/01/2017')
-    db.session.add_all([ui1, ui2, ui3, ui4, ui5, ui6, ui7, ui8, ui9, ui10, ui11, ui12, ui13])
+
+    # created by 3:
+    ui14 = UserInvite(ui_id=14, invite_id=4, user_id=3, status='act', created_date='01/01/2017')
+    ui15 = UserInvite(ui_id=15, invite_id=4, user_id=1, status='pen', created_date='01/01/2017')
+    ui16 = UserInvite(ui_id=16, invite_id=4, user_id=2, status='pen', created_date='01/01/2017')
+
+    db.session.add_all([ui1, ui2, ui3, ui4, ui5, ui6, ui7, ui8, ui9, ui10, ui11,
+                        ui12, ui13, ui14, ui15, ui15, ui16])
 
     db.session.commit()
 
@@ -151,12 +176,16 @@ def load_relationships():
     rel2 = Relationship(user_id=1, friend_id=3, status='act', request_date='2017 05 09 09:00:00')
     rel3 = Relationship(user_id=2, friend_id=1, status='act')
     rel4 = Relationship(user_id=3, friend_id=1, status='act')
+    rel7 = Relationship(user_id=3, friend_id=2, status='act', request_date='2017 05 09 09:00:00')
+    rel8 = Relationship(user_id=2, friend_id=3, status='act')
+    rel9 = Relationship(user_id=1, friend_id=6, status='act', request_date='2017 05 09 09:00:00')
+    rel10 = Relationship(user_id=6, friend_id=1, status='act')
     # pending relationship
-    rel5 = Relationship(user_id=1, friend_id=4, status='pen', request_date='2017 05 09 09:00:00')    
+    rel5 = Relationship(user_id=1, friend_id=4, status='pen', request_date='2017 05 09 09:00:00')
     # rejected relationship
-    rel6 = Relationship(user_id=1, friend_id=5, status='rej', request_date='2017 05 09 09:00:00')    
+    rel6 = Relationship(user_id=1, friend_id=5, status='rej', request_date='2017 05 09 09:00:00')
 
-    db.session.add_all([rel1, rel2, rel3, rel4, rel5, rel6])
+    db.session.add_all([rel1, rel2, rel3, rel4, rel5, rel6, rel7, rel8, rel9, rel10])
 
     db.session.commit()
 
@@ -242,6 +271,53 @@ def load_waypoints():
         # current_time = item['time']
 
         waypoint = Waypoint(invite_id=1, user_id=3,
+                            # current_time=current_time,
+                            waypoint_lat=waypoint_lat,
+                            waypoint_long=waypoint_long,
+                            created_date='01/01/2017')
+        db.session.add(waypoint)
+
+#helper_functions.get_route_data('299 Octavia St San Francisco','683 Sutter st San Francisco')
+
+    route4 = [{'lat': 37.7746434, 'lng': -122.4242785},
+              {'lat': 37.7738748, 'lng': -122.4241174},
+              {'lat': 37.7736814, 'lng': -122.42573},
+              {'lat': 37.7746043, 'lng': -122.4259057},
+              {'lat': 37.7752318, 'lng': -122.420976},
+              {'lat': 37.7882861, 'lng': -122.423617},
+              {'lat': 37.7899599, 'lng': -122.4104554},
+              {'lat': 37.7890236, 'lng': -122.4102744},
+              {'lat': 37.7888568, 'lng': -122.4115372}]
+
+    for item in route4:
+        waypoint_lat = item['lat']
+        waypoint_long = item['lng']
+        # current_time = item['time']
+
+        waypoint = Waypoint(invite_id=2, user_id=1,
+                            # current_time=current_time,
+                            waypoint_lat=waypoint_lat,
+                            waypoint_long=waypoint_long,
+                            created_date='01/01/2017')
+        db.session.add(waypoint)
+
+    db.session.commit()
+
+# https://maps.googleapis.com/maps/api/directions/json?origin=221+4th+St+San+Francisco&destination=683+Sutter+St+San+Francisco&mode=driving&key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0get_route_data('221 4th St San Francisco','683 Sutter St San Francisco')
+# '221 4th St San Francisco'
+    route5 = [{'lat': 37.7831001, 'lng': -122.4025164},
+              {'lat': 37.7820395, 'lng': -122.4011837},
+              {'lat': 37.78380380000001, 'lng': -122.3989875},
+              {'lat': 37.7879767, 'lng': -122.4035082},
+              {'lat': 37.78982740000001, 'lng': -122.4038894},
+              {'lat': 37.7888568, 'lng': -122.4115372}]
+
+    for item in route5:
+        waypoint_lat = item['lat']
+        waypoint_long = item['lng']
+        # current_time = item['time']
+
+        waypoint = Waypoint(invite_id=2, user_id=3,
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long,

@@ -5,6 +5,10 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
+Invitations:  problem:  status of MY invitations....
+    does not work to have status start pending and change when accepted/rejected by others because what if some accept and some decline?
+    Do I need a different status for self's invitations in user_invites?
+
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
 

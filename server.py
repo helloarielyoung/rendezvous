@@ -74,20 +74,11 @@ def get_user(user_id):
 
         user = User.query.get(user_id)
 
-        #what I want here:
-        # for this user in users_invites, get list of all invites
-        # and pull back the data for all their invites...
-
         # NOTE:  this means I will need to exclude those created by THIS USER
         #  from display in all but the Accepted list... does that make sense?
         #  maybe if i leave that display coming from the active_invites relationship
 
-        # SELECT ui.status, ui.invite_id, i.destination_lat, i.destination_long,
-        # u.name
-        # FROM users_invites ui
-        # JOIN invitations i on ui.invite_id = i.invite_id
-        # JOIN users u on u.user_id = i.created_by
-        # WHERE ui.user_id = This session user_id
+#IS THIS REALLY WHAT I THINK I AM GETTING??
 
         stmt = db.text("SELECT ui.status,\
                                ui.invite_id,\
@@ -96,9 +87,9 @@ def get_user(user_id):
                                u.name, \
                                i.rendezvous_location_name,\
                                i.rendezvous_location_address\
-        FROM users_invites ui\
+        FROM users_invites ui\  # get all logged-in users invitations
         JOIN invitations i on ui.invite_id = i.invite_id \
-        JOIN users u on u.user_id = i.created_by_id \
+        JOIN users u on u.user_id = i.created_by_id \  #get name of user who created this invite
         WHERE ui.user_id = :user_id\
         ORDER BY rendezvous_date, rendezvous_name")
         stmt = stmt.columns(UserInvite.status,

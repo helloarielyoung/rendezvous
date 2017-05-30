@@ -17,7 +17,7 @@
           <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
           </p>
         add query that makes buttons here for any active invitations that are today
-         <ul>{% for invite in user.pending_invites|sort(attribute='rendezvous_date') %}
+         <ul>{% for invite in invitation_data if invite[0] == 'act' %}
           <li>
             {{ invite.rendezvous_date }}
           </li>
@@ -28,7 +28,7 @@
         old.
       </div>
       <div id="ActiveInvite" class="tab-pane fade">
-          <h2>Accepted Invitations</h2>
+          <h2>Active Invitations</h2>
           <ul>{% for invite in user.active_invites|sort(attribute='rendezvous_date') %} 
               <li>
                   <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
@@ -61,9 +61,13 @@
       <div id="RejectedInvite" class="tab-pane fade">
           <h2>Rejected Invitations</h2>
           <p>This will be a link to modal form to view rejected invites</p>
-          <ul>{% for invite in user.rejected_invites|sort(attribute='rendezvous_date') %}
-          <li>
-            {{ invite.rendezvous_date }}
+           <ul>{% for invite in invitation_data if invite[0] == 'rej' %}
+            <li>
+              Name: {{ invite[2] }} <br>
+              Location: {{ invite[5]}}<br>
+              {{ invite[6] }}<br>
+              Invited by: {{ invite[4] }} <br>
+              Date and time: {{ invite[3] }} <br>
           </li>
               {% endfor %}
           </ul>

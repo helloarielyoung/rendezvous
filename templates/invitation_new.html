@@ -105,6 +105,7 @@
                 <label for="rendezvousLocation">Location</label>
                   <p id="rendezvousLocationName"> </p>
                   <p id="rendezvousLocationAddress"></p>
+
             </div>
 
             <div class="form-group">
@@ -159,6 +160,8 @@
         }
         var data = {rendezvousName: $('#rendezvousName').val(),
                 rendezvousDateTime: $('#rendezvousDateTime').val(),
+                rendezvousLocationAddress: $('#rendezvousLocationAddress').text(),
+                rendezvousLocationName: $('#rendezvousLocationName').text(),
                 rendezvousFriends: JSON.stringify(friendList),
                 destinationLat: destination_lat,
                 destinationLng: destination_lng
@@ -268,6 +271,7 @@
                     console.log(marker.getPosition().lat(), marker.getPosition().lng());
                     destination_lat = marker.getPosition().lat();
                     destination_lng = marker.getPosition().lng();
+                    // show it on the modal form
                       $("#rendezvousLocationName").html(places[0].name);
                       $('#rendezvousLocationAddress').html(places[0].formatted_address);
                     launchModal();

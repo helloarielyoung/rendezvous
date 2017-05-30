@@ -311,6 +311,8 @@ def invitation_save():
         rendezvous_friends = request.form.get("rendezvousFriends")
         destination_lat = request.form.get("destinationLat")
         destination_lng = request.form.get("destinationLng")
+        rendezvous_location_name = request.form.get("rendezvousLocationName")
+        rendezvous_location_address = request.form.get("rendezvousLocationAddress")
 
         user_id = session['user_id']
         created_date = datetime.datetime.now()
@@ -321,7 +323,9 @@ def invitation_save():
                              destination_lat=destination_lat,
                              destination_lng=destination_lng,
                              rendezvous_date=rendezvous_date,
-                             rendezvous_name=rendezvous_name)
+                             rendezvous_name=rendezvous_name,
+                             rendezvous_location_name=rendezvous_location_name,
+                             rendezvous_location_address=rendezvous_location_address)
 
         db.session.add(invite1)
         db.session.flush()

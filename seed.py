@@ -57,29 +57,35 @@ def load_invitations():
     invite1 = Invitation(invite_id=1,
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.7888568,
-                         destination_lng=-122.4115372,
+                         destination_lat=37.7888754,
+                         destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 12 09:00:00',
-                         rendezvous_name='Girls coffee date')
+                         rendezvous_name='Girls coffee date',
+                         rendezvous_location_name='Test location 1',
+                         rendezvous_location_address='123 Street')
 
     invite2 = Invitation(invite_id=2,
                          created_by_id=1,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.7888568,
-                         destination_lng=-122.4115372,
+                         destination_lat=37.7888754,
+                         destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 19 11:00:00',
-                         rendezvous_name='Coffee with Joe')
+                         rendezvous_name='Coffee with Joe',
+                         rendezvous_location_name='Test location 2',
+                         rendezvous_location_address='345 Street')
 
     invite3 = Invitation(invite_id=3,
                          created_by_id=2,
                          created_date='2017 05 09 9:00:00',
-                         destination_lat=37.7888568,
-                         destination_lng=-122.4115372,
+                         destination_lat=37.7888754,
+                         destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
                          rendezvous_date='2017 05 22 13:00:00',
-                         rendezvous_name='Sue\'s Birthday')
+                         rendezvous_name='Sue\'s Birthday',
+                         rendezvous_location_name='Test location',
+                         rendezvous_location_address='678 Street')
     db.session.add_all([invite1, invite2, invite3])
 
     db.session.commit()

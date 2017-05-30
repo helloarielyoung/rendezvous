@@ -12,9 +12,9 @@
     <!-- Pending: list of users who have not responded to invite -->
     <!-- Active: list of users who have said yes -->
     <!-- Declined:  list of users who have declined the invite -->
-    <li><a data-toggle="pill" href="#ActiveInvite">Active Invitations</a></li>
-    <li><a data-toggle="pill" href="#PendingInvite">Pending Invitations</a></li>
-    <li><a data-toggle="pill" href="#RejectedInvite">Rejected Invitations</a></li>
+    <li><a data-toggle="pill" href="#sentInvite">Sent Invitations</a></li>
+    <li><a data-toggle="pill" href="#receivedInvite">Received Invitations</a></li>
+    <!-- <li><a data-toggle="pill" href="#RejectedInvite">Rejected Invitations</a></li> -->
     <li><a data-toggle="pill" href="#Friends">Friends</a></li>
   </ul>
   <div class="tab-content">
@@ -25,7 +25,7 @@
           <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
           </p>
         <h3>Click to go!</h3>
-         <ul>{% for invite in active_invitation_data if invite[0] == 'act' %}
+         <ul>{% for invite in imminent_invites_sum %}
               {% if session.user_id == invite[7] %}
           <li>
               <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
@@ -49,8 +49,8 @@
         Add query that makes buttons here for any friend requests that are n-days
         old.
       </div>
-      <div id="ActiveInvite" class="tab-pane fade">
-          <h2>Active Invitations</h2>
+      <div id="sentInvite" class="tab-pane fade">
+          <h2>Your Active Invitations</h2>
           <ul>{% for invite in active_invitation_data %} 
               <li>
                   <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
@@ -61,9 +61,25 @@
               </li>
               {% endfor %}
           </ul>
+            <div id="RejectedInvite">
+              <h2>Declined Invitations</h2>
+     <!-- need to change this to this user's invites that have any rejects ) -->
+              <p>List of invites that have any rejections, show users who declined</p>
+               <ul>{% for invite in active_invitation_data if invite[0] == 'rej' %}
+                <li>
+                  Name: {{ invite[2] }} <br>
+                  Location: {{ invite[5]}}<br>
+                  {{ invite[6] }}<br>
+                  Invited by: {{ invite[4] }} <br>
+                  Date and time: {{ invite[3] }} <br>
+              </li>
+                  {% endfor %}
+              </ul>
+            </div>
       </div>
-      <div id="PendingInvite" class="tab-pane fade">
-          <h2>Pending Invitations</h2>
+
+      <div id="receivedInvite" class="tab-pane fade">
+          <h2>Received Invitations</h2>
 <!-- need to change this to pending (using active for now until pending query is built) -->
           <ul>{% for invite in active_invitation_data if invite[0] == 'pen' %}
             <li>
@@ -79,21 +95,6 @@
               </form>
             </li>
           {% endfor %}
-          </ul>
-      </div>
-      <div id="RejectedInvite" class="tab-pane fade">
-          <h2>Rejected Invitations</h2>
- <!-- need to change this to rejected (using active for now until pending query is built) -->
-          <p>This will be a link to modal form to view rejected invites</p>
-           <ul>{% for invite in active_invitation_data if invite[0] == 'rej' %}
-            <li>
-              Name: {{ invite[2] }} <br>
-              Location: {{ invite[5]}}<br>
-              {{ invite[6] }}<br>
-              Invited by: {{ invite[4] }} <br>
-              Date and time: {{ invite[3] }} <br>
-          </li>
-              {% endfor %}
           </ul>
       </div>
       <div id="Friends" class="tab-pane fade">

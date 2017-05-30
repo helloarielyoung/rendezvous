@@ -1,5 +1,15 @@
 ****Links & notes for my project****
 
+db.session.query(from Class or list of columns with one from from class listed first).join:
+  use aliased(class name) to be able to join to same table multiple times, and add
+  the table from which you are joining (User.addresses) to specify on clause
+        a_alias = aliased(Address)
+
+        q = session.query(User).\
+          join(User.addresses).\
+          join(a_alias, User.addresses)
+
+
 
 Jinja2 conditional for loop that works on data from a query:
         <ul>{% for invite in invitation_data if invite[0] == 'pen' %}

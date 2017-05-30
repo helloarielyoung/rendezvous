@@ -1,6 +1,7 @@
 """Models and database functions for Ariel's project - db Rendezvous."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import aliased
 # from helper_functions import *
 import bcrypt
 
@@ -50,6 +51,10 @@ class User(db.Model):
                                        secondaryjoin="and_(User.user_id==UserInvite.user_id, "
                                        "UserInvite.status=='rej')",
                                        backref="rejected_invite_users")
+
+    # this is all invites created by this user
+    all_my_invites = db.relationship("Invitation",
+                                     backref="invite_creator")
 
     #get all relationships
     all_relationships = db.relationship("Relationship", foreign_keys='Relationship.user_id')

@@ -121,9 +121,56 @@ def get_user(user_id):
             from_statement(stmt).params(user_id=session['user_id'],
                                         today=today, tomorrow=tomorrow).all()
 
+        #summary data of invites that:
+        #   i created or was invited to
+        #   that i accepted (status = 'act')
+        #   that occur today or tomorrow
+        imminent_invites_sum = db.session.query(UserInvite.status,
+                                                UserInvite.invite_id,
+                                                Invitation.rendezvous_name,
+                                                Invitation.rendezvous_date,
+                                                User.name,
+                                                Invitation.rendezvous_location_name,
+                                                Invitation.rendezvous_location_address,
+                                                User.user_id)\
+                                .join(Invitation, User)\
+                                .filter(UserInvite.user_id == session['user_id'],
+                                        UserInvite.status == 'act',
+                                        Invitation.rendezvous_date >= today,
+                                        Invitation.rendezvous_date <= tomorrow).all()
+
+        #data of invites that:
+        #   i created
+        #   only get user data for users who are not me
+        ui2 = aliased(UserInvites)
+        all_my_invites = db.session.query(UserInvite.invite_id,
+                                          Invitation.rendezvous_name,
+                                          Invitation.rendezvous_date,
+                                          Invitation.rendezvous_location_name,
+                                          Invitation.rendezvous_location_address,
+                                          #join back to UI to see which friends accepted/declined
+                                          ui2.user_id,
+                                          ui2.status,
+                                          User.user_id,
+                                          User.name)\
+                                .join(Invitation)\
+                                .join(ui2)\
+                                .join(User, ui2.user_id)\
+                                .filter(Invitation.created_by_id == session['user_id']
+                                        & User.user_id != session['user_id'])\
+                                .order_by(UserInvite.invite_id, User.name).all()
+
+
+        #Invitation Details Query
+        #for invite_id, gather all the deets:
+        #rendezvous_name, rendezvous_date, location_name, location_address,
+        #created_by_id, created_by_name,
+        #
+
         return render_template('user.html',
                                user=user,
-                               active_invitation_data=active_invitation_data)
+                               active_invitation_data=active_invitation_data,
+                               imminent_invites_sum=imminent_invites_sum)
 
     else:
         flash('You must be logged in to access that page.')

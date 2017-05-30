@@ -12,11 +12,6 @@ Invitations:  problem:  status of MY invitations....
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
 
-Working on invite lists...  filter using Jinja?
-    {% for invite in user.pending_invites|selectattr("rendezvous_date", "equalto", _datetime)|sort(attribute='rendezvous_date') %} or something like that....
-
-    trying textual SQL:  http://docs.sqlalchemy.org/en/latest/orm/tutorial.html#orm-tutorial-literal-sql
-
 Things that are most showable:
     improve demo map:
         more showable-routes
@@ -180,6 +175,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Modified query to get list of today's invites correctly to show on front of user profile.
+    need to copy how i did that for Received Invites and Sent Invites (see notebook).
+    (Took almost an hour to figure out how to get current datetime in local timezone - very frustrating!)
 Added rendezvousLocationName and Address to save in db with new invitation to
     make it easier to disply the name & address in pending invitation management
 Spent an hour troubleshooting broken maps due to changes I had made to base.html,

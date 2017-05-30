@@ -60,29 +60,29 @@ def load_invitations():
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 12 09:00:00',
+                         rendezvous_date='2017 05 29 09:00:00',
                          rendezvous_name='Girls coffee date',
                          rendezvous_location_name='Test location 1',
                          rendezvous_location_address='123 Street')
 
     invite2 = Invitation(invite_id=2,
                          created_by_id=1,
-                         created_date='2017 05 09 9:00:00',
+                         created_date='2017 05 15 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 19 11:00:00',
+                         rendezvous_date='2017 05 30 11:00:00',
                          rendezvous_name='Coffee with Joe',
                          rendezvous_location_name='Test location 2',
                          rendezvous_location_address='345 Street')
 
     invite3 = Invitation(invite_id=3,
                          created_by_id=2,
-                         created_date='2017 05 09 9:00:00',
+                         created_date='2017 05 20 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 22 13:00:00',
+                         rendezvous_date='2017 06 02 13:00:00',
                          rendezvous_name='Sue\'s Birthday',
                          rendezvous_location_name='Test location',
                          rendezvous_location_address='678 Street')
@@ -127,10 +127,10 @@ def load_status():
 
     Status.query.delete()
 
-    for status, descrip in [('pen', 'pending'),
-                            ('rej', 'rejected'),
-                            ('act', 'active'),
-                            ('ina', 'inactive')]:
+    for status, descrip in [('pen', 'pending'),  #has not been accepted/rejected
+                            ('rej', 'rejected'),  #declined
+                            ('act', 'active'),  #accepted (or if self, sent out)
+                            ('ina', 'inactive')]:  #cancelled or finished
         rel = Status(status_id=status, status_description=descrip)
         db.session.add(rel)
     db.session.commit()

@@ -5,8 +5,17 @@ from jinja2.ext import Extension
 
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, jsonify, render_template, redirect, request, flash, session, abort, json
+
+#for time
 import datetime
+import pytz
+import tzlocal
+
+# from helper_functions import *
+
 from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
+
+#to convert unicode to literal string
 import ast
 
 import os
@@ -74,12 +83,14 @@ def get_user(user_id):
 
         user = User.query.get(user_id)
 
-        # NOTE:  this means I will need to exclude those created by THIS USER
-        #  from display in all but the Accepted list... does that make sense?
-        #  maybe if i leave that display coming from the active_invites relationship
+        ptz = pytz.timezone('US/Pacific')
+        today = datetime.datetime.now(tz=ptz)
+        print today
 
-#IS THIS REALLY WHAT I THINK I AM GETTING??
+        tomorrow = today + + datetime.timedelta(days=1)
+        today = "%s-%s-%s 00:00:00" % (today.year, today.month, today.day)
 
+        #active invitations that are today
         stmt = db.text("SELECT ui.status,\
                                ui.invite_id,\
                                i.rendezvous_name,\
@@ -87,10 +98,11 @@ def get_user(user_id):
                                u.name, \
                                i.rendezvous_location_name,\
                                i.rendezvous_location_address\
-        FROM users_invites ui\  # get all logged-in users invitations
+        FROM users_invites ui\
         JOIN invitations i on ui.invite_id = i.invite_id \
-        JOIN users u on u.user_id = i.created_by_id \  #get name of user who created this invite
-        WHERE ui.user_id = :user_id\
+        JOIN users u on u.user_id = i.created_by_id \
+        WHERE ui.user_id = :user_id and ui.status = 'act'\
+              and rendezvous_date between :today and :tomorrow\
         ORDER BY rendezvous_date, rendezvous_name")
         stmt = stmt.columns(UserInvite.status,
                             UserInvite.invite_id,
@@ -99,15 +111,16 @@ def get_user(user_id):
                             User.name,
                             Invitation.rendezvous_location_name,
                             Invitation.rendezvous_location_address)
-        invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
+        active_invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
             Invitation.rendezvous_name, Invitation.rendezvous_date,\
             User.name, Invitation.rendezvous_location_name,\
             Invitation.rendezvous_location_address).\
-            from_statement(stmt).params(user_id=session['user_id']).all()
+            from_statement(stmt).params(user_id=session['user_id'],
+                                        today=today, tomorrow=tomorrow).all()
 
         return render_template('user.html',
                                user=user,
-                               invitation_data=invitation_data)
+                               active_invitation_data=active_invitation_data)
 
     else:
         flash('You must be logged in to access that page.')

@@ -4,6 +4,14 @@
 <div class="container">
       <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" href="#profile">Profile</a></li>
+
+    <!-- need to change these to two groups:  Received Invites (whose dates are in the future)  -->
+    <!-- which has grouped Pending (accept/decline), Declined (accept), Accepted (decline) -->
+    <!-- and Sent Invites (all but status 'ina'??) with (cancel) button changes status to 'ina' for all users on invites or (modify) which opens to /new-invitation with modal form populated with current data so you can change and submit...?? -->
+    <!-- which has list by date & name that you click on to see: -->\
+    <!-- Pending: list of users who have not responded to invite -->
+    <!-- Active: list of users who have said yes -->
+    <!-- Declined:  list of users who have declined the invite -->
     <li><a data-toggle="pill" href="#ActiveInvite">Active Invitations</a></li>
     <li><a data-toggle="pill" href="#PendingInvite">Pending Invitations</a></li>
     <li><a data-toggle="pill" href="#RejectedInvite">Rejected Invitations</a></li>
@@ -17,9 +25,9 @@
           <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
           </p>
         add query that makes buttons here for any active invitations that are today
-         <ul>{% for invite in invitation_data if invite[0] == 'act' %}
+         <ul>{% for invite in active_invitation_data if invite[0] == 'act' %}
           <li>
-            {{ invite.rendezvous_date }}
+            {{ invite.invite_id }} {{ invite.rendezvous_date }}
           </li>
               {% endfor %}
           </ul>
@@ -29,12 +37,12 @@
       </div>
       <div id="ActiveInvite" class="tab-pane fade">
           <h2>Active Invitations</h2>
-          <ul>{% for invite in user.active_invites|sort(attribute='rendezvous_date') %} 
+          <ul>{% for invite in active_invitation_data %} 
               <li>
                   <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
                       <input type='hidden' name='user_id' value={{ session.user_id }}>
-                      <input type='hidden' name='invite_id' value={{ invite.invite_id }}>
-                      <input type='submit'name='submit_button' value= '{{ invite.rendezvous_date }} {{ invite.rendezvous_name }}' style='width:auto' >
+                      <input type='hidden' name='invite_id' value={{ invite[1] }}>
+                      <input type='submit'name='submit_button' value= '{{ invite[3] }} {{ invite[2] }} with {{ invite.name}}' style='width:auto' >
                   </form>
               </li>
               {% endfor %}
@@ -42,7 +50,8 @@
       </div>
       <div id="PendingInvite" class="tab-pane fade">
           <h2>Pending Invitations</h2>
-          <ul>{% for invite in invitation_data if invite[0] == 'pen' %}
+<!-- need to change this to pending (using active for now until pending query is built) -->
+          <ul>{% for invite in active_invitation_data if invite[0] == 'pen' %}
             <li>
               Name: {{ invite[2] }} <br>
               Location: {{ invite[5]}}<br>
@@ -60,8 +69,9 @@
       </div>
       <div id="RejectedInvite" class="tab-pane fade">
           <h2>Rejected Invitations</h2>
+ <!-- need to change this to rejected (using active for now until pending query is built) -->
           <p>This will be a link to modal form to view rejected invites</p>
-           <ul>{% for invite in invitation_data if invite[0] == 'rej' %}
+           <ul>{% for invite in active_invitation_data if invite[0] == 'rej' %}
             <li>
               Name: {{ invite[2] }} <br>
               Location: {{ invite[5]}}<br>

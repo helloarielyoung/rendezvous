@@ -2,6 +2,12 @@
 import json
 import requests
 
+# could not get time conversion function working
+#for time
+import datetime
+import pytz
+import tzlocal
+
 
 def get_route_data(start, end):
     """Returns formatted list of waypoints between start and end
@@ -40,3 +46,14 @@ def get_route_data(start, end):
     route = [{'lat':item['lat'], 'lng':item['lng']} for item in whole]
 
     print route
+
+
+#probably depreate this since I could not get it working - the simple tz=ptz does work
+def convert_to_local_time(utc_time):
+    local_timezone = tzlocal.get_localzone()  # get pytz tzinfo
+    ptz = pytz.timezone('US/Pacific')
+    # this works, but cant figure out how to apply to other dates in a function
+    dt = datetime.datetime.now(tz=ptz)
+    local_time = utc_time.datetime.localtime()
+
+    return local_time

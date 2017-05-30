@@ -93,9 +93,9 @@ def get_user(user_id):
                                ui.invite_id,\
                                i.rendezvous_name,\
                                i.rendezvous_date,\
-                               i.destination_lat,\
-                               i.destination_lng,\
-                               u.name \
+                               u.name, \
+                               i.rendezvous_location_name,\
+                               i.rendezvous_location_address\
         FROM users_invites ui\
         JOIN invitations i on ui.invite_id = i.invite_id \
         JOIN users u on u.user_id = i.created_by_id \
@@ -105,12 +105,13 @@ def get_user(user_id):
                             UserInvite.invite_id,
                             Invitation.rendezvous_name,
                             Invitation.rendezvous_date,
-                            Invitation.destination_lat,
-                            Invitation.destination_lng,
-                            User.name)
+                            User.name,
+                            Invitation.rendezvous_location_name,
+                            Invitation.rendezvous_location_address)
         invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
             Invitation.rendezvous_name, Invitation.rendezvous_date,\
-            Invitation.destination_lat, Invitation.destination_lng, User.name).\
+            User.name, Invitation.rendezvous_location_name,\
+            Invitation.rendezvous_location_address).\
             from_statement(stmt).params(user_id=session['user_id']).all()
 
         return render_template('user.html',

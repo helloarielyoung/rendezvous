@@ -35,7 +35,7 @@ Rendezvous Map Improvements:
         point and adjust the zoom and center point of the map to include all of
         both routes
     Make demo animation slower, have user2 arrive first, then send alert when user2 arrives at destination
-    Add Invite info when you click on the rendezvous marker
+    Add on-click listener to launch modal when click on ANY googlmap marker
 
 Question about testing: had to manually create "testdb".  Other ways?
 
@@ -176,6 +176,8 @@ Way Future Features:
 ***DONE***
 ***********
 
+Added rendezvousLocationName and Address to save in db with new invitation to
+    make it easier to disply the name & address in pending invitation management
 Spent an hour troubleshooting broken maps due to changes I had made to base.html,
     then another 20 minutes undoing the changes made by the person who helped me
     with troubleshooting and restoring original base.html.  Will revisit those

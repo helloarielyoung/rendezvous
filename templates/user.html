@@ -44,15 +44,15 @@
           <h2>Pending Invitations</h2>
           <ul>{% for invite in invitation_data if invite[0] == 'pen' %}
             <li>
-              Name: {{ invite[1] }} <br>
-              Invited by: {{ invite[6] }} <br>
+              Name: {{ invite[2] }} <br>
+              Location: {{ invite[5]}}<br>
+              {{ invite[6] }}<br>
+              Invited by: {{ invite[4] }} <br>
               Date and time: {{ invite[3] }} <br>
-              How do I get the google maps location here?{{ invite[4] }}, {{ invite[5] }}
               <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[0] }}>
                   <input type='submit'name='pending_submit_button' value= 'Accept' >
                   <input type='submit'name='peiding_submit_button' value= 'Decline' >
-
               </form>
             </li>
           {% endfor %}

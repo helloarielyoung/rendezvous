@@ -431,7 +431,7 @@ def invitation_save():
 #                                 invite_id=invite_id)
 
 
-@app.route('/invitation-accept-reject.json', methods=['POST'])
+@app.route('/invitation-change-status.json', methods=['POST'])
 def invitation_update():
     """Update invitation as accepted or rejected"""
 
@@ -441,27 +441,27 @@ def invitation_update():
         return abort(400)
 
     else:
-        rendezvous_id = request.form.get("invite_id")
+        invite_id = int(request.form.get("invite_id"))
         user_id = session['user_id']
-        status = request.form.get("pending_submit_button")
+        status = request.form.get("recieved_submit_button")
 
-        if status == "Accept":
+        if status == "Pending":
+            status == "pen"
+        elif status == "Accept":
             status = "act"
+        elif status == "Inactive":
+            status == "ina"
         else:
             status = 'rej'
 
-        #then update the record with status
-        # admin = User.query.filter_by(username='admin').first()
-        # admin.email = 'my_new_email@example.com'
-        # db.session.commit()
+        print status
 
-        # user = User.query.get(5)
-        # user.name = 'New Name'
-        # db.session.commit()
-        update_invite = UserInvite.query.filter_by(UserInvite.user_id == user_id,
-                        UserInvite.invite_id == invite_id).one()
+        invite_to_update =\
+            UserInvite.query.filter(UserInvite.user_id == user_id,
+                                    UserInvite.invite_id == invite_id).one()
+        print invite_to_update
 
-        update_invite.status = status
+        invite_to_update.status = status
 
         db.session.commit()
 
@@ -470,7 +470,15 @@ def invitation_update():
         #     User_Invites.invite_id == invite_id).update(status=status)
 
         success = {'status': 'successful'}
-        return jsonify(success)
+        return redirect(redirect_url())
+
+
+# Helper Functions
+def redirect_url(default='index'):
+    """redirect user back to page they came from"""
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
 
 
 if __name__ == "__main__":

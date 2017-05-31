@@ -8,6 +8,11 @@ import datetime
 import pytz
 import tzlocal
 
+def redirect_url(default='index'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
+
 
 def get_route_data(start, end):
     """Returns formatted list of waypoints between start and end

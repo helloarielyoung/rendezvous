@@ -93,18 +93,20 @@
                     6 Invitation.rendezvous_location_name,
                     7 Invitation.rendezvous_location_address,
                     8 User.user_id -->
-
-              Name: {{ invite[2] }} <br>
+<!-- it would be way better if i did the status change using jQuery -->
+<!-- wouldn't it? -->
+              InviteID: {{ invite[2] }}
+              Name: {{ invite[3] }} <br>
               Location: {{ invite[5]}}<br>
               {{ invite[6] }}<br>
               Invited by: {{ invite[4] }} <br>
               Date and time: {{ invite[3] }} <br>
               <b>Current Status: {{ invite[1]}} </b><br>
               Click below to modify the status:
-              <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
-                  <input type='hidden' name='invite_id' value={{ invite[0] }}>
-                  <input type='submit'name='pending_submit_button' value= 'Accept' >
-                  <input type='submit'name='peiding_submit_button' value= 'Decline' >
+              <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value={{ invite[2] }}>
+                  <input type='submit'name='recieved_submit_button' value= 'Accept' >
+                  <input type='submit'name='received_submit_button' value= 'Decline' >
               </form>
             </li>
           {% endfor %}
@@ -118,10 +120,13 @@
               {{ invite[6] }}<br>
               Invited by: {{ invite[4] }} <br>
               Date and time: {{ invite[3] }} <br>
-              <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
-                  <input type='hidden' name='invite_id' value={{ invite[0] }}>
-                  <input type='submit'name='pending_submit_button' value= 'Accept' >
-                  <input type='submit'name='peiding_submit_button' value= 'Decline' >
+              <b>Current Status: {{ invite[1]}} </b><br>
+              Click below to modify the status:
+
+              <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value={{ invite[2] }}>
+                  <input type='submit'name='received_submit_button' value= 'Decline' >
+                  <input type='submit'name='received_submit_button' value= 'Pending' >
               </form>
             </li>
           {% endfor %}
@@ -135,10 +140,12 @@
               {{ invite[6] }}<br>
               Invited by: {{ invite[4] }} <br>
               Date and time: {{ invite[3] }} <br>
-              <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
-                  <input type='hidden' name='invite_id' value={{ invite[0] }}>
-                  <input type='submit'name='pending_submit_button' value= 'Accept' >
-                  <input type='submit'name='peiding_submit_button' value= 'Decline' >
+              <b>Current Status: {{ invite[1]}} </b><br>
+              Click below to modify the status:
+              <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value={{ invite[2] }}>
+                  <input type='submit'name='received_submit_button' value= 'Accept' >
+                  <input type='submit'name='received_submit_button' value= 'Pending' >
               </form>
             </li>
           {% endfor %}
@@ -159,4 +166,33 @@
       </div>
     </div>
 </div>
+<script>
+if (location.hash) {
+  $('a[href=\'' + location.hash + '\']').tab('show');
+}
+var activeTab = localStorage.getItem('activeTab');
+if (activeTab) {
+  $('a[href="' + activeTab + '"]').tab('show');
+}
+
+$('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
+  e.preventDefault()
+  var tab_name = this.getAttribute('href')
+  if (history.pushState) {
+    history.pushState(null, null, tab_name)
+  }
+  else {
+    location.hash = tab_name
+  }
+  localStorage.setItem('activeTab', tab_name)
+
+  $(this).tab('show');
+  return false;
+});
+$(window).on('popstate', function () {
+  var anchor = location.hash ||
+    $('a[data-toggle=\'tab\']').first().attr('href');
+  $('a[href=\'' + anchor + '\']').tab('show');
+});
+</script>
 {% endblock %}

@@ -150,9 +150,9 @@ def load_user_invites():
     ui16 = UserInvite(ui_id=16, invite_id=4, user_id=2, status='pen', created_date='01/01/2017')
 
    # created by 3:
-    ui14 = UserInvite(ui_id=17, invite_id=5, user_id=3, status='act', created_date='01/01/2017')
-    ui15 = UserInvite(ui_id=18, invite_id=5, user_id=1, status='rej', created_date='01/01/2017')
-    ui16 = UserInvite(ui_id=19, invite_id=5, user_id=2, status='act', created_date='01/01/2017')
+    ui17 = UserInvite(ui_id=17, invite_id=5, user_id=3, status='act', created_date='01/01/2017')
+    ui18 = UserInvite(ui_id=18, invite_id=5, user_id=1, status='rej', created_date='01/01/2017')
+    ui19 = UserInvite(ui_id=19, invite_id=5, user_id=2, status='act', created_date='01/01/2017')
 
     db.session.add_all([ui1, ui2, ui3, ui4, ui5, ui6, ui7, ui8, ui9, ui10, ui11,
                         ui12, ui13, ui14, ui15, ui15, ui16, ui17, ui18, ui19])

@@ -32,6 +32,10 @@ Next most important:  could I get google maps routes API thingy working bettween
 
 Failing that, perhaps make Sent Invitations better:  group by Invite, button to cancel
 
+It would be good to refactor how I'm sending invite query data to user's page:
+    if i sent a dictionary, then understanding and changing the jinja references
+    to data bits would be easier (could be invite.name or invite['name'] instead of invite[0])
+    
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
     Hover over dots show name & current ETA.

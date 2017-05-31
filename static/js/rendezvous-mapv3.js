@@ -22,14 +22,18 @@ function initMap() {
     title: 'Rendezvous Here'
         });
 
-//doesn't work becuase userLines isn't populated when the map is rendered....
-    //animate the symbols
-    for (var i=0; i<userLines.length; i++) {
-        var count = 30;
-        setTimeout(animateSymbol(userLines[i], count), 4500);
-        count = count + 10;
-      }    
+//animate doesn't work HERE becuase userLines isn't populated when the map is rendered....
   }
+
+// wait until page is loaded, then animate the symbols
+//this didn't work either - userLines is still empty here
+// $(function() {
+//     for (var i=0; i<userLines.length; i++) {
+//         var count = 30;
+//         setTimeout(animateSymbol(userLines[i], count), 4500);
+//         count = count + 10;
+//       }
+//     });
 
 // this waits until the page is loaded, queries the database for waypoint data
 // for users on this invitation, then runs dataReceived
@@ -85,10 +89,8 @@ function dataReceived(results) {
                         }],
                      map: map
                       });
-
             //save userId and userLine so I can update icon position in realitme later
             userLines[thisUserId] = userLine;
-
                
             //END loop for waypoints for this user
               } 
@@ -121,13 +123,18 @@ function dataReceived(results) {
         //END loop for users in allWaypoints
           }
 
+//animate work here??
+    for (var i=0; i<=Object.values(userLines).length; i++) {
+        var count = 20;
+        setTimeout(animateSymbol(userLines[i], count), 6000);
+        count = count + 15;
+      }
+
 //END of dataReceived function
 }
 
 //later will use this to update the the current location of the user along their route
     // var thisUser = userLines[user_id][icons][0][icon]  and ??MAYBE [strokeColor]
-
-
 
 
 // // Use the DOM setInterval() function to change the offset of the symbol

@@ -80,7 +80,8 @@ Animate the dots on v3 map (? maybe not worth the time right now)
 
 Refactor Waypoints and Invitations table/class
     why not store route lat/long data in one field formatted for google maps Path?
-    there is no reason to store them in individual fields!
+    there is no reason to store them in individual fields! Would make loading the
+    routes on the rendezvous map go much faster.
 
 Improve Invitation form
      Look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals

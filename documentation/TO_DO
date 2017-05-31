@@ -5,21 +5,13 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-error on rendezvous-map-v3
-    legend i think:  undefined-circle-lv.png Failed to load resource: the server responded with a status of 404 ()
-
-Invitations:  problem:  status of MY invitations....
-    does not work to have status start pending and change when accepted/rejected by others because what if some accept and some decline?  YES:  if everyone declines, set to 'ina'
-
-Googlemap:  remove map/satelite option.  remove street view
-Legend still not working.
+Animation almost working, but broken.
 
 Things that are most showable:
     improve demo map:
         more showable-routes
         Legend WITH ETA updating
         fix the zoom
-        ETA pop-up when hoover
         can i animate the "traffic encountered" delay from googlemaps
         pop up to user1 when user2 arrives at destination
             (and remove their route)
@@ -186,6 +178,13 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Legend working.
+Googlemap:  removed map/satelite option.  removed street view.
+Animation progress:  dots now move, but thousands of errors and original dots
+    stay at starting point.
+Names and colors on legend now working.
+^5/31^
 
 Legend on map, but names and colors are wrong.
 Buttons to change invite status now work.

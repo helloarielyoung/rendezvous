@@ -12,7 +12,9 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center:  {'lat': center_lat, 'lng': center_lng },
       zoom: 13  ,
-      mapTypeId: 'roadmap'
+      mapTypeId: 'roadmap',
+      mapTypeControl: false,
+      streetViewControl: false
         });
 
     // add marker for destination point
@@ -123,7 +125,7 @@ function dataReceived(results) {
         //END loop for users in allWaypoints
           }
 
-//animate work here??
+//animate work here??  Yes - sort of...  animateSymbol throwing thousands of errors.
     for (var i=0; i<=Object.values(userLines).length; i++) {
         var count = 20;
         setTimeout(animateSymbol(userLines[i], count), 6000);

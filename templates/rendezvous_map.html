@@ -42,7 +42,9 @@
         var map = new google.maps.Map(document.getElementById('map'), {
           center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
           zoom: 13  ,
-          mapTypeId: 'roadmap'
+          mapTypeId: 'roadmap',
+          mapTypeControl: false,
+          streetViewControl: false
         });
 
         // add marker for destination point

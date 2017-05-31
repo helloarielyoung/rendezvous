@@ -1,5 +1,9 @@
 ****Links & notes for my project****
 
+Google maps controls:  https://developers.google.com/maps/documentation/javascript/controls
+
+Jinja groupby:  http://jinja.pocoo.org/docs/2.9/templates/
+
 Jinja can do conditional for loop!
     {% for invite in received_invites_sum if invite[0] == 'pen' %}
 

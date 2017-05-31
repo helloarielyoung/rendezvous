@@ -44,7 +44,7 @@
 <!-- this would be better if it was organized with in-line modal expansion -->
 <!-- sort under invite info into Pending, Accepted, Declined with button to click -->
 <!--  and have it expand list of friends who haven't answered, accepted, declined -->
-          <ul>{% for invite in all_my_invites %} 
+          <ul>{% for invite in all_my_invites|groupby('invite_id') %} 
               <li>
                 <!--0 Invitation.invite_id,
                     1 Invitation.rendezvous_name,
@@ -58,16 +58,27 @@
                     9 Status.status_description,
                     10 User.name,
                     11 User.email  -->
-                  Name:  {{ invite[10] }}<br>
+                    {{ invite.grouper }}
+                  Name:  {{ invite.rendezvous_name }}<br>
                   Date:  {{ invite[2] }}<br>
                   Location:  {{ invite[3] }}<br>
                    {{ invite[4] }}<br>
+<!-- figure out how to group by invite here, then add cancel button -->
+<!-- and list user's status under one instance of the invite -->
+<!--               Click below to cancel this invitation:
+              <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value= invite[2]<<will have to jinja that, took brackts off so i could comment this section out>
+                  <input type='submit'name='sent_submit_button' value= 'Cancel' >
+              </form> -->
+              {% for person in group.list %}<ul>
+                <li>
                   Friend:  {{ invite[10] }}<br>
                   Status: {% if invite[9] == 'active' %} <b>Accepted</b>
-                      {% else %} {{ invite[9] }}
+                      {% else %} {{ invite[9] }}</li>
                       {% endif %}<br>
-              </li>
+                {% endfor %} </ul></li>
               {% endfor %}
+            </ul>
           </ul>
       </div>
       <div id="receivedInvite" class="tab-pane fade">

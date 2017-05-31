@@ -449,7 +449,7 @@ def invitation_update():
             status = "pen"
         elif status == "Accept":
             status = "act"
-        elif status == "Inactive":
+        elif status == "Cancel":
             status = "ina"
         elif status == "Decline":
             status = 'rej'

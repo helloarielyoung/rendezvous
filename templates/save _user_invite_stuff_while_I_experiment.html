@@ -1,0 +1,36 @@
+save while i mess with it:
+
+         <ul>{% for invite, list in all_my_invites|groupby('invite_id') %} 
+              <li>
+                <!--0 Invitation.invite_id,
+                    1 Invitation.rendezvous_name,
+                    2 Invitation.rendezvous_date,
+                    3 Invitation.rendezvous_location_name,
+                    4 Invitation.rendezvous_location_address,
+                    5 Invitation.created_by_id,
+                    6 Invitation.created_date,
+                    7 UserInvite.user_id,
+                    8 UserInvite.status,
+                    9 Status.status_description,
+                    10 User.name,
+                    11 User.email  -->
+                    {{ invite }}
+                  Name:  {{ list[0] }}<br>
+                  Date:  {{ list[1] }}<br>
+                  Location:  {{ list[2] }}<br>
+                   {{ list[3] }}<br>
+<!-- figure out how to group by invite here, then add cancel button -->
+<!-- and list user's status under one instance of the invite -->
+<!--               Click below to cancel this invitation:
+              <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value= invite[2]<<will have to jinja that, took brackts off so i could comment this section out>
+                  <input type='submit'name='sent_submit_button' value= 'Cancel' >
+              </form> -->
+              {% for person in group.list %}<ul>
+                <li>
+                  Friend:  {{ list[7] }}<br>
+                  Status: {% if list[6] == 'active' %} <b>Accepted</b>
+                      {% else %} {{ list[7] }}</li>
+                      {% endif %}<br>
+                {% endfor %} </ul></li>
+              {% endfor %}

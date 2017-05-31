@@ -443,21 +443,16 @@ def invitation_update():
     else:
         invite_id = int(request.form.get("invite_id"))
         user_id = session['user_id']
-        status = json.loads(request.form.get("received_submit_button"))
-
-        print status
-        print type(status)
+        status = request.form.get("received_submit_button")
 
         if status == "Pending":
-            status == "pen"
+            status = "pen"
         elif status == "Accept":
             status = "act"
         elif status == "Inactive":
-            status == "ina"
+            status = "ina"
         elif status == "Decline":
             status = 'rej'
-
-        print status
 
         invite_to_update =\
             UserInvite.query.filter(UserInvite.user_id == user_id,

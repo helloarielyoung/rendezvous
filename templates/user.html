@@ -19,12 +19,9 @@
   </ul>
   <div class="tab-content">
       <div id="profile" class="tab-pane fade in active">
-          <h2>Your User Profile</h2>
-          <p> Click <a href='/rendezvous-map'>here</a> for animated google map
-          </p> 
-          <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
-          </p>
-        <h3>Click to go!</h3>
+        <h2>Welcome, {{ session['user_name'] }}!</h2>
+          
+        <h3>Imminent Rendezvous - Click to go!</h3>
          <ul>{% for invite in imminent_invites_sum %}
               {% if session.user_id == invite[7] %}
           <li>
@@ -45,43 +42,76 @@
               {% endif %}
              {% endfor %}
           </ul>
-
-        Add query that makes buttons here for any friend requests that are n-days
-        old.
+        <p> Click <a href='/rendezvous-map'>here</a> for animated google map
+          </p> 
+        <p> Click <a href="/invitation-new">here</a> to create a new Rendezvous
+          </p>
       </div>
       <div id="sentInvite" class="tab-pane fade">
-          <h2>Your Active Invitations</h2>
-          <ul>{% for invite in active_invitation_data %} 
+          <h2>Invitations You have Sent</h2>
+<!-- this would be better if it was organized with in-line modal expansion -->
+<!-- sort under invite info into Pending, Accepted, Declined with button to click -->
+<!--  and have it expand list of friends who haven't answered, accepted, declined -->
+          <ul>{% for invite in all_my_invites %} 
               <li>
-                  <form action='/rendezvous-map-v3' method='POST' name='inviteform'>
-                      <input type='hidden' name='user_id' value={{ session.user_id }}>
-                      <input type='hidden' name='invite_id' value={{ invite[1] }}>
-                      <input type='submit'name='submit_button' value= '{{ invite[3] }} {{ invite[2] }} with {{ invite.name}}' style='width:auto' >
-                  </form>
+                <!--0 Invitation.invite_id,
+                    1 Invitation.rendezvous_name,
+                    2 Invitation.rendezvous_date,
+                    3 Invitation.rendezvous_location_name,
+                    4 Invitation.rendezvous_location_address,
+                    5 Invitation.created_by_id,
+                    6 Invitation.created_date,
+                    7 UserInvite.user_id,
+                    8 UserInvite.status,
+                    9 Status.status_description,
+                    10 User.name,
+                    11 User.email  -->
+                  Name:  {{ invite[10] }}<br>
+                  Date:  {{ invite[2] }}<br>
+                  Location:  {{ invite[3] }}<br>
+                   {{ invite[4] }}<br>
+                  Friend:  {{ invite[10] }}<br>
+                  Status: {% if invite[9] == 'active' %} <b>Accepted</b>
+                      {% else %} {{ invite[9] }}
+                      {% endif %}<br>
               </li>
               {% endfor %}
           </ul>
-            <div id="RejectedInvite">
-              <h2>Declined Invitations</h2>
-     <!-- need to change this to this user's invites that have any rejects ) -->
-              <p>List of invites that have any rejections, show users who declined</p>
-               <ul>{% for invite in active_invitation_data if invite[0] == 'rej' %}
-                <li>
-                  Name: {{ invite[2] }} <br>
-                  Location: {{ invite[5]}}<br>
-                  {{ invite[6] }}<br>
-                  Invited by: {{ invite[4] }} <br>
-                  Date and time: {{ invite[3] }} <br>
-              </li>
-                  {% endfor %}
-              </ul>
-            </div>
       </div>
-
       <div id="receivedInvite" class="tab-pane fade">
           <h2>Received Invitations</h2>
-<!-- need to change this to pending (using active for now until pending query is built) -->
-          <ul>{% for invite in active_invitation_data if invite[0] == 'pen' %}
+          <hr>
+          <h3>Pending</h3>
+          <ul>{% for invite in received_invites_sum if invite[0] == 'pen' %}
+            <li>
+              <!--  0 UserInvite.status,
+                    1 Status.status_description,
+                    2 UserInvite.invite_id,
+                    3 Invitation.rendezvous_name,
+                    4 Invitation.rendezvous_date,
+                    5 User.name,
+                    6 Invitation.rendezvous_location_name,
+                    7 Invitation.rendezvous_location_address,
+                    8 User.user_id -->
+
+              Name: {{ invite[2] }} <br>
+              Location: {{ invite[5]}}<br>
+              {{ invite[6] }}<br>
+              Invited by: {{ invite[4] }} <br>
+              Date and time: {{ invite[3] }} <br>
+              <b>Current Status: {{ invite[1]}} </b><br>
+              Click below to modify the status:
+              <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value={{ invite[0] }}>
+                  <input type='submit'name='pending_submit_button' value= 'Accept' >
+                  <input type='submit'name='peiding_submit_button' value= 'Decline' >
+              </form>
+            </li>
+          {% endfor %}
+          </ul>
+          <hr>
+          <h3>Accepted</h3>
+          <ul>{% for invite in received_invites_sum if invite[0] == 'act' %}
             <li>
               Name: {{ invite[2] }} <br>
               Location: {{ invite[5]}}<br>
@@ -96,7 +126,25 @@
             </li>
           {% endfor %}
           </ul>
-      </div>
+          <hr>
+          <h3>Declined</h3>
+          <ul>{% for invite in received_invites_sum if invite[0] == 'rej' %}
+            <li>
+              Name: {{ invite[2] }} <br>
+              Location: {{ invite[5]}}<br>
+              {{ invite[6] }}<br>
+              Invited by: {{ invite[4] }} <br>
+              Date and time: {{ invite[3] }} <br>
+              <form action='/invitation-accept-reject.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value={{ invite[0] }}>
+                  <input type='submit'name='pending_submit_button' value= 'Accept' >
+                  <input type='submit'name='peiding_submit_button' value= 'Decline' >
+              </form>
+            </li>
+          {% endfor %}
+          </ul>
+  </div>
+
       <div id="Friends" class="tab-pane fade">
           <h2>Friend Requests:</h2>
           <p> Short description with buttons to Accept or Reject

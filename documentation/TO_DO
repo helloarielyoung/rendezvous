@@ -4,12 +4,13 @@ REMINDER:  on startup:
 ***********
 ***TO DO***
 ***********
+Received Invitations - Pending:  change status buttons don't work
 
 error on rendezvous-map-v3
     legend i think:  undefined-circle-lv.png Failed to load resource: the server responded with a status of 404 ()
+
 Invitations:  problem:  status of MY invitations....
-    does not work to have status start pending and change when accepted/rejected by others because what if some accept and some decline?
-    Do I need a different status for self's invitations in user_invites?
+    does not work to have status start pending and change when accepted/rejected by others because what if some accept and some decline?  YES:  if everyone declines, set to 'ina'
 
 Googlemap:  remove map/satelite option.  remove street view
 Legend still not working.
@@ -25,7 +26,11 @@ Things that are most showable:
             (and remove their route)
         User3 joins the rendezvous and route appears on the map
         add comments from the user "stopped to get gas"
-        Cancel button
+
+Next most important:  could I get google maps routes API thingy working bettween
+    "Click to Go" and displaying the routes?
+
+Failing that, perhaps make Sent Invitations better:  group by Invite, button to cancel
 
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
@@ -177,6 +182,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Re-factored queries and now have Sent Invitations (lists status for each user on
+    invitation you sent) and Received Invitations (lists deets and current status
+    and has button to change status - though that doesn't presently work)
 Modified query to get list of today's invites correctly to show on front of user profile.
     need to copy how i did that for Received Invites and Sent Invites (see notebook).
     (Took almost an hour to figure out how to get current datetime in local timezone - very frustrating!)

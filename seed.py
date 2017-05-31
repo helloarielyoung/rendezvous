@@ -104,7 +104,17 @@ def load_invitations():
                          rendezvous_name='Drinks with Allison',
                          rendezvous_location_name='A Bar',
                          rendezvous_location_address='8910 Street')
-    db.session.add_all([invite1, invite2, invite3, invite4])
+
+    invite5 = Invitation(invite_id=5,
+                         created_by_id=3,
+                         created_date='2017 05 20 9:00:00',
+                         destination_lat=37.7888754,
+                         destination_lng=-122.411542,
+                         rendezvous_date='2017 06 02 15:00:00',
+                         rendezvous_name='Out on the town',
+                         rendezvous_location_name='Two bars',
+                         rendezvous_location_address='1010 Street')
+    db.session.add_all([invite1, invite2, invite3, invite4, invite5])
 
     db.session.commit()
 
@@ -136,11 +146,16 @@ def load_user_invites():
 
     # created by 3:
     ui14 = UserInvite(ui_id=14, invite_id=4, user_id=3, status='act', created_date='01/01/2017')
-    ui15 = UserInvite(ui_id=15, invite_id=4, user_id=1, status='pen', created_date='01/01/2017')
+    ui15 = UserInvite(ui_id=15, invite_id=4, user_id=1, status='act', created_date='01/01/2017')
     ui16 = UserInvite(ui_id=16, invite_id=4, user_id=2, status='pen', created_date='01/01/2017')
 
+   # created by 3:
+    ui14 = UserInvite(ui_id=17, invite_id=5, user_id=3, status='act', created_date='01/01/2017')
+    ui15 = UserInvite(ui_id=18, invite_id=5, user_id=1, status='rej', created_date='01/01/2017')
+    ui16 = UserInvite(ui_id=19, invite_id=5, user_id=2, status='act', created_date='01/01/2017')
+
     db.session.add_all([ui1, ui2, ui3, ui4, ui5, ui6, ui7, ui8, ui9, ui10, ui11,
-                        ui12, ui13, ui14, ui15, ui15, ui16])
+                        ui12, ui13, ui14, ui15, ui15, ui16, ui17, ui18, ui19])
 
     db.session.commit()
 

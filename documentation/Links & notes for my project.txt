@@ -1,15 +1,65 @@
 ****Links & notes for my project****
 
+Jinja can do conditional for loop!
+    {% for invite in received_invites_sum if invite[0] == 'pen' %}
+
+Saved because this worked, but I re-wrote it using SQLAlchemy
+        #active invitations that are today
+        # and list other active users if it's created by self
+        stmt = db.text("SELECT ui.status,\
+                               ui.invite_id,\
+                               i.rendezvous_name,\
+                               i.rendezvous_date,\
+                               u.name, \
+                               i.rendezvous_location_name,\
+                               i.rendezvous_location_address,\
+                               u.user_id\
+        FROM users_invites ui\
+        JOIN invitations i on ui.invite_id = i.invite_id \
+        JOIN users u on u.user_id = i.created_by_id \
+        WHERE ui.user_id = :user_id and ui.status = 'act'\
+              and rendezvous_date between :today and :tomorrow\
+        ORDER BY rendezvous_date, rendezvous_name")
+        stmt = stmt.columns(UserInvite.status,
+                            UserInvite.invite_id,
+                            Invitation.rendezvous_name,
+                            Invitation.rendezvous_date,
+                            User.name,
+                            Invitation.rendezvous_location_name,
+                            Invitation.rendezvous_location_address,
+                            User.user_id)
+        active_invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
+            Invitation.rendezvous_name, Invitation.rendezvous_date,\
+            User.name, Invitation.rendezvous_location_name,\
+            Invitation.rendezvous_location_address, User.user_id).\
+            from_statement(stmt).params(user_id=session['user_id'],
+                                        today=today, tomorrow=tomorrow).all()
+
+
+
 db.session.query(from Class or list of columns with one from from class listed first).join:
   use aliased(class name) to be able to join to same table multiple times, and add
   the table from which you are joining (User.addresses) to specify on clause
+        
         a_alias = aliased(Address)
 
         q = session.query(User).\
           join(User.addresses).\
           join(a_alias, User.addresses)
 
+    if don't want any fields from FROM table, or don't want to put them first, force the FROM:
+        q = session.query(Address).select_from(User).\
+                join(User.addresses)
 
+    to specify the on clause, use this:
+        query(User).join((Address, User.id==Address.user_id))
+
+        This calling form is accepted in 0.7 and further, though is not necessary unless multiple join conditions are passed to a single join() call, if only one condition, use:
+        
+        q = session.query(User).join(Address, User.id==Address.user_id)
+
+    For LEFT OUTER:
+        session.query(User).outerjoin(Address) and etc.
 
 Jinja2 conditional for loop that works on data from a query:
         <ul>{% for invite in invitation_data if invite[0] == 'pen' %}

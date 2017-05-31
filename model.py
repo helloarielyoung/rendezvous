@@ -99,6 +99,9 @@ class Status(db.Model):
     status_id = db.Column(db.String(3), primary_key=True)
     status_description = db.Column(db.String(15), nullable=False)
 
+    status_rel = db.relationship("UserInvite",
+                                 backref="invite_status")
+
 
 class Relationship(db.Model):
     """Create friend relationships table.

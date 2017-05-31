@@ -13,7 +13,7 @@ import tzlocal
 
 # from helper_functions import *
 
-from model import User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
+from model import Status, User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
 
 #to convert unicode to literal string
 import ast
@@ -83,43 +83,12 @@ def get_user(user_id):
 
         user = User.query.get(user_id)
 
+        #in order to query for invites today or tomorrow
+        #have not tested thoroughly, probably needs fine-tuning...
         ptz = pytz.timezone('US/Pacific')
         today = datetime.datetime.now(tz=ptz)
-        print today
-
         tomorrow = today + + datetime.timedelta(days=1)
         today = "%s-%s-%s 00:00:00" % (today.year, today.month, today.day)
-
-        #active invitations that are today
-# and list other active users if it's created by self
-        stmt = db.text("SELECT ui.status,\
-                               ui.invite_id,\
-                               i.rendezvous_name,\
-                               i.rendezvous_date,\
-                               u.name, \
-                               i.rendezvous_location_name,\
-                               i.rendezvous_location_address,\
-                               u.user_id\
-        FROM users_invites ui\
-        JOIN invitations i on ui.invite_id = i.invite_id \
-        JOIN users u on u.user_id = i.created_by_id \
-        WHERE ui.user_id = :user_id and ui.status = 'act'\
-              and rendezvous_date between :today and :tomorrow\
-        ORDER BY rendezvous_date, rendezvous_name")
-        stmt = stmt.columns(UserInvite.status,
-                            UserInvite.invite_id,
-                            Invitation.rendezvous_name,
-                            Invitation.rendezvous_date,
-                            User.name,
-                            Invitation.rendezvous_location_name,
-                            Invitation.rendezvous_location_address,
-                            User.user_id)
-        active_invitation_data = db.session.query(UserInvite.status, UserInvite.invite_id,\
-            Invitation.rendezvous_name, Invitation.rendezvous_date,\
-            User.name, Invitation.rendezvous_location_name,\
-            Invitation.rendezvous_location_address, User.user_id).\
-            from_statement(stmt).params(user_id=session['user_id'],
-                                        today=today, tomorrow=tomorrow).all()
 
         #summary data of invites that:
         #   i created or was invited to
@@ -140,26 +109,63 @@ def get_user(user_id):
                                         Invitation.rendezvous_date <= tomorrow).all()
 
         #data of invites that:
-        #   i created
+        #   i created ("i" being the logged in user)
         #   only get user data for users who are not me
-        ui2 = aliased(UserInvites)
-        all_my_invites = db.session.query(UserInvite.invite_id,
-                                          Invitation.rendezvous_name,
-                                          Invitation.rendezvous_date,
-                                          Invitation.rendezvous_location_name,
-                                          Invitation.rendezvous_location_address,
-                                          #join back to UI to see which friends accepted/declined
-                                          ui2.user_id,
-                                          ui2.status,
-                                          User.user_id,
-                                          User.name)\
-                                .join(Invitation)\
-                                .join(ui2)\
-                                .join(User, ui2.user_id)\
-                                .filter(Invitation.created_by_id == session['user_id']
-                                        & User.user_id != session['user_id'])\
-                                .order_by(UserInvite.invite_id, User.name).all()
+        #This gets ALL my invites - even ones i have cancelled (status = 'ina')
+        stmt2 = db.text("SELECT i.invite_id,\
+                                 i.rendezvous_name,\
+                                 i.rendezvous_date,\
+                                 i.rendezvous_location_name,\
+                                 i.rendezvous_location_address,\
+                                 i.created_by_id,\
+                                 i.created_date,\
+                                 ui.user_id,\
+                                 ui.status,\
+                                 statuses.status_description,\
+                                 u.name,\
+                                 u.email\
+        FROM invitations i\
+        JOIN users_invites ui on i.invite_id = ui.invite_id\
+        JOIN statuses on ui.status = statuses.status_id\
+        JOIN users u on u.user_id = ui.user_id and u.user_id != :user_id\
+        WHERE i.created_by_id = :user_id\
+        ORDER BY rendezvous_date, rendezvous_name, i.invite_id, statuses.status_description")
 
+        stmt2 = stmt2.columns(Invitation.invite_id,
+                              Invitation.rendezvous_name,
+                              Invitation.rendezvous_date,
+                              Invitation.rendezvous_location_name,
+                              Invitation.rendezvous_location_address,
+                              Invitation.created_by_id,
+                              Invitation.created_date,
+                              UserInvite.user_id,
+                              UserInvite.status,
+                              Status.status_description,
+                              User.name,
+                              User.email)
+        all_my_invites = db.session.query(Invitation.invite_id,
+            Invitation.rendezvous_name, Invitation.rendezvous_date,
+            Invitation.rendezvous_location_name,
+            Invitation.rendezvous_location_address, Invitation.created_by_id,
+            Invitation.created_date, UserInvite.user_id, UserInvite.status,
+            Status.status_description, User.name, User.email)\
+            .from_statement(stmt2).params(user_id=session['user_id']).all()
+
+        #summary data of invites that:
+        #   i was invited to
+        #   any status
+        received_invites_sum = db.session.query(UserInvite.status,
+                                                Status.status_description,
+                                                UserInvite.invite_id,
+                                                Invitation.rendezvous_name,
+                                                Invitation.rendezvous_date,
+                                                User.name,
+                                                Invitation.rendezvous_location_name,
+                                                Invitation.rendezvous_location_address,
+                                                User.user_id)\
+                                .join(Invitation, User, Status)\
+                                .filter(UserInvite.user_id == session['user_id'],
+                                        Invitation.created_by_id != session['user_id']).all()
 
         #Invitation Details Query
         #for invite_id, gather all the deets:
@@ -169,8 +175,9 @@ def get_user(user_id):
 
         return render_template('user.html',
                                user=user,
-                               active_invitation_data=active_invitation_data,
-                               imminent_invites_sum=imminent_invites_sum)
+                               imminent_invites_sum=imminent_invites_sum,
+                               all_my_invites=all_my_invites,
+                               received_invites_sum=received_invites_sum)
 
     else:
         flash('You must be logged in to access that page.')

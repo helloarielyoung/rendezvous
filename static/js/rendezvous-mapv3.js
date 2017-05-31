@@ -93,26 +93,29 @@ function dataReceived(results) {
               } 
 
         //legend
-        var iconColors = ['blu', 'purple', 'red', 'ylw'];
-        var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
-       
-        var icons = {
-          thisUserId: {
-            name: allWaypoints[user]['name'],
-            icon: iconBase + iconColors[i]+'-circle-lv.png'
-          }
-        };
-        var legend = document.getElementById('legend');
-        for (var key in icons) {
-            var type = icons[key];
-            var name = type.name;
-            var icon = type.icon;
-            var div = document.createElement('div');
-            div.innerHTML = '<img src="' + icon + '"> ' + name;
-            legend.appendChild(div);
-          }
+        // do not include logged in user in the legend
+        if (user != user_id) {
 
-            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend); 
+            var iconColors = ['blu', 'purple', 'red', 'ylw'];
+            var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
+    // debugger       
+            var icons = {
+              thisUserId: {
+                name: allWaypoints[user]['name'],
+                icon: iconBase + iconColors[user]+'-circle-lv.png'
+              }
+            };
+            var legend = document.getElementById('legend');
+            for (var key in icons) {
+                var type = icons[key];
+                var name = type.name;
+                var icon = type.icon;
+                var div = document.createElement('div');
+                div.innerHTML = '<img src="' + icon + '"> ' + name;
+                legend.appendChild(div);
+              }
+                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+            }
         //END loop for users in allWaypoints
           }
 

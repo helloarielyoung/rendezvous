@@ -78,11 +78,12 @@ Animate the dots on v3 map (? maybe not worth the time right now)
     What about some kind of transparency or layer priority? when other's routes
      overlap logged in user, you can only see the one drawn last.
 
+Refactor Waypoints and Invitations table/class
+    why not store route lat/long data in one field formatted for google maps Path?
+    there is no reason to store them in individual fields!
+
 Improve Invitation form
      Look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals
-
-Refactor Waypoints and Invitations table/class
-    why not store route lat/long data in one field formatted for google maps Path
 
 Add indexes in model.py on fields that are FK's
 
@@ -185,18 +186,20 @@ Way Future Features:
 ***DONE***
 ***********
 
+Legend on map, but names and colors are wrong.
 Buttons to change invite status now work.
 Re-factored queries and now have Sent Invitations (lists status for each user on
     invitation you sent) and Received Invitations (lists deets and current status
     and has button to change status)
+Added data to seed.py to be able to test invitation statuses
 ^5/30^
-
 
 Modified query to get list of today's invites correctly to show on front of user profile.
     need to copy how i did that for Received Invites and Sent Invites (see notebook).
     (Took almost an hour to figure out how to get current datetime in local timezone - very frustrating!)
 Added rendezvousLocationName and Address to save in db with new invitation to
     make it easier to disply the name & address in pending invitation management
+    Added data to seed.py for new fields.
 Spent an hour troubleshooting broken maps due to changes I had made to base.html,
     then another 20 minutes undoing the changes made by the person who helped me
     with troubleshooting and restoring original base.html.  Will revisit those

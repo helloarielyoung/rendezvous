@@ -4,7 +4,6 @@ REMINDER:  on startup:
 ***********
 ***TO DO***
 ***********
-Received Invitations - Pending:  change status buttons don't work
 
 error on rendezvous-map-v3
     legend i think:  undefined-circle-lv.png Failed to load resource: the server responded with a status of 404 ()
@@ -35,7 +34,7 @@ Failing that, perhaps make Sent Invitations better:  group by Invite, button to 
 It would be good to refactor how I'm sending invite query data to user's page:
     if i sent a dictionary, then understanding and changing the jinja references
     to data bits would be easier (could be invite.name or invite['name'] instead of invite[0])
-    
+
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
     Hover over dots show name & current ETA.
@@ -186,9 +185,13 @@ Way Future Features:
 ***DONE***
 ***********
 
+Buttons to change invite status now work.
 Re-factored queries and now have Sent Invitations (lists status for each user on
     invitation you sent) and Received Invitations (lists deets and current status
-    and has button to change status - though that doesn't presently work)
+    and has button to change status)
+^5/30^
+
+
 Modified query to get list of today's invites correctly to show on front of user profile.
     need to copy how i did that for Received Invites and Sent Invites (see notebook).
     (Took almost an hour to figure out how to get current datetime in local timezone - very frustrating!)

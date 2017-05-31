@@ -88,29 +88,31 @@ function dataReceived(results) {
             //save userId and userLine so I can update icon position in realitme later
             userLines[thisUserId] = userLine;
 
-              //legend
-              var iconColors = ['blu', 'purple', 'red', 'ylw'];
-              var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
-              
-              var icons = {
-                thisUserId: {
-                  name: allWaypoints[user]['name'],
-                  icon: iconBase + iconColors[i]+'-circle-lv.png'
-                }
-              };
-              var legend = document.getElementById('legend');
-              for (var key in icons) {
-                  var type = icons[key];
-                  var name = type.name;
-                  var icon = type.icon;
-                  var div = document.createElement('div');
-                  div.innerHTML = '<img src="' + icon + '"> ' + name;
-                  legend.appendChild(div);
-                }
-
-            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);                
+               
             //END loop for waypoints for this user
               } 
+
+        //legend
+        var iconColors = ['blu', 'purple', 'red', 'ylw'];
+        var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
+       
+        var icons = {
+          thisUserId: {
+            name: allWaypoints[user]['name'],
+            icon: iconBase + iconColors[i]+'-circle-lv.png'
+          }
+        };
+        var legend = document.getElementById('legend');
+        for (var key in icons) {
+            var type = icons[key];
+            var name = type.name;
+            var icon = type.icon;
+            var div = document.createElement('div');
+            div.innerHTML = '<img src="' + icon + '"> ' + name;
+            legend.appendChild(div);
+          }
+
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend); 
         //END loop for users in allWaypoints
           }
 

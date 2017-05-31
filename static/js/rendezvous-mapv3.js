@@ -42,17 +42,18 @@ function dataReceived(results) {
     var allWaypoints = results['data'];
 
         var symbolColors = ['blue', 'purple', 'red', 'yellow'];
-        var colorCount = 0;
-        var userLineColor;
+        var symbolColorCount = 0;  //for symbol color
+        var userLineColor;  //for route polyline
+        var iconColorCount = 0;  //for legend icon color
         //iterate through waypoints_by_user to get users
         for (var user in allWaypoints) {
             //Save this user id for later
             var thisUserId = allWaypoints[user]['id'];
             if (thisUserId == user_id) { //this is the logged in user
-                var pickColor = '#000000'; //black
+                var pickColor = 'white'; //white
             } else {
-                pickColor = symbolColors[colorCount];
-                colorCount++;
+                pickColor = symbolColors[symbolColorCount];
+                symbolColorCount++;
             }
             // Define symbol for this user
             var lineSymbol = {
@@ -91,19 +92,21 @@ function dataReceived(results) {
                
             //END loop for waypoints for this user
               } 
-
+// debugger
         //legend
-        // do not include logged in user in the legend
-        if (user != user_id) {
-
             var iconColors = ['blu', 'purple', 'red', 'ylw'];
+            if (thisUserId == user_id) {  //this is the logged in user
+              var iconColor = 'wht';
+            } else  { iconColor = iconColors[iconColorCount];
+              iconColorCount +=1;
+            }
             var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
     // debugger       
             var icons = {
               thisUserId: {
                 name: allWaypoints[user]['name'],
-                icon: iconBase + iconColors[user]+'-circle-lv.png'
-              }
+                icon: iconBase + iconColor +'-circle-lv.png'
+                }
             };
             var legend = document.getElementById('legend');
             for (var key in icons) {
@@ -114,8 +117,7 @@ function dataReceived(results) {
                 div.innerHTML = '<img src="' + icon + '"> ' + name;
                 legend.appendChild(div);
               }
-                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
-            }
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
         //END loop for users in allWaypoints
           }
 

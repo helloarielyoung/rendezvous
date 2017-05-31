@@ -400,7 +400,7 @@ def invitation_save():
         #add the other users
         rendezvous_friends = ast.literal_eval(rendezvous_friends)
 
-        print type(rendezvous_friends)
+        # print type(rendezvous_friends)
         for user in rendezvous_friends:
             user_id = user
             print user_id
@@ -443,7 +443,10 @@ def invitation_update():
     else:
         invite_id = int(request.form.get("invite_id"))
         user_id = session['user_id']
-        status = request.form.get("recieved_submit_button")
+        status = json.loads(request.form.get("received_submit_button"))
+
+        print status
+        print type(status)
 
         if status == "Pending":
             status == "pen"
@@ -451,7 +454,7 @@ def invitation_update():
             status = "act"
         elif status == "Inactive":
             status == "ina"
-        else:
+        elif status == "Decline":
             status = 'rej'
 
         print status

@@ -11,7 +11,7 @@ function initMap() {
     //initiates the map object
     map = new google.maps.Map(document.getElementById('map'), {
       center:  {'lat': center_lat, 'lng': center_lng },
-      zoom: 13  ,
+      zoom: 14  ,
       mapTypeId: 'roadmap',
       mapTypeControl: false,
       streetViewControl: false
@@ -143,13 +143,16 @@ function animateSymbol(inputLine, inputSpeed, userName) {
       icons[0].offset = (count1 / 2) + '%';
       line.set('icons', icons);
 
+    // // make traffic alert for user3 not working in here, try elsewhere
+    // if ((userName = "Test User 3") && (parseInt(line.get('icons')[0].offset) = 60)) {
+    //   alert ("Test User 3 has encountered traffic. 4 minute delay.")
+    // }
     // make animation to stop at destination
       if (parseInt(line.get('icons')[0].offset) > 99.5) {     
             icons[0].offset = '100%';  
             clearInterval(id1);
             // remove polyline from map when arrive
-            line.setMap(null);
-            
+            line.setMap(null);          
             alert(userName + 'arrived!')
     }
      }, speed);

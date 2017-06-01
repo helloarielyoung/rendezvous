@@ -5,6 +5,8 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
+Make map fit in div.  Have to clean up HTML/base stuff to do that probably.
+
     better date/time picker
 
     improve demo map:

@@ -8,9 +8,10 @@ REMINDER:  on startup:
     better date/time picker
 
     improve demo map:
+        Make Pop up notice when user arrives not stop the animation?
+        Remove ETA from legend when user arrives?
         pop up to user1 when user2 arrives at destination
-        ETA on legend (can i fake updates? maybe use offset value?)
-        User3 joins the rendezvous and route appears on the map
+         User3 joins the rendezvous and route appears on the map
         fix the zoom:
             Do some calculation of the starting points of the routes and the destination
             point and adjust the zoom and center point of the map to include all of
@@ -173,6 +174,9 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Pop-up on user arrival with user's name.
+ETA on legend (can i fake updates? maybe use offset value?)
 
 Animation successfully uses nesUserLines with refactored data structure.
 Refactored rendezvousmap code to save line, user name, eta data, symbol color

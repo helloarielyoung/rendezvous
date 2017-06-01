@@ -5,7 +5,6 @@
 //define the map and lines as global variables
 var map;
 var userLines = {};
-var newUserLines = {};
 
 // initialize the map
 function initMap() {
@@ -89,46 +88,20 @@ function dataReceived(results) {
                       }],
                      map: map
                       });
-            //save userId and userLine so I can update icon position in realitme later
-// current format:  {user_id: googlemap line object}
-            userLines[thisUserId] = userLine;
-
-            newUserLines[thisUserId]= {'line': userLine, 'name': allWaypoints[user]['name'],
-           'eta_text': allWaypoints[user]['starting_eta_text'],
-           'eta_value': allWaypoints[user]['starting_eta_value'],
+            //save user data so I can update icon position/legend in realitme later
+    //format: {user_id: {'line': googlemap line object, 'name': name,
+        //    'eta_text': eta_text, 'eta_value': eta_value, 'symbolColor': color}} 
+            userLines[thisUserId]= {'line': userLine, 'name': allWaypoints[user]['name'],
+           'starting_eta_text': allWaypoints[user]['starting_eta_text'],
+           'starting_eta_value': allWaypoints[user]['starting_eta_value'],
            'symbolColor': pickColor}
-            // newuserLines[thisUserId]['line'] = userLine;
-            // newuserLines[thisUserId]['name'] = allWaypoints[user]['name'];
-            // newuserLines[thisUserId][''] = userLine;
-//change to: {user_id: {'line': googlemap line object, 'name': name,
-        //    'eta_text': eta_text, 'eta_value': eta_value, 'symbolColor': color}}  
-        //get name:    allWaypoints[user]['name']
-        //get name:  pickColor
-
-  //added allWaypoints[user]['starting_eta_text'] and allWaypoints[user]['starting_eta_value']
-  // so should be able to push one (or both) of those into userLines along with 
-  // the user name so both name and ETA can be updated on the Legend
-            // can i change this to include the user name and their ETA without
-             // breaking everything?
-            // userLines[thisUserId] = [userLine, allWaypoints[user]['name', 'ETA']]
-            // yes, this makes the user line:  userLines[<userID>][0]
-            // and the name:  userLines[<userID>][1]
-            // why did i want the user name in here?  so I can modify the legend, I think?
-            // and use the name in an alert when that user arrives at destination
 
         //legend
-            var iconColors = ['blu', 'purple', 'red', 'ylw'];
-            if (thisUserId == user_id) {  //this is the logged in user
-              var iconColor = 'wht';
-            } else  { iconColor = iconColors[iconColorCount];
-              iconColorCount +=1;
-            }
             var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
-    // debugger       
             var icons = {
               thisUserId: {
-                name: allWaypoints[user]['name'],
-                icon: iconBase + iconColor +'-circle-lv.png'
+                name: userLines[thisUserId]['name'] + " - " +userLines[thisUserId]['starting_eta_text'],
+                icon: iconBase + changeColorName(userLines[thisUserId]['symbolColor']) +'-circle-lv.png'
                 }
             };
             var legend = document.getElementById('legend');
@@ -144,25 +117,20 @@ function dataReceived(results) {
         //END loop for users in allWaypoints
           }
 
-//animate
-var lineSpeed = 40;
-for(var user in newUserLines)
-{ 
-animateSymbol(newUserLines[user]['line'], lineSpeed);
-lineSpeed = lineSpeed + 50;
-}
+    //animate the symbols on the lines
+    var lineSpeed = 40;
+    for(var user in userLines)
+    { 
+    animateSymbol(userLines[user]['line'], lineSpeed, userLines[thisUserId]['name']);
+    lineSpeed = lineSpeed + 40;
+    }
 
 //END of dataReceived function
 }
 
-//later will use this to update the the current location of the user along their route
-    // var thisUser = userLines[user_id][icons][0][icon]  and ??MAYBE [strokeColor]
-
-
-// // Use the DOM setInterval() function to change the offset of the symbol
-// // at fixed intervals.  offset 0=the begining of the polyline, 100=the end
-
-function animateSymbol(inputLine, inputSpeed) {
+// Use the DOM setInterval() function to change the offset of the symbol
+// at fixed intervals.  offset 0=the begining of the polyline, 100=the end
+function animateSymbol(inputLine, inputSpeed, userName) {
     
     var id1;
     var count1 = 0;
@@ -181,7 +149,21 @@ function animateSymbol(inputLine, inputSpeed) {
             clearInterval(id1);
             // remove polyline from map when arrive
             line.setMap(null);
+            
+            alert(userName + 'arrived!')
     }
      }, speed);
     
+}
+
+function changeColorName (color) {
+  var colors = {
+    'white': 'wht',
+    'blue': 'blu',
+    'purple': 'purple',
+    'red': 'red',
+    'yellow': 'ylw',
+    'default': 'blu'
+  };
+  return (colors[color] || colors['default']);
 }

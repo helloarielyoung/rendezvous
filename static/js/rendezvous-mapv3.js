@@ -11,7 +11,7 @@ function initMap() {
     //initiates the map object
     map = new google.maps.Map(document.getElementById('map'), {
       center:  {'lat': center_lat, 'lng': center_lng },
-      zoom: 13  ,
+      zoom: 14  ,
       mapTypeId: 'roadmap',
       mapTypeControl: false,
       streetViewControl: false
@@ -24,18 +24,14 @@ function initMap() {
     title: 'Rendezvous Here'
         });
 
-//animate doesn't work HERE becuase userLines isn't populated when the map is rendered....
+    //  make map dynamically resize when window is resized
+    // google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, "resize", function() {
+     var center = map.getCenter();
+     google.maps.event.trigger(map, "resize");
+     map.setCenter(center); 
+    });
   }
-
-// wait until page is loaded, then animate the symbols
-//this didn't work either - userLines is still empty here
-// $(function() {
-//     for (var i=0; i<userLines.length; i++) {
-//         var count = 30;
-//         setTimeout(animateSymbol(userLines[i], count), 4500);
-//         count = count + 10;
-//       }
-//     });
 
 // this waits until the page is loaded, queries the database for waypoint data
 // for users on this invitation, then runs dataReceived
@@ -61,18 +57,14 @@ function dataReceived(results) {
                 pickColor = symbolColors[symbolColorCount];
                 symbolColorCount++;
             }
-            // Define symbol for this user
-            var lineSymbol = {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 4,
-              strokeColor: pickColor
-              };
+
          
             // variable to hold the waypoints for this user
             var pathListByUser = [];
 
             //iterate through waypoints to get path for this user
             for (var i=0; i<allWaypoints[user]['waypoints'].length; i++) {
+
                   pathListByUser.push({'lat': parseFloat(allWaypoints[user]['waypoints'][i][0]),
                                      'lng': parseFloat(allWaypoints[user]['waypoints'][i][1])});
 
@@ -80,23 +72,26 @@ function dataReceived(results) {
                   if (thisUserId == user_id) {
                       userLineColor = '#000000'; //black
                   } else {userLineColor = '#999999';} //gray
-
-            //use the pathListByUser to draw that user's route on the map
-                  var userLine = new google.maps.Polyline({
+              
+            //END loop for waypoints for this user
+              } 
+              var userLine = new google.maps.Polyline({
                     path: pathListByUser,
                     strokeColor: userLineColor,
                     icons: [{
-                       icon: lineSymbol,
-                       offset: '0%'
-                        }],
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 4,
+                            strokeColor: pickColor
+                            },
+                        offset: '0%'
+                      }],
                      map: map
                       });
+
             //save userId and userLine so I can update icon position in realitme later
             userLines[thisUserId] = userLine;
-               
-            //END loop for waypoints for this user
-              } 
-// debugger
+
         //legend
             var iconColors = ['blu', 'purple', 'red', 'ylw'];
             if (thisUserId == user_id) {  //this is the logged in user
@@ -125,12 +120,13 @@ function dataReceived(results) {
         //END loop for users in allWaypoints
           }
 
-//animate work here??  Yes - sort of...  animateSymbol throwing thousands of errors.
-    for (var i=0; i<=Object.values(userLines).length; i++) {
-        var count = 20;
-        setTimeout(animateSymbol(userLines[i], count), 6000);
-        count = count + 15;
-      }
+//animate
+var lineSpeed = 40;
+for(var line in userLines)
+{ 
+animateSymbol(userLines[line], lineSpeed);
+lineSpeed = lineSpeed + 50;
+}
 
 //END of dataReceived function
 }
@@ -140,21 +136,27 @@ function dataReceived(results) {
 
 
 // // Use the DOM setInterval() function to change the offset of the symbol
-// // at fixed intervals.
-var id1
-function animateSymbol(line, speed) {
-    var count = 0;
-    id1 = window.setInterval(function() {
-      count = (count + 1);
+// // at fixed intervals.  offset 0=the begining of the polyline, 100=the end
 
+function animateSymbol(inputLine, inputSpeed) {
+    
+    var id1;
+    var count1 = 0;
+    var line = inputLine;
+    var speed = inputSpeed;
+
+    id1 = setInterval(function() {
+      count1 = (count1 + 1);
       var icons = line.get('icons');
-      icons[0].offset = (count / 2) + '%';
+      icons[0].offset = (count1 / 2) + '%';
       line.set('icons', icons);
-    // make animation to stop at destination
-    if (line.get('icons')[0].offset == "99.5%") {
-          icons[0].offset = '100%';
-          line.set('icons', icons);
-          window.clearInterval(id1);
 
-  } }, speed);
+    // make animation to stop at destination
+      if (parseInt(line.get('icons')[0].offset) > 99.5) {     
+            icons[0].offset = '100%';  
+            clearInterval(id1);
+            line.setMap(null);
+    }
+     }, speed);
+    
 }

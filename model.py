@@ -2,7 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import aliased
-# from helper_functions import *
+from helper_functions import *
 import bcrypt
 
 # This is the connection to the PostgreSQL database; we're getting this through

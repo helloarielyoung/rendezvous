@@ -45,7 +45,6 @@
 <!-- sort under invite info into Pending, Accepted, Declined with button to click -->
 <!--  and have it expand list of friends who haven't answered, accepted, declined -->
           <ul>{% for invite, list in all_my_invites|groupby('invite_id') %} 
-              <li>
                 <!--0 Invitation.invite_id,
                     1 Invitation.rendezvous_name,
                     2 Invitation.rendezvous_date,
@@ -58,9 +57,13 @@
                     9 Status.status_description,
                     10 User.name,
                     11 User.email  -->
-                    {{ invite }}
-                  Name:  {{ list[0] }}<br>
-
+              <li>
+                {{ invite }}<br>
+                Name: {{ list[0][1] }}<br>
+                Date:  {{ list[0][2] }}<br>
+                Location:  {{ list[0][3] }}<br>
+                {{ list[0][4] }}<br>
+              <ul>  
 <!-- figure out how to group by invite here, then add cancel button -->
 <!-- and list user's status under one instance of the invite -->
 <!--               Click below to cancel this invitation:
@@ -68,13 +71,18 @@
                   <input type='hidden' name='invite_id' value= invite[2]<<will have to jinja that, took brackts off so i could comment this section out>
                   <input type='submit'name='sent_submit_button' value= 'Cancel' >
               </form> -->
-              {% for person in list %}<ul>
+              <!-- add group by status! -->
+              {% for person in list %}
                 <li>
-{{ person }}
+                    this is person {{ person }}<br>
+                    {{ list[0][9] }} <br>
+                    {{ list[0][10] }} <br>
+                    {{ list[0][11] }}
+                </li>
                 {% endfor %} </ul></li>
               {% endfor %}
             </ul>
-          </ul>
+
       </div>
       <div id="receivedInvite" class="tab-pane fade">
           <h2>Received Invitations</h2>

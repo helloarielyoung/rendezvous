@@ -5,13 +5,14 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Animation almost working, but broken.
-
 Things that are most showable:
     improve demo map:
-        more showable-routes
-        Legend WITH ETA updating
-        fix the zoom
+        pop up to user1 when user2 arrives at destination
+        Legend WITH ETA (updating?)
+        fix the zoom:
+            Do some calculation of the starting points of the routes and the destination
+            point and adjust the zoom and center point of the map to include all of
+            all routes
         can i animate the "traffic encountered" delay from googlemaps
         pop up to user1 when user2 arrives at destination
             (and remove their route)
@@ -30,11 +31,6 @@ It would be good to refactor how I'm sending invite query data to user's page:
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
     Hover over dots show name & current ETA.
-    Map ledger of route colors (who is who) 
-        (https://developers.google.com/maps/documentation/javascript/adding-a-legend)
-    Do some calculation of the starting points of the routes and the destination
-        point and adjust the zoom and center point of the map to include all of
-        both routes
     Make demo animation slower, have user2 arrive first, then send alert when user2 arrives at destination
     Add on-click listener to launch modal when click on ANY googlmap marker
 
@@ -43,7 +39,6 @@ Question about testing: had to manually create "testdb".  Other ways?
 Add even more tests so I don't have to manually check if changes broke stuff.
     confirm test that you can't get to users/id by brute force (try get and post)
     And, should users/user_id be accessed only by one or the other?
-
 
 Improve layout of User landing page (tabs!?)
     https://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp
@@ -64,11 +59,6 @@ Improve Login
     Do same for Registration form
 
 On User.html, inspect element reveals the user_id and invite_id values. Is there any way to hide that data and still pass it in the Post request?  Maybe can I save the invite ID to session when the button is clicked and then get it from there in the map route???
-
-Animate the dots on v3 map (? maybe not worth the time right now)
-    If traffic alert rec'd by one user, display that to other user
-    What about some kind of transparency or layer priority? when other's routes
-     overlap logged in user, you can only see the one drawn last.
 
 Refactor Waypoints and Invitations table/class
     why not store route lat/long data in one field formatted for google maps Path?
@@ -92,8 +82,6 @@ Web page design security question:
     reveals user id's...  seems bad.  probably should pass from session data
         instead.
     POST *and* check when land that sessionID = userID
-
-Allow two users to see the same map when logged in at same time
 
 Obtain geolocation info and update animation of routes & status info in real time
     start here?  https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
@@ -179,6 +167,18 @@ Way Future Features:
 ***DONE***
 ***********
 
+Made some progress grouping Sent Invite by invite and displaying each friend's
+    response under the invites.
+Added removal of the route polyline upon "arrival" of the dot at destination.
+Changed canned route data.
+Animation working.  Took hours - there were several issues, biggest one was that
+    i was making a separate dot at beginning of the line with every loop through
+    waypoints, and only one of them was accessible to animate.  Moved where the
+    symbols were added from within waypoints loop out to users loop.
+    Got differeing speed working too - that was due to re-setting the speed
+    variable back to default with each loop. moved initial definition out of the loop.
+Map resizes and re-centers automatically when window is resized (still trying to
+    figure out how to dynamically change zoom)
 Legend working.
 Googlemap:  removed map/satelite option.  removed street view.
 Animation progress:  dots now move, but thousands of errors and original dots

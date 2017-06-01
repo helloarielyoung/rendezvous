@@ -11,7 +11,7 @@ function initMap() {
     //initiates the map object
     map = new google.maps.Map(document.getElementById('map'), {
       center:  {'lat': center_lat, 'lng': center_lng },
-      zoom: 14  ,
+      zoom: 13  ,
       mapTypeId: 'roadmap',
       mapTypeControl: false,
       streetViewControl: false
@@ -88,9 +88,15 @@ function dataReceived(results) {
                       }],
                      map: map
                       });
-
+//debugger
             //save userId and userLine so I can update icon position in realitme later
             userLines[thisUserId] = userLine;
+            // can i change this to include the user name without breaking everything?
+            // userLines[thisUserId] = [userLine, allWaypoints[user]['name']]
+            // yes, this makes the user line:  userLines[<userID>][0]
+            // and the name:  userLines[<userID>][1]
+            // why did i want the user name in here?  so I can modify the legend, I think?
+            // and use the name in an alert when that user arrives at destination
 
         //legend
             var iconColors = ['blu', 'purple', 'red', 'ylw'];
@@ -155,6 +161,7 @@ function animateSymbol(inputLine, inputSpeed) {
       if (parseInt(line.get('icons')[0].offset) > 99.5) {     
             icons[0].offset = '100%';  
             clearInterval(id1);
+            // remove polyline from map when arrive
             line.setMap(null);
     }
      }, speed);

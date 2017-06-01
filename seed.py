@@ -167,10 +167,10 @@ def load_status():
 
     Status.query.delete()
 
-    for status, descrip in [('pen', 'pending'),  #has not been accepted/rejected
-                            ('rej', 'rejected'),  #declined
-                            ('act', 'active'),  #accepted (or if self, sent out)
-                            ('ina', 'inactive')]:  #cancelled or finished
+    for status, descrip in [('pen', 'pending'),  # has not been accepted/rejected
+                            ('rej', 'declined'),  # declined
+                            ('act', 'accepted'),  # accepted (or if self, sent out)
+                            ('ina', 'cancelled')]:  # cancelled or finished
         rel = Status(status_id=status, status_description=descrip)
         db.session.add(rel)
     db.session.commit()

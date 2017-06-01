@@ -8,7 +8,8 @@ REMINDER:  on startup:
 Things that are most showable:
     improve demo map:
         pop up to user1 when user2 arrives at destination
-        Legend WITH ETA (updating?)
+        ETA on legend (can i fake updates? maybe use offset value?)
+        User3 joins the rendezvous and route appears on the map
         fix the zoom:
             Do some calculation of the starting points of the routes and the destination
             point and adjust the zoom and center point of the map to include all of
@@ -16,17 +17,17 @@ Things that are most showable:
         can i animate the "traffic encountered" delay from googlemaps
         pop up to user1 when user2 arrives at destination
             (and remove their route)
-        User3 joins the rendezvous and route appears on the map
         add comments from the user "stopped to get gas"
 
 Next most important:  could I get google maps routes API thingy working bettween
     "Click to Go" and displaying the routes?
 
-Failing that, perhaps make Sent Invitations better:  group by Invite, button to cancel
+Sent invitations:  add un-cancel button and re-invite friends.
 
 It would be good to refactor how I'm sending invite query data to user's page:
     if i sent a dictionary, then understanding and changing the jinja references
-    to data bits would be easier (could be invite.name or invite['name'] instead of invite[0])
+    to data bits would be easier (could be invite.name or invite['name']
+    - i forget which - instead of invite[i])
 
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
@@ -167,6 +168,8 @@ Way Future Features:
 ***DONE***
 ***********
 
+Improved layout of Sent Invites and added Cancel button (it's not really
+    fully functional without an un-cancel button, but out of time.)
 Made some progress grouping Sent Invite by invite and displaying each friend's
     response under the invites.
 Added removal of the route polyline upon "arrival" of the dot at destination.

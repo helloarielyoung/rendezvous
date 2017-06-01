@@ -1,3 +1,11 @@
+                    <b>Status:  {% if person[8] == 'Active' %} Accepted
+                  {% elif person[8] == 'Rejected' %} Declined
+                  {% elif person[8] == 'Inactive %} Cancelled
+                  {% elif person[8] == 'Pending' %} Pending
+                  {% else %} unknown status
+                  {% endif %} </b><br>
+
+
 //animate 
 
 for(var line in userLines)

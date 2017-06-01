@@ -58,26 +58,23 @@
                     10 User.name,
                     11 User.email  -->
               <li>
-                {{ invite }}<br>
-                Name: {{ list[0][1] }}<br>
+                <!-- group by invitation -->
+                ID: {{ list[0][0] }}<br>
+                <b>{{ list[0][1] }}</b><br>
                 Date:  {{ list[0][2] }}<br>
                 Location:  {{ list[0][3] }}<br>
-                {{ list[0][4] }}<br>
+                Click below to cancel this invitation:
+                <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                  <input type='hidden' name='invite_id' value= {{ list[0][0] }}>
+                  <input type='submit'name='invite_submit_button' value= 'Cancel' >
+                </form>
               <ul>  
-<!-- figure out how to group by invite here, then add cancel button -->
-<!-- and list user's status under one instance of the invite -->
-<!--               Click below to cancel this invitation:
-              <form action='/invitation-change-status.json', method='POST' name='inviteform'>
-                  <input type='hidden' name='invite_id' value= invite[2]<<will have to jinja that, took brackts off so i could comment this section out>
-                  <input type='submit'name='sent_submit_button' value= 'Cancel' >
-              </form> -->
-              <!-- add group by status! -->
+              <!-- future feature:  add group by status! -->
               {% for person in list %}
                 <li>
-                    this is person {{ person }}<br>
-                    {{ list[0][9] }} <br>
-                    {{ list[0][10] }} <br>
-                    {{ list[0][11] }}
+                    Name: {{ person[10] }} <br>
+                    Email:  {{ person[11] }}<br>
+                    <b>Status: {{ person[9] }}</b>
                 </li>
                 {% endfor %} </ul></li>
               {% endfor %}
@@ -111,8 +108,8 @@
               Click below to modify the status:
               <form action='/invitation-change-status.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[2] }}>
-                  <input type='submit'name='received_submit_button' value= 'Accept' >
-                  <input type='submit'name='received_submit_button' value= 'Decline' >
+                  <input type='submit'name='invite_submit_button' value= 'Accept' >
+                  <input type='submit'name='invite_submit_button' value= 'Decline' >
               </form>
             </li>
           {% endfor %}
@@ -131,8 +128,8 @@
               Click below to modify the status:
               <form action='/invitation-change-status.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[2] }}>
-                  <input type='submit'name='received_submit_button' value= 'Decline' >
-                  <input type='submit'name='received_submit_button' value= 'Pending' >
+                  <input type='submit'name='invite_submit_button' value= 'Decline' >
+                  <input type='submit'name='invite_submit_button' value= 'Pending' >
               </form>
             </li>
           {% endfor %}
@@ -151,8 +148,8 @@
               Click below to modify the status:
               <form action='/invitation-change-status.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[2] }}>
-                  <input type='submit'name='received_submit_button' value= 'Accept' >
-                  <input type='submit'name='received_submit_button' value= 'Pending' >
+                  <input type='submit'name='invite_submit_button' value= 'Accept' >
+                  <input type='submit'name='invite_submit_button' value= 'Pending' >
               </form>
             </li>
           {% endfor %}

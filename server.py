@@ -443,7 +443,7 @@ def invitation_update():
     else:
         invite_id = int(request.form.get("invite_id"))
         user_id = session['user_id']
-        status = request.form.get("received_submit_button")
+        status = request.form.get("invite_submit_button")
 
         if status == "Pending":
             status = "pen"
@@ -454,18 +454,18 @@ def invitation_update():
         elif status == "Decline":
             status = 'rej'
 
-        invite_to_update =\
-            UserInvite.query.filter(UserInvite.user_id == user_id,
-                                    UserInvite.invite_id == invite_id).one()
-        print invite_to_update
+        if status == 'ina':
+            #user who created this invite is cancelling it, need to update
+            #status for all users on the invitation
+            db.session.query(UserInvite).filter(UserInvite.invite_id == 2).update({UserInvite.status: 'ina'}, synchronize_session=False)
+        else:
+            invite_to_update =\
+                UserInvite.query.filter(UserInvite.user_id == user_id,
+                                        UserInvite.invite_id == invite_id).one()
 
-        invite_to_update.status = status
+            invite_to_update.status = status
 
         db.session.commit()
-
-        # if this does not work, try bulk update
-        # Users_Invites.query.filter_by(User_invites.user_id == user_id,\
-        #     User_Invites.invite_id == invite_id).update(status=status)
 
         success = {'status': 'successful'}
         return redirect(redirect_url())

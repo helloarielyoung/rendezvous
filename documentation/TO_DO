@@ -6,6 +6,9 @@ REMINDER:  on startup:
 ***********
 
 Things that are most showable:
+    New Invitation Modal:  make Rendezvous name cursor focus (autofocus)
+    Sent Invitation success:  add link to "Sent Invitations" in the confirmation modal
+
     improve demo map:
         pop up to user1 when user2 arrives at destination
         ETA on legend (can i fake updates? maybe use offset value?)

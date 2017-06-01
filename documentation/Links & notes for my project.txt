@@ -1,5 +1,8 @@
 ****Links & notes for my project****
 
+Image for background:  https://commons.wikimedia.org/wiki/File%3A1932_Candrain_Map_of_San_Francisco%2C_California_-_Geographicus_-_SanFrancisco-candrian-1932.jpg
+
+
 For Sent Invitations, example of the jinja grouped data.
   List:
   [(1, u'Girls coffee date', datetime.datetime(2017, 5, 31, 9, 0), u'Test location 1', u'123 Street', 1, datetime.datetime(2017, 5, 9, 9, 0), 2, u'act', u'accepted', u'Test User 2', u'user2@email.com'), (1, u'Girls coffee date', datetime.datetime(2017, 5, 31, 9, 0), u'Test location 1', u'123 Street', 1, datetime.datetime(2017, 5, 9, 9, 0), 3, u'act', u'accepted', u'Test User 3', u'user3@email.com')] 

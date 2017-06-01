@@ -112,7 +112,7 @@
 
             <div class="form-group">
                 <label for="rendezvousName">Rendezvous Name</label>
-                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name" autofocus>
+                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name">
             </div>
 
             <div class="form-group">
@@ -295,9 +295,15 @@ $('#inviteModal').on('hidden.bs.modal', function(){
     $("#pac-input").val("")
 });
 
+//launches the New Invitation modal form
 function launchModal(){
      $('#inviteModal').modal();
 }
+
+//when the New Invitation form opens, find the autofocus field
+$('#inviteModal').on('shown.bs.modal', function () {
+  $('#rendezvousName').focus();
+});
 
     </script>
 

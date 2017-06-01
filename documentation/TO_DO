@@ -174,9 +174,12 @@ Way Future Features:
 ***DONE***
 ***********
 
+Animation successfully uses nesUserLines with refactored data structure.
+Refactored rendezvousmap code to save line, user name, eta data, symbol color
+    all in one object
+
 Added ETA data to the json being returned to map.
 Added starting ETA text and value to model and seed.py
-
 Change invite status - need confirmation message. Used flash for now.
 Sent Invitation success:  link your invitations
 New Invitation Modal:  make Rendezvous name cursor focus (autofocus)

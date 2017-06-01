@@ -5,6 +5,7 @@
 //define the map and lines as global variables
 var map;
 var userLines = {};
+var newUserLines = {};
 
 // initialize the map
 function initMap() {
@@ -88,9 +89,21 @@ function dataReceived(results) {
                       }],
                      map: map
                       });
-//debugger
             //save userId and userLine so I can update icon position in realitme later
+// current format:  {user_id: googlemap line object}
             userLines[thisUserId] = userLine;
+
+            newUserLines[thisUserId]= {'line': userLine, 'name': allWaypoints[user]['name'],
+           'eta_text': allWaypoints[user]['starting_eta_text'],
+           'eta_value': allWaypoints[user]['starting_eta_value'],
+           'symbolColor': pickColor}
+            // newuserLines[thisUserId]['line'] = userLine;
+            // newuserLines[thisUserId]['name'] = allWaypoints[user]['name'];
+            // newuserLines[thisUserId][''] = userLine;
+//change to: {user_id: {'line': googlemap line object, 'name': name,
+        //    'eta_text': eta_text, 'eta_value': eta_value, 'symbolColor': color}}  
+        //get name:    allWaypoints[user]['name']
+        //get name:  pickColor
 
   //added allWaypoints[user]['starting_eta_text'] and allWaypoints[user]['starting_eta_value']
   // so should be able to push one (or both) of those into userLines along with 
@@ -133,9 +146,9 @@ function dataReceived(results) {
 
 //animate
 var lineSpeed = 40;
-for(var line in userLines)
+for(var user in newUserLines)
 { 
-animateSymbol(userLines[line], lineSpeed);
+animateSymbol(newUserLines[user]['line'], lineSpeed);
 lineSpeed = lineSpeed + 50;
 }
 

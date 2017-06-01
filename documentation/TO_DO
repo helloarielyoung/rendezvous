@@ -5,9 +5,7 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Things that are most showable:
-    New Invitation Modal:  make Rendezvous name cursor focus (autofocus)
-    Sent Invitation success:  add link to "Sent Invitations" in the confirmation modal
+    better date/time picker
 
     improve demo map:
         pop up to user1 when user2 arrives at destination
@@ -21,6 +19,9 @@ Things that are most showable:
         pop up to user1 when user2 arrives at destination
             (and remove their route)
         add comments from the user "stopped to get gas"
+
+Sent Invitation success:  make link go to "Sent Invitations" tab!
+    look up jQuery on-click to close the modal, go to page and switch to tab
 
 Next most important:  could I get google maps routes API thingy working bettween
     "Click to Go" and displaying the routes?
@@ -170,6 +171,11 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Change invite status - need confirmation message. Used flash for now.
+Sent Invitation success:  link your invitations
+New Invitation Modal:  make Rendezvous name cursor focus (autofocus)
+^6/1^
 
 Improved layout of Sent Invites and added Cancel button (it's not really
     fully functional without an un-cancel button, but out of time.)

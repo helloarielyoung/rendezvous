@@ -70,7 +70,7 @@ def load_invitations():
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 05 31 09:00:00',
+                         rendezvous_date='2017 06 01 09:00:00',
                          rendezvous_name='Girls coffee date',
                          rendezvous_location_name='Test location 1',
                          rendezvous_location_address='123 Street')
@@ -80,8 +80,8 @@ def load_invitations():
                          created_date='2017 05 15 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         rendezvous_date='2017 06 01 11:00:00',
-                         rendezvous_name='Coffee with Joe',
+                         rendezvous_date='2017 06 01 18:00:00',
+                         rendezvous_name='Dinner with Joe',
                          rendezvous_location_name='Test location 2',
                          rendezvous_location_address='345 Street')
 

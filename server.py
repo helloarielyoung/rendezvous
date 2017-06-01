@@ -446,28 +446,31 @@ def invitation_update():
         status = request.form.get("invite_submit_button")
 
         if status == "Pending":
-            status = "pen"
+            status_id = "pen"
         elif status == "Accept":
-            status = "act"
+            status_id = "act"
         elif status == "Cancel":
-            status = "ina"
+            status_id = "ina"
         elif status == "Decline":
-            status = 'rej'
+            status_id = 'rej'
 
         if status == 'ina':
             #user who created this invite is cancelling it, need to update
             #status for all users on the invitation
-            db.session.query(UserInvite).filter(UserInvite.invite_id == 2).update({UserInvite.status: 'ina'}, synchronize_session=False)
+            db.session.query(UserInvite).filter(UserInvite.invite_id == invite_id).update({UserInvite.status: status_id}, synchronize_session=False)
         else:
             invite_to_update =\
                 UserInvite.query.filter(UserInvite.user_id == user_id,
                                         UserInvite.invite_id == invite_id).one()
 
-            invite_to_update.status = status
+            invite_to_update.status = status_id
 
         db.session.commit()
 
-        success = {'status': 'successful'}
+        #to send confirmation message back
+        invite_name = db.session.query(Invitation.rendezvous_name).filter(Invitation.invite_id == invite_id).first()
+        flash("Invitation \'" + invite_name[0] + "\'' status changed to " + status)
+
         return redirect(redirect_url())
 
 

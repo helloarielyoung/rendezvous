@@ -11,7 +11,7 @@ import datetime
 import pytz
 import tzlocal
 
-# from helper_functions import *
+from helper_functions import *
 
 from model import Status, User, Invitation, Waypoint, UserInvite, connect_to_db, db, hash_pass, compare_hash
 
@@ -230,9 +230,8 @@ def logout():
 
 @app.route('/rendezvous-map')
 def googlemap2():
-    """Google map with animated routes populated from database.
+    """This is a demo map - Google map with animated routes populated from database.
 
-    Only display to a logged in user
     """
 
     if session.get('user_id') is None:
@@ -295,6 +294,8 @@ def map_data():
         user_dict = {'id': 0, 'name': '', 'waypoints': []}
         user_dict['id'] = user
         user_dict['name'] = User.query.get(user).name
+        user_dict['starting_eta_text'] = db.session.query(Waypoint.starting_eta_text).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).first()
+        user_dict['starting_eta_value'] = db.session.query(Waypoint.starting_eta_value).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).first()
         user_dict['waypoints'] = db.session.query(Waypoint.waypoint_lat, Waypoint.waypoint_long).filter(Waypoint.invite_id == invite_id, Waypoint.user_id == user).order_by(Waypoint.waypoint_id).all()
         #append all the users dictionaries to all_waypoints
         all_waypoints['data'].append(user_dict)
@@ -304,10 +305,11 @@ def map_data():
 
 @app.route('/rendezvous-map-v3', methods=['POST'])
 def googlemapv2():
-    """Google map with animated routes populated from database.
+    """Google map with animated routes.
 
     Only display to a logged in user
-    Receives user_id and invite_id and displays routes accordingly
+    Receives user_id and invite_id and passes back the center point of that invite.
+    The route data is acquired by the page using an AJAX request to '/map-data.json'
     """
 
     #make sure you cannot get here if not logged in:

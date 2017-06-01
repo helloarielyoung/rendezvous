@@ -91,8 +91,13 @@ function dataReceived(results) {
 //debugger
             //save userId and userLine so I can update icon position in realitme later
             userLines[thisUserId] = userLine;
-            // can i change this to include the user name without breaking everything?
-            // userLines[thisUserId] = [userLine, allWaypoints[user]['name']]
+
+  //added allWaypoints[user]['starting_eta_text'] and allWaypoints[user]['starting_eta_value']
+  // so should be able to push one (or both) of those into userLines along with 
+  // the user name so both name and ETA can be updated on the Legend
+            // can i change this to include the user name and their ETA without
+             // breaking everything?
+            // userLines[thisUserId] = [userLine, allWaypoints[user]['name', 'ETA']]
             // yes, this makes the user line:  userLines[<userID>][0]
             // and the name:  userLines[<userID>][1]
             // why did i want the user name in here?  so I can modify the legend, I think?

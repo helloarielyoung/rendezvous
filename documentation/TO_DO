@@ -21,7 +21,9 @@ REMINDER:  on startup:
         add comments from the user "stopped to get gas"
 
 Sent Invitation success:  make link go to "Sent Invitations" tab!
-    look up jQuery on-click to close the modal, go to page and switch to tab
+    improvement:  look up jQuery on-click to close the modal, go to page and switch to tab
+
+Invitation change status:  can i capture the flash in bootstrap and make it cooler?
 
 Next most important:  could I get google maps routes API thingy working bettween
     "Click to Go" and displaying the routes?
@@ -171,6 +173,9 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Added ETA data to the json being returned to map.
+Added starting ETA text and value to model and seed.py
 
 Change invite status - need confirmation message. Used flash for now.
 Sent Invitation success:  link your invitations

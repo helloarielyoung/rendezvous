@@ -220,6 +220,10 @@ def load_waypoints():
 
     Waypoint.query.delete()
 
+#need to add starting ETA to these
+#starting_eta_text
+#starting_eta_value
+
 # 55 Francisco St San Francisco
     route1 = [{'lat': 37.8056759, 'lng': -122.4056522}, {'lat': 37.8056888, 'lng': -122.4054091}, {'lat': 37.8038687, 'lng': -122.4049994}, {'lat': 37.80419, 'lng': -122.4022693}, {'lat': 37.8039573, 'lng': -122.4020258}, {'lat': 37.7922635, 'lng': -122.3997971}, {'lat': 37.7908979, 'lng': -122.4106552}, {'lat': 37.7890236, 'lng': -122.4102744}, {'lat': 37.7888568, 'lng': -122.4115372}]
 
@@ -232,7 +236,9 @@ def load_waypoints():
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long,
-                            created_date='01/01/2017')
+                            created_date='01/01/2017',
+                            starting_eta_value=765,
+                            starting_eta_text='13 mins')
         db.session.add(waypoint)
 
     db.session.commit()
@@ -259,7 +265,9 @@ def load_waypoints():
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long,
-                            created_date='01/01/2017')
+                            created_date='01/01/2017',
+                            starting_eta_value=814,
+                            starting_eta_text='14 mins')
         db.session.add(waypoint)
 
     db.session.commit()
@@ -282,7 +290,9 @@ def load_waypoints():
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long,
-                            created_date='01/01/2017')
+                            created_date='01/01/2017',
+                            starting_eta_value=517,
+                            starting_eta_text='9 mins')
         db.session.add(waypoint)
 
 #helper_functions.get_route_data('299 Octavia St San Francisco','683 Sutter st San Francisco')
@@ -306,13 +316,15 @@ def load_waypoints():
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long,
-                            created_date='01/01/2017')
+                            created_date='01/01/2017',
+                            starting_eta_value=814,
+                            starting_eta_text='14 mins')
         db.session.add(waypoint)
 
     db.session.commit()
 
 # https://maps.googleapis.com/maps/api/directions/json?origin=221+4th+St+San+Francisco&destination=683+Sutter+St+San+Francisco&mode=driving&key=AIzaSyAQebJTWGOQmOsuTYscQ5bjCVjBenHOgC0get_route_data('221 4th St San Francisco','683 Sutter St San Francisco')
-# '221 4th St San Francisco'
+#  get_route_data('221 4th St San Francisco','683 Sutter St San Francisco')
     route5 = [{'lat': 37.7831001, 'lng': -122.4025164},
               {'lat': 37.7820395, 'lng': -122.4011837},
               {'lat': 37.78380380000001, 'lng': -122.3989875},
@@ -329,7 +341,9 @@ def load_waypoints():
                             # current_time=current_time,
                             waypoint_lat=waypoint_lat,
                             waypoint_long=waypoint_long,
-                            created_date='01/01/2017')
+                            created_date='01/01/2017',
+                            starting_eta_value=517,
+                            starting_eta_text='9 mins')
         db.session.add(waypoint)
 
     db.session.commit()

@@ -27,13 +27,12 @@
     <div id="map"></div>
     <div id="legend"><h3>Legend</h3></div>
     <script>
-      /* to pass invite_id, login, and center position, and user names to the javascript */
+      /* to pass invite_id, login, and center position to the javascript */
       var user_id = {{ session.user_id }}
       var invite_id = {{ invite_id }}
       var center_lat = {{ center[0] }}
       var center_lng = {{ center[1] }}
-      var users_names ={}
-            // here is where getting user name will go
+      // got user's names via the AJAX request for waypoints data
     </script>
 
     <script src="static/js/rendezvous-mapv3.js"></script>

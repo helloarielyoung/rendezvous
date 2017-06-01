@@ -50,7 +50,10 @@ def get_route_data(start, end):
     #format the way "path" for google maps API wants them:
     route = [{'lat':item['lat'], 'lng':item['lng']} for item in whole]
 
-    print route
+    starting_eta_text = result['routes'][0]['legs'][0]['duration']['text']
+    starting_eta_value = result['routes'][0]['legs'][0]['duration']['value']
+
+    print route, starting_eta_value, starting_eta_text
 
 
 #probably depreate this since I could not get it working - the simple tz=ptz does work

@@ -195,6 +195,8 @@ class Waypoint(db.Model):
     waypoint_lat = db.Column(db.String(17), nullable=False)
     waypoint_long = db.Column(db.String(17), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False)
+    starting_eta_text = db.Column(db.String(25))
+    starting_eta_value = db.Column(db.Integer)
 
     def __repr__(self):
         return "<Waypoint waypoint_id=%s user_id=%s waypoint_lat=%s \

@@ -1,28 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<html lang = "en" style="height: 100%">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta charset="utf-8">
-    <title>Rendezvous Map v3</title> <small>You are currently logged in as {{ session['user_name'] }}. Click <a href="/users/{{ session['user_id'] }}">here </a>to go to your profile
+    <small>You are currently logged in as {{ session['user_name'] }}. Click <a href="/users/{{ session['user_id'] }}">here </a>to go to your profile
     </small>
-<script src="https://code.jquery.com/jquery.js"></script>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
+
     <h3>Rendezvous Map</h3>
     <div id="map"></div>
     <div id="legend"><h3>Legend</h3></div>
@@ -35,10 +16,9 @@
       // got user's names via the AJAX request for waypoints data
     </script>
 
-    <script src="static/js/rendezvous-mapv3.js"></script>
+  <script src="static/js/rendezvous-mapv3.js"></script>
   <script
     src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap">
-    </script>
+  </script>
 
-  </body>
   {% endblock %}

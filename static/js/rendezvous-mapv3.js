@@ -142,11 +142,10 @@ function animateSymbol(inputLine, inputSpeed, userName) {
       var icons = line.get('icons');
       icons[0].offset = (count1 / 2) + '%';
       line.set('icons', icons);
-
-    // // make traffic alert for user3 not working in here, try elsewhere
-    // if ((userName = "Test User 3") && (parseInt(line.get('icons')[0].offset) = 60)) {
-    //   alert ("Test User 3 has encountered traffic. 4 minute delay.")
-    // }
+    // make traffic alert for user3 not working in here, try elsewhere
+    if ((userName == "Test User 3") && (parseInt(line.get('icons')[0].offset) == 80)) {
+        alert ("Test User 3 has encountered traffic. 4 minute delay.")
+    }
     // make animation to stop at destination
       if (parseInt(line.get('icons')[0].offset) > 99.5) {     
             icons[0].offset = '100%';  
@@ -157,6 +156,10 @@ function animateSymbol(inputLine, inputSpeed, userName) {
     }
      }, speed);
     
+}
+
+function trafficAlert () {
+    alert (userName + " has encountered traffic. 4 minute delay.")
 }
 
 function changeColorName (color) {

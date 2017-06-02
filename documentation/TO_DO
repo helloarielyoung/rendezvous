@@ -5,53 +5,29 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Make map fit in div.  Have to clean up HTML/base stuff to do that probably.
+Login/invite update flash messages never goes away if you don't leave Users page
 
-    better date/time picker
+better date/time picker
 
-    improve demo map:
-        Make Pop up notice when user arrives not stop the animation?
-        Remove ETA from legend when user arrives?
-        pop up to user1 when user2 arrives at destination
-         User3 joins the rendezvous and route appears on the map
-        fix the zoom:
+Improve Map:
+    Fix traffic pop-up so it comes up only once
+    Make Pop up notice when user arrives not stop the animation?
+    Remove ETA from legend when user arrives?
+    Make map fit in div.  Have to clean up HTML/base stuff to do that probably.
+    User3 joins the rendezvous and route appears on the map
+    fix the zoom:
             Do some calculation of the starting points of the routes and the destination
             point and adjust the zoom and center point of the map to include all of
-            all routes
-        can i animate the "traffic encountered" delay from googlemaps
-        pop up to user1 when user2 arrives at destination
-            (and remove their route)
-        add comments from the user "stopped to get gas"
+            all routes.  See Links & notes for links...
 
-Sent Invitation success:  make link go to "Sent Invitations" tab!
-    improvement:  look up jQuery on-click to close the modal, go to page and switch to tab
+New Invitation success:
+    make link go to "Sent Invitations" tab! look up jQuery on-click
+     to close the modal, go to page and switch to tab
+
+Sent Invitations:
+    sort by most recently sent?
 
 Invitation change status:  can i capture the flash in bootstrap and make it cooler?
-
-Next most important:  could I get google maps routes API thingy working bettween
-    "Click to Go" and displaying the routes?
-
-Sent invitations:  add un-cancel button and re-invite friends.
-
-It would be good to refactor how I'm sending invite query data to user's page:
-    if i sent a dictionary, then understanding and changing the jinja references
-    to data bits would be easier (could be invite.name or invite['name']
-    - i forget which - instead of invite[i])
-
-Rendezvous Map Improvements:
-    **Do this stuff on v1 map for demo**
-    Hover over dots show name & current ETA.
-    Make demo animation slower, have user2 arrive first, then send alert when user2 arrives at destination
-    Add on-click listener to launch modal when click on ANY googlmap marker
-
-Question about testing: had to manually create "testdb".  Other ways?
-
-Add even more tests so I don't have to manually check if changes broke stuff.
-    confirm test that you can't get to users/id by brute force (try get and post)
-    And, should users/user_id be accessed only by one or the other?
-
-Improve layout of User landing page (tabs!?)
-    https://www.w3schools.com/bootstrap/bootstrap_tabs_pills.asp
 
 Make Time-To-Rendezvous page:
     Change User Profile page so clicking on Active Invitation brings you to
@@ -63,6 +39,25 @@ Make Time-To-Rendezvous page:
         routes when they join.  Think:  might have to modify model for this...?
         Here's the google maps API for getting the directions:
             https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions
+
+
+Sent invitations:  add un-cancel button and re-invite friends.
+
+It would be good to refactor how I'm sending invite query data to user's page:
+    if i sent a dictionary, then understanding and changing the jinja references
+    to data bits would be easier (could be invite.name or invite['name']
+    - i forget which - instead of invite[i])
+
+Rendezvous Map Improvements:
+    **Do this stuff on v1 map for demo**
+    Hover over dots show name & current ETA.
+    Add on-click listener to launch modal when click on ANY googlmap marker
+
+Question about testing: had to manually create "testdb".  Other ways?
+
+Add even more tests so I don't have to manually check if changes broke stuff.
+    confirm test that you can't get to users/id by brute force (try get and post)
+    And, should users/user_id be accessed only by one or the other?
 
 Improve Login
     Add some javascript to check for valid data w/out reloading page
@@ -176,7 +171,7 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
-
+Animate the "traffic encountered" delay from googlemaps (though it comes up more than once)
 Pop-up on user arrival with user's name.
 ETA on legend (can i fake updates? maybe use offset value?)
 

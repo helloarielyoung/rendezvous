@@ -1,5 +1,9 @@
 ****Links & notes for my project****
 
+Google Maps dynamic zoom
+  https://stackoverflow.com/questions/20480813/google-maps-api-v3-dynamic-zoom-level-when-using-places-library
+  https://groups.google.com/forum/#!topic/google-maps-js-api-v3/HyAFbvzoGGo
+  
 Image for background:  https://commons.wikimedia.org/wiki/File%3A1932_Candrain_Map_of_San_Francisco%2C_California_-_Geographicus_-_SanFrancisco-candrian-1932.jpg
 
 

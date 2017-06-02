@@ -11,9 +11,8 @@ better date/time picker
 
 Improve Map:
     Fix traffic pop-up so it comes up only once
-    Make Pop up notice when user arrives not stop the animation?
     Remove ETA from legend when user arrives?
-
+    Legend isn't going in TOP-RIGHT, why?  Can it have opaque background?
     User3 joins the rendezvous and route appears on the map
     fix the zoom:
             Do some calculation of the starting points of the routes and the destination

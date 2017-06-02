@@ -1,6 +1,7 @@
  /* Set the map height explicitly or it will be zero height */
 #map {
   height: 80%;
+  width: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {

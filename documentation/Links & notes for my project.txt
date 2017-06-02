@@ -1,5 +1,7 @@
 ****Links & notes for my project****
 
+Datetime picker:  http://www.tikalk.com/incubator/week-picker-using-jquery-ui-datepicker/
+
 Google Maps dynamic zoom
   https://stackoverflow.com/questions/20480813/google-maps-api-v3-dynamic-zoom-level-when-using-places-library
   https://groups.google.com/forum/#!topic/google-maps-js-api-v3/HyAFbvzoGGo

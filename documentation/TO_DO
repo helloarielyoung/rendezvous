@@ -13,7 +13,7 @@ Improve Map:
     Fix traffic pop-up so it comes up only once
     Make Pop up notice when user arrives not stop the animation?
     Remove ETA from legend when user arrives?
-    Make map fit in div.  Have to clean up HTML/base stuff to do that probably.
+
     User3 joins the rendezvous and route appears on the map
     fix the zoom:
             Do some calculation of the starting points of the routes and the destination
@@ -171,6 +171,11 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Made map fit in div. Worked only after I created external css file for styles!?!
+    (Cleaning out html tags & style from templates was not enough, weirdly.)
+^6/2^
+
 Animate the "traffic encountered" delay from googlemaps (though it comes up more than once)
 Pop-up on user arrival with user's name.
 ETA on legend (can i fake updates? maybe use offset value?)

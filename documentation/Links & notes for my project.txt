@@ -100,6 +100,8 @@ Working on invite lists...  filter using Jinja?
     trying textual SQL:  http://docs.sqlalchemy.org/en/latest/orm/tutorial.html#orm-tutorial-literal-sql
 
 Google maps legend:  https://developers.google.com/maps/documentation/javascript/adding-a-legend
+    fixed custom legend:  https://stackoverflow.com/questions/36515/fixed-legend-in-google-maps-mashup
+    https://developers.google.com/maps/documentation/javascript/controls#CustomControls
 Google maps ALL the availble google icons: http://kml4earth.appspot.com/icons.html
 
 Google maps custom symbols:  https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-custom

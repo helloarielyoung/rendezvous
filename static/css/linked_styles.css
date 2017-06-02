@@ -1,11 +1,13 @@
  /* Set the map height explicitly or it will be zero height */
 #map {
+  /*setting height at 80 is only thing I've found that keeps map from being
+    taller than the browser window height.  :(  */
   height: 80%;
   width: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
-  height: 80%;
+  height: 100%;
   margin: 0;
   padding: 0;
 }

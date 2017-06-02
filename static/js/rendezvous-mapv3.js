@@ -73,9 +73,7 @@ function dataReceived(results) {
         //END loop for waypoints for this user
         } 
 
-        //Add line to the map
-//This should probably be moved out of the
-//loop so it does it ONCE when pathListByUser is complete for each user
+    //Add line for this user to the map
     var userLine = new google.maps.Polyline({
         path: pathListByUser,
         strokeColor: userLineColor,
@@ -90,7 +88,7 @@ function dataReceived(results) {
         map: map
     });
     //save user data so I can update icon position/legend in realitme later
-    //format: {user_id: {'line': googlemap line object, 'name': name,
+    //format: {user_id: {'line': googlemap line object, 'name': user name,
     //    'eta_text': eta_text, 'eta_value': eta_value, 'symbolColor': color}} 
     userLines[thisUserId]= {
         'line': userLine, 'name': allWaypoints[user]['name'],
@@ -117,6 +115,7 @@ function dataReceived(results) {
         legend.appendChild(div);
     }
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+
     //END loop for users in allWaypoints
     }
 

@@ -7,12 +7,10 @@ REMINDER:  on startup:
 
 Login/invite update flash messages never goes away if you don't leave Users page
 
-better date/time picker
-
 Improve Map:
-    Fix traffic pop-up so it comes up only once
-    Remove ETA from legend when user arrives?
     Legend isn't going in TOP-RIGHT, why?  Can it have opaque background?
+    Map size not actually fixed:  why is it taller than my browser window?
+    Remove ETA from legend when user arrives?
     User3 joins the rendezvous and route appears on the map
     fix the zoom:
             Do some calculation of the starting points of the routes and the destination
@@ -22,6 +20,8 @@ Improve Map:
 New Invitation success:
     make link go to "Sent Invitations" tab! look up jQuery on-click
      to close the modal, go to page and switch to tab
+
+better date/time picker
 
 Sent Invitations:
     sort by most recently sent?
@@ -171,6 +171,7 @@ Way Future Features:
 ***DONE***
 ***********
 
+Fix traffic pop-up so it comes up only once
 Made map fit in div. Worked only after I created external css file for styles!?!
     (Cleaning out html tags & style from templates was not enough, weirdly.)
 ^6/2^

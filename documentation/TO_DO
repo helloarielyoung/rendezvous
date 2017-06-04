@@ -5,7 +5,7 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Login/invite update flash messages never goes away if you don't leave Users page
+Change Legend to display ETA time based on now + eta data.
 
 Improve Map:
     Legend isn't going in TOP-RIGHT, why?  Can it have opaque background?
@@ -27,6 +27,8 @@ Sent Invitations:
     sort by most recently sent?
 
 Invitation change status:  can i capture the flash in bootstrap and make it cooler?
+
+Login/invite update flash messages never goes away if you don't leave Users page
 
 Make Time-To-Rendezvous page:
     Change User Profile page so clicking on Active Invitation brings you to
@@ -90,6 +92,8 @@ Web page design security question:
 Obtain geolocation info and update animation of routes & status info in real time
     start here?  https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
     ASK KRISTINE - she used html5_geolocator (or something like that) with google map
+    https://www.w3schools.com/html/html5_geolocation.asp
+    watchPosition()           
 
 Add tests!
 

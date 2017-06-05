@@ -9,16 +9,19 @@
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 1%;
+  background: rgb(251, 234, 206);
 }
 
 #legend {
-      background: white;
+      background: rgb(251, 234, 206);
       padding: 5px;
       border: 1px solid black;
       margin-left: 5px;
       border-radius: 5px;
     }
+
+
 
 /* Example CSS from CSS lecture */
 /*h1 {

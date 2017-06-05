@@ -3,6 +3,8 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 2%;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Gabriela', serif;
 }
 
 body {
@@ -12,6 +14,11 @@ body {
 
 .container {
     background: rgba(251, 234, 206, 0.75); /* translucent tanish matches map image*/
+}
+
+h3 {
+  color: rgb(70, 91, 119);
+
 }
 
 form {
@@ -35,10 +42,26 @@ li.active>#friends-pill{
 }
 
 a {
-  color: rgb(70, 91, 119);
+  color: #337ab7;
 }
 
-*/
+a.focus, a.hoover {
+  color: #23527c;
+  text-decoration: underline;
+}
+
+.alert-success{
+  /*background-image: webkit-linear-gradient(top,rgb(181, 150, 99) 0, rgb(181, 150, 99) 100%);*/
+    background-image: none;
+    background-color: rgb(181, 150, 99);
+    color: #F4F9F3;
+    font-weight: bolder;
+}
+
+input[type=text] {
+  font-family: 'Roboto', sans-serif;
+}
+
 /* Example CSS from CSS lecture */
 /*h1 {
   font-family: sans-serif;

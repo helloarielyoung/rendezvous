@@ -11,6 +11,9 @@ html, body {
   margin: 0;
   padding: 1%;
   background: rgb(251, 234, 206);
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Gabriela', serif;
+  color: rgb(70, 91, 119);
 }
 
 #legend {
@@ -21,7 +24,14 @@ html, body {
       border-radius: 5px;
     }
 
+a {
+  color: #337ab7;
+}
 
+a.focus, a.hoover {
+  color: #23527c;
+  text-decoration: underline;
+}
 
 /* Example CSS from CSS lecture */
 /*h1 {

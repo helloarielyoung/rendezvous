@@ -15,23 +15,26 @@
 
 <!-- custom style sheet -->
 <link rel="stylesheet" href="\static\css\linked_styles.css">
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- fonts -->
+<link href="https://fonts.googleapis.com/css?family=Gabriela|Roboto:400,700" rel="stylesheet">
 
   </head>
     <body>
       <div class="container">
         <!-- <div id="my-box"> -->
   
-    <h4>Rendezvous</h4>
+    <h3>Rendezvous</h3>
     <hr>
     <div id="flashMessages">
     {% with messages = get_flashed_messages(with_categories=true) %}
-      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
       {% if messages %}
         {# code example had {% for category, message in messages %} even though
             the fields are not in that order...?  but this did not seem to help #}
         {% for category, message in messages %}
+      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
           <div class="alert alert-{{ category }} alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->

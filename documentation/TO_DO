@@ -7,8 +7,6 @@ REMINDER:  on startup:
 
 Move all the styles from invitation_new.html into css file...?
 
-Tried to change date format on Invitation Status change alerts, failed.
-
 Improve Map:
     Legend isn't going in TOP-RIGHT, why?  
     Map size not actually fixed:  why is it taller than my browser window?
@@ -56,9 +54,7 @@ Rendezvous Map Improvements:
     Hover over dots show name & current ETA.
     Add on-click listener to launch modal when click on ANY googlmap marker
 
-Question about testing: had to manually create "testdb".  Other ways?
-
-Add even more tests so I don't have to manually check if changes broke stuff.
+Add tests so I don't have to manually check if changes broke stuff.
     confirm test that you can't get to users/id by brute force (try get and post)
     And, should users/user_id be accessed only by one or the other?
 
@@ -67,6 +63,8 @@ Improve Login
     Do same for Registration form
 
 On User.html, inspect element reveals the user_id and invite_id values. Is there any way to hide that data and still pass it in the Post request?  Maybe can I save the invite ID to session when the button is clicked and then get it from there in the map route???
+    Invite organization:  this might? be better if it was organized with in-line modal expansion
+        sort under invite info into Pending, Accepted, Declined with button to click and have it expand list of friends who haven't answered, accepted, declined
 
 Refactor Waypoints and Invitations table/class
     why not store route lat/long data in one field formatted for google maps Path?

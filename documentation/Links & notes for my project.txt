@@ -2,6 +2,23 @@
 
 My palette:
   http://paletton.com/#uid=20Q0u0k5Kvv0ETp2IGW9Er1eqmI
+  Lightest: FBEACE, rgb(251, 234, 206), hue: 53, luminosity 92.51%
+  get tints & shades:  https://highintegritydesign.com/tools/tinter-shader/
+
+Fonts:
+  Roboto and Open Sans(that's what's used in Google Maps)
+    goes with Gabriela, Playfair
+
+    <link href="https://fonts.googleapis.com/css?family=Gabriela|Roboto:400,700" rel="stylesheet">
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Gabriela', serif;
+
+  Myriad
+  Gill Sans
+  Futura
+  Optima
+
+  Frutiger
 
 Dates & times:  moment.js
   https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-dates-and-times  
@@ -167,6 +184,7 @@ Password hashing:  https://flask-bcrypt.readthedocs.io/en/latest/
 
 Fancy Map styles in Google Maps API
   https://snazzymaps.com/
+    found here antiqued map:  https://snazzymaps.com/style/12903/antiqued-gold
 
 Fancy Google Maps marker customization:
   https://pepsized.com/customize-your-google-map-markers/

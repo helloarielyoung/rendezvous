@@ -37,14 +37,11 @@
           </ul>
         <h3> Click <a href="/invitation-new">here</a> to create a new Rendezvous</h3>
           </p>
-        <p> Click <a href='/rendezvous-map'>here</a> for animated google map demo
-          </p> 
+<!--         <p> Click <a href='/rendezvous-map'>here</a> for animated google map demo
+          </p>  -->
       </div>
       <div id="sentInvite" class="tab-pane fade">
           <h2>Invitations You have Sent</h2>
-<!-- this would be better if it was organized with in-line modal expansion -->
-<!-- sort under invite info into Pending, Accepted, Declined with button to click -->
-<!--  and have it expand list of friends who haven't answered, accepted, declined -->
           <ul>{% for invite, list in all_my_invites|groupby('invite_id') %} 
                 <!--0 Invitation.invite_id,
                     1 Invitation.rendezvous_name,
@@ -99,7 +96,7 @@
                     8 User.user_id -->
 <!-- it would be way better if i did the status change using jQuery -->
 <!-- wouldn't it? -->
-              InviteID: {{ invite[2] }}<br>
+              <!-- InviteID: {{ invite[2] }}<br> -->
               Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
               Name: {{ invite[3] }} <br>
               Location: {{ invite[6]}}<br>
@@ -119,7 +116,7 @@
           <h3>Accepted</h3>
           <ul>{% for invite in received_invites_sum if invite[0] == 'act' %}
             <li>
-              InviteID: {{ invite[2] }}<br>
+              <!-- InviteID: {{ invite[2] }}<br> -->
               Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
               Name: {{ invite[3] }} <br>
               Location: {{ invite[6]}}<br>
@@ -139,7 +136,7 @@
           <h3>Declined</h3>
           <ul>{% for invite in received_invites_sum if invite[0] == 'rej' %}
             <li>
-              InviteID: {{ invite[2] }}<br>
+              <!-- InviteID: {{ invite[2] }}<br> -->
               Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
               Name: {{ invite[3] }} <br>
               Location: {{ invite[6]}}<br>

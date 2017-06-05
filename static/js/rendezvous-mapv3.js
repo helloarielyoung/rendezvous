@@ -83,7 +83,7 @@ function initMap() {
     {
         "featureType": "transit",
         "elementType": "all",
-        "stylers": [{"visibility": "off"}]
+        "stylers": [{"visibility": "on"}]
     },
     {
         "featureType": "water",

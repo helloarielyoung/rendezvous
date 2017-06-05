@@ -60,17 +60,17 @@ def authenticate_login():
         if compare_hash(password, user.password):
             session['user_id'] = user.user_id
             session['user_name'] = user.name
-            flash('You were successfully logged in')
+            flash("You were successfully logged in", "success")
 
             user_id = user.user_id
             return redirect('/users/' + str(user_id))
         else:
-            flash('Bad password or user name')
+            flash("Bad password or user name", "danger")
             return redirect('/login')
     # we tried getting rid of what appears to be redundant else
     # but it did not work if it was valid email and bad password
     else:
-        flash('Bad password or user name')
+        flash("Bad password or user name", "danger")
         return redirect('/login')
 
 
@@ -180,7 +180,7 @@ def get_user(user_id):
                                received_invites_sum=received_invites_sum)
 
     else:
-        flash('You must be logged in to access that page.')
+        flash("You must be logged in to access that page.", "danger")
         return redirect('/')
 
 
@@ -201,7 +201,7 @@ def register_process():
 
     # check if email exists, and if not add to DB
     if User.query.filter_by(email=email).first() is not None:
-        flash("You already have an account!")
+        flash("You already have an account!", "warning")
 
     else:
         # hash password before storing
@@ -211,7 +211,7 @@ def register_process():
                     password=password)
         db.session.add(user)
         db.session.commit()
-        flash("You are now registered! Please login below.")
+        flash("You are now registered! Please login below.", "success")
 
     return redirect("/login")
 
@@ -223,7 +223,7 @@ def logout():
     del session['user_id']
     del session['user_name']
 
-    flash("You have logged out")
+    flash("You have logged out", "success")
 
     return redirect('/')
 
@@ -344,7 +344,7 @@ def invitation_new():
 
     #only get here if you are logged in
     if session.get('user_id') is None:
-        flash("You must be logged in to access this page")
+        flash("You must be logged in to access this page", "danger")
         return redirect('/')
 
     else:
@@ -363,9 +363,7 @@ def invitation_new():
 def invitation_save():
     """Save invitation data to the database"""
 
-# need to add test (and manuall test this!)
     if session.get('user_id') is None:
-        # flash('You must be logged in to access that page')
         return abort(400)
 
     else:
@@ -439,7 +437,6 @@ def invitation_update():
 
 # need to add test (and manuall test this!)
     if session.get('user_id') is None:
-        # flash('You must be logged in to access that page')
         return abort(400)
 
     else:
@@ -470,8 +467,9 @@ def invitation_update():
         db.session.commit()
 
         #to send confirmation message back
-        invite_name = db.session.query(Invitation.rendezvous_name).filter(Invitation.invite_id == invite_id).first()
-        flash("Invitation \'" + invite_name[0] + "\'' status changed to " + status)
+        invite_data = db.session.query(Invitation.rendezvous_name, Invitation.rendezvous_date).filter(Invitation.invite_id == invite_id).first()
+        print invite_data
+        flash("Status of \'" + invite_data[0] + "\'" + " on " + invite_data[1].strftime(%m/%d/%Y %I:%M%p) + " has been changed to " + status, "info")
 
         return redirect(redirect_url())
 
@@ -483,6 +481,15 @@ def redirect_url(default='index'):
            request.referrer or \
            url_for(default)
 
+
+def format_date(dateField):
+    """format date string into easier to read format
+
+    input:  2017-06-04 13:00:00
+    output: 06/04/2017 1:00PM
+
+    """
+    pass
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

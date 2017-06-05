@@ -101,7 +101,7 @@ function dataReceived(results) {
     var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
     var icons = {
         thisUserId: {
-            name: userLines[thisUserId]['name'] + " - " +userLines[thisUserId]['starting_eta_text'],
+            name: userLines[thisUserId]['name'] + " - " + etaTime(userLines[thisUserId]['starting_eta_value']),
             icon: iconBase + changeColorName(userLines[thisUserId]['symbolColor']) +'-circle-lv.png'
         }
     };
@@ -141,8 +141,8 @@ function animateSymbol(inputLine, inputSpeed, userName) {
         icons[0].offset = (count1 / 2) + '%';
         line.set('icons', icons);
 
-        // make traffic alert for user3 not working in here, try elsewhere
-        if ((userName == "Test User 3") && (parseInt(line.get('icons')[0].offset) == 80)) {
+        // make traffic alert for user3
+        if ((userName == "Test User 3") && (count1 == 101)) {
             trafficAlert(userName);
         }
         // make animation to stop at destination
@@ -175,4 +175,15 @@ function changeColorName (color) {
         'default': 'blu'
     };
     return (colors[color] || colors['default']);
+}
+
+function timeNow() {
+    var d = new Date(new Date().getTime()).toLocaleTimeString();//,
+    return d;
+}
+
+function etaTime(etaValue) {
+    var seconds = etaValue;
+    var d = new Date(new Date().getTime() + seconds*1000).toLocaleTimeString();//,
+    return d;
 }

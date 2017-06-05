@@ -12,6 +12,14 @@ html, body {
   padding: 0;
 }
 
+.container {
+    background-size: cover;
+    background: url(static/css/img/1216px-1932_Candrain_Map_SF.jpg) no-repeat center center;
+}
+
+#my-bootstrap-row {
+    background: rgba(255, 210, 0, 0.65); /* translucent yellow */
+}
 
 /* Example CSS from CSS lecture */
 /*h1 {

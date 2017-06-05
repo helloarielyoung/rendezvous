@@ -101,7 +101,7 @@ function dataReceived(results) {
     var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
     var icons = {
         thisUserId: {
-            name: userLines[thisUserId]['name'] + " - " +userLines[thisUserId]['starting_eta_text'],
+            name: userLines[thisUserId]['name'] + " - " + etaTime(userLines[thisUserId]['starting_eta_value']),
             icon: iconBase + changeColorName(userLines[thisUserId]['symbolColor']) +'-circle-lv.png'
         }
     };
@@ -175,4 +175,15 @@ function changeColorName (color) {
         'default': 'blu'
     };
     return (colors[color] || colors['default']);
+}
+
+function timeNow() {
+    var d = new Date(new Date().getTime()).toLocaleTimeString();//,
+    return d;
+}
+
+function etaTime(etaValue) {
+    var seconds = etaValue;
+    var d = new Date(new Date().getTime() + seconds*1000).toLocaleTimeString();//,
+    return d;
 }

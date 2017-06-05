@@ -12,6 +12,13 @@ html, body {
   padding: 0;
 }
 
+#legend {
+      background: white;
+      padding: 5px;
+      border: 1px solid black;
+      margin-left: 5px;
+      border-radius: 5px;
+    }
 
 /* Example CSS from CSS lecture */
 /*h1 {

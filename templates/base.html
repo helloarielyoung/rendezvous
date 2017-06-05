@@ -1,56 +1,69 @@
 <!DOCTYPE html>
 <html lang = "en" style="height: 100%">
-<head>
-  <!-- title is on browser tab -->
-    <title>Rendezvous</title> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <!-- title is on browser tab -->
+        <title>Rendezvous</title> 
 
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta charset="utf-8">
-
+<!-- custom style sheet -->
 <link rel="stylesheet" href="\static\css\linked_styles.css">
 
-</head>
-<body class="starter-template container">
+    </head>
+    <body class="starter-template container">
   
-  <h4>Rendezvous</h4>
-   <hr>
-{% for message in get_flashed_messages() %}
-    <span> {{ message }}</span>
+    <h4>Rendezvous</h4>
     <hr>
-{% endfor %}
-
+    <div id="flashMessages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+      {% if messages %}
+        {# code example had {% for category, message in messages %} even though
+            the fields are not in that order...?  but this did not seem to help #}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
+          <strong>{{ message }}</strong>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    </div>
 
     {% block content %} put your content here {% endblock %}
 
-<p>
-{% if 'user_id' not in session %}
-  <a href="/login"><h5>Click here to log in.</h5></a>
-  <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
-{% endif %}
-</p>
-<hr>
+    <p>
+    {% if 'user_id' not in session %}
+      <a href="/login"><h5>Click here to log in.</h5></a>
+      <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
+    {% endif %}
+    </p>
+    <hr>
     <p>
     {% if 'user_name' in session %}
-    <small>You are currently logged in as {{ session['user_name'] }}.<br>
-      <a href="/users/{{ session['user_id'] }}"> Click here to go to your profile</a>
-    </small>
-   <p>
-    <form action='/logout'>
-    <input type='submit' value='logout'>
-</form>
-</p> 
+        <small>You are currently logged in as {{ session['user_name'] }}.<br>
+          <a href="/users/{{ session['user_id'] }}"> Click here to go to your profile</a>
+        </small>
+       <p>
+        <form action='/logout'>
+            <input type='submit' value='logout'>
+        </form>
+        </p> 
     {% endif %}
-  </p>
+    </p>
+<!-- Placed at the end of the document so the pages load faster -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-</body>
+    </body>
 </html>

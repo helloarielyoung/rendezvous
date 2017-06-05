@@ -1,5 +1,12 @@
 ****Links & notes for my project****
 
+Dates & times:  moment.js
+  https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-dates-and-times  
+
+Bootstrap alert:  timed fade: 
+  http://jsfiddle.net/QAz2U/3/
+  https://stackoverflow.com/questions/7676356/can-twitter-bootstrap-alerts-fade-in-as-well-as-out  
+
 Datetime picker:  http://www.tikalk.com/incubator/week-picker-using-jquery-ui-datepicker/
     http://trentrichardson.com/examples/timepicker/
     https://cdnjs.com/libraries/jquery-ui-timepicker-addon

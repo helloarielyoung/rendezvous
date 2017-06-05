@@ -1,3 +1,11 @@
+{# {% for message in get_flashed_messages() %}
+    <span> {{ message }}</span>
+    <hr>
+{% endfor %}
+#}
+
+
+
                     <b>Status:  {% if person[8] == 'Active' %} Accepted
                   {% elif person[8] == 'Rejected' %} Declined
                   {% elif person[8] == 'Inactive %} Cancelled

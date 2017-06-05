@@ -11,13 +11,32 @@ body {
 }
 
 .container {
-    background: rgba(251, 234, 206, 0.65); /* translucent yellow */
+    background: rgba(251, 234, 206, 0.75); /* translucent tanish matches map image*/
 }
 
-.nav.nav-pills {
-  background-color: '465B77'
+li.active>#profile-pill{
+  background-color: rgb(70, 91, 119)
 }
 
+li.active>#sent-pill{
+  background-color: rgb(70, 91, 119)
+}
+
+li.active>#recd-pill{
+  background-color: rgb(70, 91, 119)
+}
+
+li.active>#friends-pill{
+  background-color: rgb(70, 91, 119)
+}
+
+a {
+  color: rgb(70, 91, 119)
+}
+/*.nav-pills>li.active>a{
+  background-color: rgb(70, 91, 119)
+}
+*/
 /* Example CSS from CSS lecture */
 /*h1 {
   font-family: sans-serif;

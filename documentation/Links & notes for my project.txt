@@ -1,5 +1,8 @@
 ****Links & notes for my project****
 
+My palette:
+  http://paletton.com/#uid=20Q0u0k5Kvv0ETp2IGW9Er1eqmI
+
 Dates & times:  moment.js
   https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-dates-and-times  
   in Python:  .strftime('%m/%d/%Y %I:%M%p')

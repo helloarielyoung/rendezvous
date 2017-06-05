@@ -2,6 +2,8 @@
 
 Dates & times:  moment.js
   https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-dates-and-times  
+  in Python:  .strftime('%m/%d/%Y %I:%M%p')
+  in Jinja:  
 
 Bootstrap alert:  timed fade: 
   http://jsfiddle.net/QAz2U/3/

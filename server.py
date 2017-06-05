@@ -469,7 +469,7 @@ def invitation_update():
         #to send confirmation message back
         invite_data = db.session.query(Invitation.rendezvous_name, Invitation.rendezvous_date).filter(Invitation.invite_id == invite_id).first()
         print invite_data
-        flash("Status of \'" + invite_data[0] + "\'" + " on " + invite_data[1].strftime(%m/%d/%Y %I:%M%p) + " has been changed to " + status, "info")
+        flash("Status of \'" + invite_data[0] + "\'" + " on " + invite_data[1].strftime('%m/%d/%Y %I:%M%p') + " has been changed to " + status, "info")
 
         return redirect(redirect_url())
 

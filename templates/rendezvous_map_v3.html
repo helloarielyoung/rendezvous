@@ -1,5 +1,15 @@
-{% extends 'base.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html lang = "en" style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <!-- title is on browser tab -->
+        <title>Rendezvous</title> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    </head>
+    <body>
 
     <small>You are currently logged in as {{ session['user_name'] }}. Click <a href="/users/{{ session['user_id'] }}">here </a>to go to your profile
     </small>
@@ -17,8 +27,12 @@
     </script>
 
   <script src="static/js/rendezvous-mapv3.js"></script>
+  <link rel="stylesheet" href="\static\css\map.css">
   <script
     src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap">
   </script>
 
-  {% endblock %}
+<!-- add separate css just for this map page -->
+
+    </body>
+</html>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container">
+<!-- <div class="container"> -->
     <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" href="#profile">Profile</a></li>
     <li><a data-toggle="pill" href="#sentInvite">Sent Invitations</a></li>
@@ -11,6 +11,7 @@
   </ul>
   <div class="tab-content">
       <div id="profile" class="tab-pane fade in active">
+        <!-- here is where i would put bootstrap row div -->
         <h2>Welcome, {{ session['user_name'] }}!</h2>
           
         <h3>Imminent Rendezvous - Click to go!</h3>
@@ -61,7 +62,7 @@
                 <!-- group by invitation -->
                 ID: {{ list[0][0] }}<br>
                 <b>{{ list[0][1] }}</b><br>
-                Date:  {{ list[0][2] }}<br>
+                Date:  {{ list[0][2].strftime('%m/%d/%Y %I:%M%p') }}<br>
                 Location:  {{ list[0][3] }}<br>
                 Click below to cancel this invitation:
                 <form action='/invitation-change-status.json', method='POST' name='inviteform'>
@@ -72,8 +73,8 @@
               <!-- future feature:  add group by status! -->
               {% for person in list %}
                 <li>
-                    Name: {{ person[10] }} <br>
-                    Email:  {{ person[11] }}<br>
+                    {{ person[10] }} <br>
+                    {{ person[11] }}<br>
                     <b>Status: {{ person[9] }}</b>
                 </li>
                 {% endfor %} </ul></li>
@@ -99,7 +100,7 @@
 <!-- it would be way better if i did the status change using jQuery -->
 <!-- wouldn't it? -->
               InviteID: {{ invite[2] }}<br>
-              Date and time: {{ invite[4] }} <br>
+              Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
               Name: {{ invite[3] }} <br>
               Location: {{ invite[6]}}<br>
               {{ invite[7] }}<br>
@@ -119,7 +120,7 @@
           <ul>{% for invite in received_invites_sum if invite[0] == 'act' %}
             <li>
               InviteID: {{ invite[2] }}<br>
-              Date and time: {{ invite[4] }} <br>
+              Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
               Name: {{ invite[3] }} <br>
               Location: {{ invite[6]}}<br>
               {{ invite[7] }}<br>
@@ -139,7 +140,7 @@
           <ul>{% for invite in received_invites_sum if invite[0] == 'rej' %}
             <li>
               InviteID: {{ invite[2] }}<br>
-              Date and time: {{ invite[4] }} <br>
+              Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
               Name: {{ invite[3] }} <br>
               Location: {{ invite[6]}}<br>
               {{ invite[7] }}<br>
@@ -169,7 +170,7 @@
           </ul>
       </div>
     </div>
-</div>
+<!-- </div> -->
 <script>
 if (location.hash) {
   $('a[href=\'' + location.hash + '\']').tab('show');

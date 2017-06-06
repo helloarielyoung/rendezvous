@@ -33,6 +33,14 @@ a.focus, a.hoover {
   text-decoration: underline;
 }
 
+.alert-success{
+  /*background-image: webkit-linear-gradient(top,rgb(181, 150, 99) 0, rgb(181, 150, 99) 100%);*/
+    background-image: none;
+    background-color: rgb(181, 150, 99);
+    color: #F4F9F3;
+    font-weight: bolder;
+}
+
 /* Example CSS from CSS lecture */
 /*h1 {
   font-family: sans-serif;

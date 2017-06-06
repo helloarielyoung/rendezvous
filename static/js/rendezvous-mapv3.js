@@ -260,7 +260,7 @@ function animateSymbol(inputLine, inputSpeed, userName) {
             clearInterval(id1);
             // remove polyline from map when arrive
             line.setMap(null);          
-            alert(userName + 'arrived!')
+            userArrivedAlert(userName);
             // make a list of "active users" and delete from that list
             // when this happens and then call function that re-renders
             // legend based on users that are in the list?
@@ -269,15 +269,26 @@ function animateSymbol(inputLine, inputSpeed, userName) {
 // END animateSymbol
 }
 
+function userArrivedAlert (userName) {
+    name = userName;
+    $('#user-arrived-alert').append('<div class="alert alert-success alert-dismissible" role="alert">\
+   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+   <strong>' + name + '</strong> has arrived\
+ </div>');
+}
+
 function trafficAlert (userName) {
     name = userName;
-    console.log("traffic alert called");
-    // alert (name + " has encountered traffic. 4 minute delay.");
-    $('#traffic-alert').html('<div class="alert alert-warning alert-dismissible" role="alert">\
-//   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-//   <strong>' + name + '" has encountered traffic. 4 minute delay."</strong>\
-// </div>');
+    $('#traffic-alert').append('<div class="alert alert-danger alert-dismissible" role="alert">\
+   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+   <strong>' + name + ' has encountered traffic. 4 minute delay</strong>\
+ </div>');
 }
+
+// $(".close span").on("click", function() {
+//     console.log("click close");
+//     $(".alert-dismissible").css("display", "none");
+// });
 
 function changeColorName (color) {
     var colors = {

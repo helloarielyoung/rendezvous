@@ -37,6 +37,11 @@ Invitation change status:  can i capture the flash in bootstrap and make it cool
 
 Navbar:  https://getbootstrap.com/components/#navbar-brand-image
 
+Make map-base.html and have map pages inhert from it.  Put all the basic map
+    html stuff in there.
+Figure out how to have a third css file for all the css that is shared
+    among map and non-map pages (like the alerts)
+
 Login/invite update flash messages never goes away if you don't leave Users page
 
 Make Time-To-Rendezvous page:

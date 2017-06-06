@@ -11,8 +11,8 @@ html, body {
 }
 
 body {
-    background-size: cover;
-    background: url(/static/img/1216px-1932_Candrain_Map_SF_brighter2.jpg) no-repeat center center;
+    /*background-size: cover;*/
+    background: url(/static/img/1216px-1932_Candrain_Map_SF_brighter2.jpg) center center;
 }
 
 .container {

@@ -70,9 +70,9 @@ def load_invitations():
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
                          #do I need datetime.datetime('2017 05 09')??
-                         rendezvous_date='2017 06 05 09:00:00',
-                         rendezvous_name='Girls coffee date',
-                         rendezvous_location_name='Test location 1',
+                         rendezvous_date='2017 06 06 09:00:00',
+                         rendezvous_name='Girls Coffee Date',
+                         rendezvous_location_name='Starbucks',
                          rendezvous_location_address='123 Street')
 
     invite2 = Invitation(invite_id=2,
@@ -80,7 +80,7 @@ def load_invitations():
                          created_date='2017 05 15 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         rendezvous_date='2017 06 06 18:00:00',
+                         rendezvous_date='2017 06 07 18:00:00',
                          rendezvous_name='Dinner with Joe',
                          rendezvous_location_name='Test location 2',
                          rendezvous_location_address='345 Street')
@@ -90,7 +90,7 @@ def load_invitations():
                          created_date='2017 05 20 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         rendezvous_date='2017 06 07 13:00:00',
+                         rendezvous_date='2017 06 08 13:00:00',
                          rendezvous_name='Sue\'s Birthday',
                          rendezvous_location_name='Test location',
                          rendezvous_location_address='678 Street')
@@ -100,7 +100,7 @@ def load_invitations():
                          created_date='2017 05 20 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         rendezvous_date='2017 06 07 15:00:00',
+                         rendezvous_date='2017 06 08 15:00:00',
                          rendezvous_name='Drinks with Allison',
                          rendezvous_location_name='A Bar',
                          rendezvous_location_address='8910 Street')
@@ -110,7 +110,7 @@ def load_invitations():
                          created_date='2017 05 20 9:00:00',
                          destination_lat=37.7888754,
                          destination_lng=-122.411542,
-                         rendezvous_date='2017 06 08 15:00:00',
+                         rendezvous_date='2017 06 09 15:00:00',
                          rendezvous_name='Out on the town',
                          rendezvous_location_name='Two bars',
                          rendezvous_location_address='1010 Street')

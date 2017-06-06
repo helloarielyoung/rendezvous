@@ -36,8 +36,6 @@
     <div id="map"></div>
     <div id="legend"><h3>Legend</h3></div>
     <script>
-
-
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center:  {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
@@ -46,14 +44,12 @@
           mapTypeControl: false,
           streetViewControl: false
         });
-
         // add marker for destination point
         var marker = new google.maps.Marker({
         position: {'lat': {{ center[0] }}, 'lng': {{ center[1] }} },
         map: map,
         title: 'Rendezvous point'
         });
-
         // displays just two users routes with hardcoded invite_id
         // Define symbol for Self
         var selflineSymbol = {
@@ -61,7 +57,6 @@
           scale: 4,
           strokeColor: 'green'
         };
-
         // colors for the other user's symbols
         var symbolcolors = colors = ['blue', 'purple', 'red', 'ylw']
         // define symbol for User2
@@ -70,7 +65,6 @@
           scale: 4,
           strokeColor: symbolcolors[0]
         };
-
         // Create the polyline using User1's data and add the symbol to it via the 'icons' property.
         var selfline = new google.maps.Polyline({
         path: [
@@ -85,7 +79,6 @@
           }],
           map: map
         });
-
         var otherline = new google.maps.Polyline({
         path: [
             {% for waypoint in otherquery: %}
@@ -99,11 +92,9 @@
           }],
           map: map
         });
-
         //start animation
         setTimeout(animateSelfCircle(otherline, 45), 4500)
         animateSelfCircle(selfline, 40);
-
       //legend
       var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
       var icons = {
@@ -121,10 +112,8 @@
           div.innerHTML = '<img src="' + icon + '"> ' + name;
           legend.appendChild(div);
         }
-
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
       }
-
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals for animation
       var id1
@@ -132,7 +121,6 @@
           var count = 0;
           id1 = window.setInterval(function() {
             count = (count + 1);
-
             var icons = line.get('icons');
             icons[0].offset = (count / 2) + '%';
             line.set('icons', icons);
@@ -141,10 +129,8 @@
                 icons[0].offset = '100%';
                 line.set('icons', icons);
                 window.clearInterval(id1);
-
         } }, speed);
       }
-
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap">

@@ -16,9 +16,16 @@
     <small>You are currently logged in as {{ session['user_name'] }}. Click <a href="/users/{{ session['user_id'] }}">here </a>to go to your profile
     </small>
 
-    <h3>Rendezvous Map</h3>
+    <h3>Rendezvous</h3>
+     <div id="traffic-alert">
+      test traffic div
+    </div><!--END traffic alert-->
+
+    <div id="user-arrived-alert">
+    </div><!--END user arrived alert-->
     <div id="map"></div>
     <div id="legend"><h3>Legend</h3></div>
+
     <script>
       /* to pass invite_id, login, and center position to the javascript */
       var user_id = {{ session.user_id }}

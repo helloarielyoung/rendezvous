@@ -227,8 +227,6 @@ function dataReceived(results) {
     //END loop for users in allWaypoints
     }
 
-    //force position of legend since it was not cooperating
-
     //animate the symbols on the lines
     var lineSpeed = 40;
     for(var user in userLines){
@@ -273,7 +271,12 @@ function animateSymbol(inputLine, inputSpeed, userName) {
 
 function trafficAlert (userName) {
     name = userName;
-    alert (name + " has encountered traffic. 4 minute delay.");
+    console.log("traffic alert called");
+    // alert (name + " has encountered traffic. 4 minute delay.");
+    $('#traffic-alert').html('<div class="alert alert-warning alert-dismissible" role="alert">\
+//   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+//   <strong>' + name + '" has encountered traffic. 4 minute delay."</strong>\
+// </div>');
 }
 
 function changeColorName (color) {

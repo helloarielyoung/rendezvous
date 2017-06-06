@@ -1,0 +1,431 @@
+<html lang = "en" style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <!-- title is on browser tab -->
+        <title>Rendezvous</title> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Gabriela|Roboto:400,700" rel="stylesheet">
+    </head>
+    <body>
+
+<h4>Create a new invitation</h4>
+<small><a href="/users/{{ session['user_id'] }}"> Click here to go to your profile</a>
+    </small>
+<p id="error"></p>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Rendezvous Invitation Searchbox</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
+
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<!--Invitation form pops up when one clicks on a marker on the map  -->
+<div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Rendezvous Invitation</h4>
+      </div>
+      <div class="modal-body">
+        <form id="newInvitation" action='/invitation-save.json', method='POST'>
+            <div class="form-group">
+                <label for="rendezvousLocation">Location</label>
+                  <p id="rendezvousLocationName"> </p>
+                  <p id="rendezvousLocationAddress"></p>
+
+            </div>
+
+            <div class="form-group">
+                <label for="rendezvousName">Rendezvous Name</label>
+                  <input type="name" class="form-control" id="rendezvousName" placeholder="Name">
+            </div>
+
+            <div class="form-group">
+                <label for="rendezvousDateTime">Date and Time</label>
+                <input type="datetime-local" class="form-control" id="rendezvousDateTime">
+            </div>               
+            <div class="form-group">
+              <label for="rendezvousFriends">Select Friends</label>
+               <ul>{% for friend in user_friends|sort(attribute='name') %} 
+                  <input type="checkbox" class="rendezvousFriends" value = {{ friend.user_id }}> {{ friend.name }}
+                {% endfor %}
+              </ul>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="newInvitationSubmit">Invite Friends</button>
+<!-- this way didn't work -->
+<!--         <input id="newInvitationSubmit" type="submit" value="Invite Friends" class="btn btn-primary"> -->
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- on success of Invitaiton submission -->
+<div class="modal fade" id="inviteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="inviteSuccessModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="alert alert-success alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <strong>Success!</strong> Your invitation has been created.<br>
+           <small>Click <a href="/users/{{ session['user_id'] }}" class="alert-link">here to view your invitations</a></small>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- script to submit the new invitation from the modal form -->
+<script>
+// debugger
+    $('#newInvitationSubmit').click( function(evt){
+        evt.preventDefault();
+        var friendList = [];
+
+        for ( var i=0; i< $('.rendezvousFriends').length; i++) {
+            friendList.push($('.rendezvousFriends')[i].value);
+        }
+        var data = {rendezvousName: $('#rendezvousName').val(),
+                rendezvousDateTime: $('#rendezvousDateTime').val(),
+                rendezvousLocationAddress: $('#rendezvousLocationAddress').text(),
+                rendezvousLocationName: $('#rendezvousLocationName').text(),
+                rendezvousFriends: JSON.stringify(friendList),
+                destinationLat: destination_lat,
+                destinationLng: destination_lng
+                };
+        $.post("/invitation-save.json", data, function(msg) {
+                $("#inviteModal").modal('hide');
+                $('#inviteSuccessModal').modal();
+            });
+      });
+
+
+</script>
+
+<div id="map">
+    </div>
+    <script>
+
+      //variable to hold place information outside of map
+      var placeInfo
+      //save the rendezvous location to store in waypoints
+      var destination_lat
+      var destination_lng
+      // add a search box to a map
+      function initMap() {
+        //set a default center
+        var curLatlng1 = new google.maps.LatLng(37.087654, -122.087545);
+
+        var mapOptions = {
+          center: curLatlng1,
+          zoom: 13,
+          mapTypeId: 'roadmap',
+          styles: [
+            {
+                "featureType": "administrative",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#444444"}]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "all",
+                "stylers": [{"color": "#f2f2f2"}]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry.fill",
+                "stylers": [{"visibility": "on"}]
+            },
+            {
+                "featureType": "landscape.man_made",
+                "elementType": "geometry.fill",
+                "stylers": [{"hue": "#ffd100"},
+                    {"saturation": "44"}]
+            },
+            {
+                "featureType": "landscape.man_made",
+                "elementType": "geometry.stroke",
+                "stylers": [{"saturation": "-1"
+                    },
+                    {"hue": "#ff0000"}]
+            },
+            {
+                "featureType": "landscape.natural",
+                "elementType": "geometry",
+                "stylers": [{"saturation": "-16"}]
+            },
+            {
+                "featureType": "landscape.natural",
+                "elementType": "geometry.fill",
+                "stylers": [{"hue": "#ffd100"},
+                    {"saturation": "44"}]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "all",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "featureType": "road",
+                "elementType": "all",
+                "stylers": [{"saturation": "-30"
+                    },
+                    {"lightness": "12"},
+                    {"hue": "#ff8e00"}]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "all",
+                "stylers": [{"visibility": "simplified"
+                    },
+                    {"saturation": "-26"}]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.icon",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [{"color": "#c0b78d"},
+                    {"visibility": "on"},
+                    {"saturation": "4"},
+                    {"lightness": "40"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [{"hue": "#ffe300"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry.fill",
+                "stylers": [{"hue": "#ffe300"},
+                    {"saturation": "-3"},
+                    {"lightness": "-10"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels",
+                "stylers": [{"hue": "#ff0000"},
+                    {"saturation": "-100"},
+                    {"lightness": "-5"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.stroke",
+                "stylers": [{"visibility": "off"}]
+            }
+        ]
+        };
+
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        //if user's geolaction can be obtained, set that as center
+        if (navigator.geolocation) {
+        
+            navigator.geolocation.getCurrentPosition(function (position) {
+                    initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    map.setCenter(initialLocation);
+                    });
+                }
+        else (console.log("navigator geolocation not working"))
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+
+          });
+          map.fitBounds(bounds);
+            //add onclick event to markers to pass geometry of that place to invitation
+            markers.forEach(function(marker) {
+                marker.addListener('click', function() {
+                    console.log(marker.getPosition().lat(), marker.getPosition().lng());
+                    destination_lat = marker.getPosition().lat();
+                    destination_lng = marker.getPosition().lng();
+                    // show it on the modal form
+                      $("#rendezvousLocationName").html(places[0].name);
+                      $('#rendezvousLocationAddress').html(places[0].formatted_address);
+                    launchModal();
+                });
+            });
+            // add another listener on HOOVER to get place info.  start from this,
+            // but will have to look through markers as above:
+            // google.maps.event.addListener(marker, 'click', function() {
+            //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            //     place.formatted_address + '</div>');
+            //   infowindow.open(map, this);
+            // });
+        });
+
+      }
+
+
+$('#inviteModal').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+    $("#pac-input").val("")
+});
+
+//launches the New Invitation modal form
+function launchModal(){
+     $('#inviteModal').modal();
+}
+
+//when the New Invitation form opens, find the autofocus field
+$('#inviteModal').on('shown.bs.modal', function () {
+  $('#rendezvousName').focus();
+});
+
+    </script>
+
+    <link rel="stylesheet" href="\static\css\map.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&libraries=places&callback=initMap"
+    async defer></script>

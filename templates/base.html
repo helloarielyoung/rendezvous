@@ -24,7 +24,6 @@
   </head>
     <body>
       <div class="container">
-        <!-- <div id="my-box"> -->
   
     <h3>Rendezvous</h3>
     <hr>
@@ -54,19 +53,6 @@
     {% endif %}
     </p>
     <hr>
-    <p>
-    {% if 'user_name' in session %}
-        <small>You are currently logged in as {{ session['user_name'] }}.<br>
-          <a href="/users/{{ session['user_id'] }}"> Click here to go to your profile</a>
-        </small>
-       <p>
-        <form action='/logout'>
-            <input type='submit' value='logout'>
-        </form>
-        </p> 
-    {% endif %}
-    </p>
-  <!-- </div> -->
 </div>
 <!-- Placed at the end of the document so the pages load faster -->
 

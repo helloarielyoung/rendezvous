@@ -222,10 +222,12 @@ function dataReceived(results) {
         div.innerHTML = '<img src="' + icon + '"> ' + name;
         legend.appendChild(div);
     }
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 
     //END loop for users in allWaypoints
     }
+
+    //force position of legend since it was not cooperating
 
     //animate the symbols on the lines
     var lineSpeed = 40;
@@ -233,6 +235,9 @@ function dataReceived(results) {
         animateSymbol(userLines[user]['line'], lineSpeed, userLines[user]['name']);
         lineSpeed = lineSpeed + 40;
     }
+
+    // $("#legend").attr('style','right:2px !important');
+    // console.log('legend push here');
 //END of dataReceived function
 }
 

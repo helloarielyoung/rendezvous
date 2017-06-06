@@ -12,8 +12,6 @@
   <div class="tab-content">
       <div id="profile" class="tab-pane fade in active">
         <!-- here is where i would put bootstrap row div -->
-        <h2>Welcome, {{ session['user_name'] }}!</h2>
-          
         <h3>Imminent Rendezvous - Click to go!</h3>
          <ul>{% for invite in imminent_invites_sum %}
               {% if session.user_id == invite[7] %}
@@ -35,8 +33,9 @@
               {% endif %}
              {% endfor %}
           </ul>
-        <h3> Click <a href="/invitation-new">here</a> to create a new Rendezvous</h3>
-          </p>
+          <div class="text-center">
+        <a href="/invitation-new" id="new-button" class="btn btn-new-invite" role="button">New Rendezvous</a>
+      </div>
 <!--         <p> Click <a href='/rendezvous-map'>here</a> for animated google map demo
           </p>  -->
       </div>

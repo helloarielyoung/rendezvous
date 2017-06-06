@@ -5,6 +5,13 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
+
+Rendezvous same size, place and font on all pages.  Right-Justified.
+Change color of New Invite success alert.
+Change Menu to navbar text across the top instead of pills.
+
+Change color of cancel invite alert.
+
 Move all the styles from invitation_new.html into css file...?
 
 Improve Map:
@@ -174,6 +181,11 @@ Way Future Features:
 ***********
 ***DONE***
 ***********
+
+Make background go all the way to the edges
+Make New Rendezvous button, centered.  Colored like the pills.
+
+^6/5^
 
 "Bootstrapped" Flask flash messages.
 Gave legend opaque white background.

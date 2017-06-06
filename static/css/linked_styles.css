@@ -1,10 +1,13 @@
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
-  padding: 2%;
+  padding-top: 2%;
+  padding-right: 0%;
+  padding-left: 0%;
   font-family: 'Roboto', sans-serif;
-  font-family: 'Gabriela', serif;
+  font-family: 'Playfair Display', serif;
 }
 
 body {
@@ -13,7 +16,8 @@ body {
 }
 
 .container {
-    background: rgba(251, 234, 206, 0.75); /* translucent tanish matches map image*/
+    background: rgba(251, 234, 206, 0.90); /* translucent tanish matches map image*/
+    width: 100%;
 }
 
 h3 {
@@ -24,6 +28,14 @@ h3 {
 form {
   color: rgb(70, 91, 119);
 }
+
+.btn-new-invite {
+  background-color: rgb(70, 91, 119);
+  background-image: rgb(70, 91, 119);
+  margin: 10px auto;
+  color: #fff;
+}
+
 
 li.active>#profile-pill{
   background-color: rgb(70, 91, 119);

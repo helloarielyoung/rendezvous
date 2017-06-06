@@ -6,7 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <!-- title is on browser tab -->
         <title>Rendezvous</title> 
-
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- bootstrap javascript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -15,50 +18,52 @@
 
 <!-- custom style sheet -->
 <link rel="stylesheet" href="\static\css\linked_styles.css">
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <!-- fonts -->
 <link href="https://fonts.googleapis.com/css?family=Gabriela|Roboto:400,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet"> 
 
-  </head>
-    <body>
-      <div class="container">
-  
-    <h3>Rendezvous</h3>
-    <hr>
-    <div id="flashMessages">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {# code example had {% for category, message in messages %} even though
-            the fields are not in that order...?  but this did not seem to help #}
-        {% for category, message in messages %}
-      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
-          <div class="alert alert-{{ category }} alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
-          <strong>{{ message }}</strong>
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    </div>
+    </head>
+        <body>
+          <div class="container">
+        <h3 class='rendezvous'>Rendezvous</h3> 
 
-    {% block content %} put your content here {% endblock %}
+        <a href="/logout" id="new-logout-button" class="btn btn-logout" role="button">New Logout</a>
 
-    <p>
-    {% if 'user_id' not in session %}
-      <a href="/login"><h5>Click here to log in.</h5></a>
-      <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
-    {% endif %}
-    </p>
-    <hr>
-</div>
-<!-- Placed at the end of the document so the pages load faster -->
+        <form action='/logout'> <input type='submit' value='logout'> </form>
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+            <hr>
+            <div id="flashMessages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {# code example had {% for category, message in messages %} even though
+                    the fields are not in that order...?  but this did not seem to help #}
+                {% for category, message in messages %}
+              <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+                  <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
+                  <strong>{{ message }}</strong>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            </div>
 
-    </body>
+            {% block content %} put your content here {% endblock %}
+
+            <p>
+            {% if 'user_id' not in session %}
+              <a href="/login" autofocus><h5>Click here to log in.</h5></a>
+              <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
+            {% endif %}
+            </p>
+            <hr>
+        </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+      </body>
 </html>

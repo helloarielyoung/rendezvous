@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- <div class="container"> -->
     <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" id="profile-pill" href="#profile">Profile</a></li>
     <li><a id="sent-pill" data-toggle="pill" href="#sentInvite">Sent Invitations</a></li>
@@ -34,13 +33,11 @@
              {% endfor %}
           </ul>
           <div class="text-center">
-        <a href="/invitation-new" id="new-button" class="btn btn-new-invite" role="button">New Rendezvous</a>
-      </div>
-<!--         <p> Click <a href='/rendezvous-map'>here</a> for animated google map demo
-          </p>  -->
-      </div>
+            <a href="/invitation-new" id="new-button" class="btn btn-new-invite" role="button">New Rendezvous</a>
+          </div>
+      </div> <!-- END Profile tab content-->
+
       <div id="sentInvite" class="tab-pane fade">
-          <h2>Invitations You have Sent</h2>
           <ul>{% for invite, list in all_my_invites|groupby('invite_id') %} 
                 <!--0 Invitation.invite_id,
                     1 Invitation.rendezvous_name,
@@ -56,15 +53,15 @@
                     11 User.email  -->
               <li>
                 <!-- group by invitation -->
-                ID: {{ list[0][0] }}<br>
-                <b>{{ list[0][1] }}</b><br>
+                <!-- ID: {# {{ list[0][0] }} #}<br> -->
+                <b>{{ list[0][1] }}</b>
+                    <form action='/invitation-change-status.json', method='POST' name='inviteform'>
+                      <input type='hidden' name='invite_id' value= {{ list[0][0] }}>
+                      <input type='submit'name='invite_submit_button' value= 'Cancel' >
+                    </form> <br>
                 Date:  {{ list[0][2].strftime('%m/%d/%Y %I:%M%p') }}<br>
                 Location:  {{ list[0][3] }}<br>
-                Click below to cancel this invitation:
-                <form action='/invitation-change-status.json', method='POST' name='inviteform'>
-                  <input type='hidden' name='invite_id' value= {{ list[0][0] }}>
-                  <input type='submit'name='invite_submit_button' value= 'Cancel' >
-                </form>
+
               <ul>  
               <!-- future feature:  add group by status! -->
               {% for person in list %}
@@ -76,11 +73,14 @@
                 {% endfor %} </ul></li>
               {% endfor %}
             </ul>
+      </div>  <!-- END Sent Invite -->
 
-      </div>
       <div id="receivedInvite" class="tab-pane fade">
-          <h2>Received Invitations</h2>
-          <hr>
+
+        <!-- bootstrap grid -->
+        <div class="container-fluid">
+            <div class="row">
+               <div class="col-md-4 col-md-border">
           <h3>Pending</h3>
           <ul>{% for invite in received_invites_sum if invite[0] == 'pen' %}
             <li>
@@ -94,15 +94,13 @@
                     7 Invitation.rendezvous_location_address,
                     8 User.user_id -->
 <!-- it would be way better if i did the status change using jQuery -->
-<!-- wouldn't it? -->
+<!-- wouldn't it? Then you could stay where you are and just refresh that section -->
               <!-- InviteID: {{ invite[2] }}<br> -->
-              Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
-              Name: {{ invite[3] }} <br>
-              Location: {{ invite[6]}}<br>
-              {{ invite[7] }}<br>
+              <strong>{{ invite[3] }} </strong><br>
+              Date: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
+              Location: {{ invite[6]}} {{ invite[7] }}<br>
               Invited by: {{ invite[5] }} <br>
               <b>Current Status: {{ invite[1]}} </b><br>
-              Click below to modify the status:
               <form action='/invitation-change-status.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[2] }}>
                   <input type='submit'name='invite_submit_button' value= 'Accept' >
@@ -111,18 +109,19 @@
             </li>
           {% endfor %}
           </ul>
-          <hr>
+
+      </div> <!-- end of first cell on row-->
+
+       <div class="col-md-4 col-md-border">
           <h3>Accepted</h3>
           <ul>{% for invite in received_invites_sum if invite[0] == 'act' %}
             <li>
               <!-- InviteID: {{ invite[2] }}<br> -->
-              Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
-              Name: {{ invite[3] }} <br>
-              Location: {{ invite[6]}}<br>
-              {{ invite[7] }}<br>
+              <strong>{{ invite[3] }} </strong><br>
+              Date: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
+              Location: {{ invite[6]}} {{ invite[7] }}<br>
               Invited by: {{ invite[5] }} <br>
               <b>Current Status: {{ invite[1]}} </b><br>
-              Click below to modify the status:
               <form action='/invitation-change-status.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[2] }}>
                   <input type='submit'name='invite_submit_button' value= 'Decline' >
@@ -131,18 +130,18 @@
             </li>
           {% endfor %}
           </ul>
-          <hr>
+
+        </div> <!-- end of second cell of row-->
+        <div class="col-md-4 col-md-border">
           <h3>Declined</h3>
           <ul>{% for invite in received_invites_sum if invite[0] == 'rej' %}
             <li>
               <!-- InviteID: {{ invite[2] }}<br> -->
-              Date and time: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
-              Name: {{ invite[3] }} <br>
-              Location: {{ invite[6]}}<br>
-              {{ invite[7] }}<br>
+              <strong> {{ invite[3] }} </strong> <br>
+              Date: {{ invite[4].strftime('%m/%d/%Y %I:%M%p') }} <br>
+              Location: {{ invite[6]}} {{ invite[7] }}<br>
               Invited by: {{ invite[5] }} <br>
               <b>Current Status: {{ invite[1]}} </b><br>
-              Click below to modify the status:
               <form action='/invitation-change-status.json', method='POST' name='inviteform'>
                   <input type='hidden' name='invite_id' value={{ invite[2] }}>
                   <input type='submit'name='invite_submit_button' value= 'Accept' >
@@ -151,7 +150,12 @@
             </li>
           {% endfor %}
           </ul>
-  </div>
+        </div> <!-- end of third cell in row-->
+  </div> <!-- END row -->
+</div> <!-- END bootstrap bootstrap grid container-->
+</div> <!-- END received invite tab content-->
+
+
 
       <div id="Friends" class="tab-pane fade">
           <h2>Friend Requests:</h2>
@@ -165,8 +169,8 @@
               {% endfor %}
           </ul>
       </div>
-    </div>
-<!-- </div> -->
+    </div> <!--END tab content-->
+
 <script>
 if (location.hash) {
   $('a[href=\'' + location.hash + '\']').tab('show');

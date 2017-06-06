@@ -22,18 +22,47 @@ body {
 
 h1, h2, h3, h4 {
   color: rgb(70, 91, 119);
+}
 
+.rendezvous { /* allow logout button to be on same line as heading*/
+  display: inline-block;
 }
 
 form {
   color: rgb(70, 91, 119);
+  display: inline-block; /* make form buttons on same line as text */
 }
 
+input[type=text] { /*sets font when filling out forms*/
+  font-family: 'Roboto', sans-serif;
+}
+
+input[type=button] { /*trying to get logout button to look like other buttons*/
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background-color: rgb(70, 91, 119);
+  background-image: rgb(70, 91, 119);
+}
+
+#logout-button {
+  float: right;
+  margin-top: 25px;
+}
+
+.btn-logout {
+  background-color: rgb(70, 91, 119);
+  background-image: rgb(70, 91, 119);
+  margin: 15px auto;
+  color: #fff;
+  padding: 10px;
+  float: right;
+}
 .btn-new-invite {
   background-color: rgb(70, 91, 119);
   background-image: rgb(70, 91, 119);
-  margin: 10px auto;
+  margin: 15px auto;
   color: #fff;
+  padding: 10px;
 }
 
 
@@ -68,35 +97,5 @@ a.focus, a.hoover {
     background-color: rgb(181, 150, 99);
     color: #F4F9F3;
     font-weight: bolder;
+    font-family: 'Roboto', sans-serif;
 }
-
-input[type=text] {
-  font-family: 'Roboto', sans-serif;
-}
-
-/* Example CSS from CSS lecture */
-/*h1 {
-  font-family: sans-serif;
-  color: blue;
-}
-
-h1 {
-  color: pink;
-}
-
-div.urgent {
-  color: red;
-  font-weight: bold;
-}
-
-div {
-  background-color: blue;
-}
-
-#notice {
-  font-family: monospace;
-  font-size: 3em;
-  width: 15em;
-  margin: 0 auto;
-}
-*/

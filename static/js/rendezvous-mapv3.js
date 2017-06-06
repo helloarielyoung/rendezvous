@@ -236,8 +236,6 @@ function dataReceived(results) {
         lineSpeed = lineSpeed + 40;
     }
 
-    // $("#legend").attr('style','right:2px !important');
-    // console.log('legend push here');
 //END of dataReceived function
 }
 

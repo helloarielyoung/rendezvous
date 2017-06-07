@@ -5,34 +5,29 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Readme.  Examples:  http://fellowship.hackbrightacademy.com/materials/f18k/lectures/demo-presentation-prep/
+Change Menu to navbar text across the top instead of pills.     And add logo.
 
-Rendezvous same size, place and font on all pages.  Right-Justified.
-Change color of New Invite success alert.
-Change Menu to navbar text across the top instead of pills.
+Change color of cancel invite alert. (Fix cancel - it doesn't currently change status of friend's I don't think)
 
-Change color of cancel invite alert.
-
-Move all the styles from invitation_new.html into css file...?
+Move all the styles from invitation_new.html into css file...
 
 Improve Map:
     Legend isn't going in TOP-RIGHT, why?  
-    Map size not actually fixed:  why is it taller than my browser window?
-    Remove ETA from legend when user arrives?
+    Map size not actually fixed:  why is it taller than my browser window? Set to 80% for now...
+    Update ETA in legend.  Set to "Arrived" on arrival.
     User3 joins the rendezvous and route appears on the map
-    fix the zoom:
+    Fix the zoom:
             Do some calculation of the starting points of the routes and the destination
             point and adjust the zoom and center point of the map to include all of
             all routes.  See Links & notes for links...
 
 New Invitation success:
-    make link go to "Sent Invitations" tab! look up jQuery on-click
-     to close the modal, go to page and switch to tab
+    make link go to "Sent Invitations" tab! look up jQuery on-click to close the modal, go to page and switch to tab
 
-better date/time picker
+Better date/time picker
 
 Sent Invitations:
-    sort by most recently sent?
+    sort by most recently sent
 
 Hide logout button if you are not logged in.
 
@@ -185,6 +180,9 @@ Way Future Features:
 ***DONE***
 ***********
 
+Change color of New Invite success alert.
+Readme.  Examples:  http://fellowship.hackbrightacademy.com/materials/f18k/lectures/demo-presentation-prep/
+Rendezvous same size, place and font on all pages.
 Make background go all the way to the edges
 Make New Rendezvous button, centered.  Colored like the pills.
 

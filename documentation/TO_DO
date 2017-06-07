@@ -5,42 +5,9 @@ REMINDER:  on startup:
 ***TO DO***
 ***********
 
-Change Menu to navbar text across the top instead of pills.     And add logo.
+Change Menu to navbar text across the top instead of pills.     And add logo.  https://getbootstrap.com/components/#navbar-brand-image
 
-Change color of cancel invite alert. (Fix cancel - it doesn't currently change status of friend's I don't think)
-
-Move all the styles from invitation_new.html into css file...
-
-Improve Map:
-    Legend isn't going in TOP-RIGHT, why?  
-    Map size not actually fixed:  why is it taller than my browser window? Set to 80% for now...
-    Update ETA in legend.  Set to "Arrived" on arrival.
-    User3 joins the rendezvous and route appears on the map
-    Fix the zoom:
-            Do some calculation of the starting points of the routes and the destination
-            point and adjust the zoom and center point of the map to include all of
-            all routes.  See Links & notes for links...
-
-New Invitation success:
-    make link go to "Sent Invitations" tab! look up jQuery on-click to close the modal, go to page and switch to tab
-
-Better date/time picker
-
-Sent Invitations:
-    sort by most recently sent
-
-Hide logout button if you are not logged in.
-
-Invitation change status:  can i capture the flash in bootstrap and make it cooler?
-
-Navbar:  https://getbootstrap.com/components/#navbar-brand-image
-
-Make map-base.html and have map pages inhert from it.  Put all the basic map
-    html stuff in there.
-Figure out how to have a third css file for all the css that is shared
-    among map and non-map pages (like the alerts)
-
-Login/invite update flash messages never goes away if you don't leave Users page
+Login/invite update flash messages never goes away if you don't leave Users page.  Make it fade
 
 Make Time-To-Rendezvous page:
     Change User Profile page so clicking on Active Invitation brings you to
@@ -53,8 +20,32 @@ Make Time-To-Rendezvous page:
         Here's the google maps API for getting the directions:
             https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions
 
+Improve Rendezvous Map:
+    Make it really get routes from above, really query user's positions & update....
+    Legend isn't going in TOP-RIGHT, why?  
+    Map size not actually fixed:  why is it taller than my browser window? Set to 80% for now...
+    Update ETA in legend.  Set to "Arrived" on arrival.
+    User3 joins the rendezvous and route appears on the map
+    Fix the zoom:
+            Do some calculation of the starting points of the routes and the destination
+            point and adjust the zoom and center point of the map to include all of
+            all routes.  See Links & notes for links...
 
-Sent invitations:  add un-cancel button and re-invite friends.
+Make map-base.html and have map pages inhert from it.  Put all the basic map html stuff in there.
+
+Sent Invitations:
+    sort by most recently sent
+    add un-cancel button and re-invite friends.
+    change color of cancel invite alert.
+    Fix cancel - it doesn't currently change friend's users_invites status
+
+New Invitation:
+    Better date/time picker
+    Move all the styles from invitation_new.html into css file...
+    on successful save, make link go to "Sent Invitations" tab! look up jQuery on-click to close the modal, go to page and switch to tab
+    Add on-click listener to launch modal when click on ANY googlmap marker
+
+Figure out how to have a third css file for all the css that is shared among map and non-map pages (like the alerts)
 
 It would be good to refactor how I'm sending invite query data to user's page:
     if i sent a dictionary, then understanding and changing the jinja references
@@ -64,7 +55,6 @@ It would be good to refactor how I'm sending invite query data to user's page:
 Rendezvous Map Improvements:
     **Do this stuff on v1 map for demo**
     Hover over dots show name & current ETA.
-    Add on-click listener to launch modal when click on ANY googlmap marker
 
 Add tests so I don't have to manually check if changes broke stuff.
     confirm test that you can't get to users/id by brute force (try get and post)
@@ -180,6 +170,8 @@ Way Future Features:
 ***DONE***
 ***********
 
+Hide logout button if you are not logged in.
+Invitation change status: captured the flash in bootstrap and made it cooler
 Change color of New Invite success alert.
 Readme.  Examples:  http://fellowship.hackbrightacademy.com/materials/f18k/lectures/demo-presentation-prep/
 Rendezvous same size, place and font on all pages.

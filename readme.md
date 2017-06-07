@@ -5,7 +5,7 @@ Learn more about the developer:  www.linkedin.com/in/helloarielyoung/
 *Rendezvous* is a fullstack web application designed for coordinating meeting with your friends and knowing their estimated time of arrival and any traffic delays encountered along their way to your rendezvous.  As users create new invitations, Google Places Autocomplete makes suggestions based on their input.  Users select the destination, set a date and time, and invite their friends to meet them.  As each person on the invitation gets ready to go, they select a Google Maps Route, and their progress toward the rendezvous is shared with the other users.  Google Maps traffic alerts received by one users are shared with the other users, and as each person arrives at the rendezvous the others are notified.
 
 ![RendezvousUserProfile](https://raw.githubusercontent.com/helloarielyoung/rendezvous/static/img/Rendezvous_User_Profile_Page.png)
-![RendezvousGif](https://raw.githubusercontent.com/helloarielyoung/rendezvous/static/img/Rendezvous_gif.mp4)
+![RendezvousGif](https://github.com/helloarielyoung/rendezvous/blob/master/static/img/Rendezvous_gif.mp4)
 
 #### Technologies
 Python, Flask, PostgreSQL, SQLAlchemy, HTML/CSS, Twitter Bootstrap, JavaScript, jQuery,  AJAX, Google Maps API, Google Places Web Service

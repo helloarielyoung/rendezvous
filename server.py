@@ -407,28 +407,11 @@ def invitation_save():
             ui = UserInvite(invite_id=invite1.invite_id, user_id=user_id, status='pen', created_date=created_date)
             db.session.add(ui)
 
-#         #don't commit until they are all added without error
+        # don't commit until they are all added without error
         db.session.commit()
 
         success = {'status': 'successful'}
         return jsonify(success)
-
-# don't need this I don't think = just putting deets & accept/decline buttons
-# on the users page
-# @app.route('/invitation-pending-manage')
-# def invitation_manage_pending():
-#     """Accept or reject pending invitations"""
-
-#     if session.get('user_id') is None:
-#         return redirect('/')
-
-#     else:
-#         user_id = session["user_id"]
-#         invite_id = request.form.get("invite_id")
-
-#         return render_template("invitation_manage_pending.html",
-#                                 user_id=user_id,
-#                                 invite_id=invite_id)
 
 
 @app.route('/invitation-change-status.json', methods=['POST'])
@@ -468,9 +451,10 @@ def invitation_update():
 
         #to send confirmation message back
         invite_data = db.session.query(Invitation.rendezvous_name, Invitation.rendezvous_date).filter(Invitation.invite_id == invite_id).first()
-        print invite_data
-        flash("Status of \'" + invite_data[0] + "\'" + " on " + invite_data[1].strftime('%m/%d/%Y %I:%M%p') + " has been changed to " + status, "info")
 
+        flash("Status of \'" + invite_data[0] + "\'" + " on " +
+              invite_data[1].strftime('%m/%d/%Y %I:%M%p') +
+              " has been changed to " + status, "success")
         return redirect(redirect_url())
 
 
@@ -500,5 +484,5 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    # DebugToolbarExtension(app)
+    #DebugToolbarExtension(app)
     app.run(port=5000, host='0.0.0.0')

@@ -1,42 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3> Login</h3>
+<p class="blue-text">Enter your email address and password to log in</p>
 <p>
-<form id="login_form" action="/login" method="POST">
+<form id="login-form" action="/login" method="POST">
 <label>Email <input type="text" name="email" id="email_login" autofocus></label>
 <br>
 <label>Password <input type="password" name="password" id="password_login"></label>
-<br>
-
-<input type="submit" name="user_id" value="Login" id="submit_login">
-</form>
+<!-- <input type="submit" name="user_id" value="Login" id="submit_login"> -->
+</form><br>
+<button type="submit" form="login-form" class="btn btn-login" role="button" value="Login">Login</button>
 </p>
 
-<!-- this is somebody else's version... not quite sure what they were going for -->
-<!-- but it would be nice to do some javascript/AJAX checking and not submit
-    until valid info is in fields -->
 <!-- JavaScript starts here -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-// var email = $('#email_submit').val();
-// var password = $('#password_submit').val();
-
-// function startSession() {
-
-// }
-
-// function sendRequest(evt) {
-//     evt.preventDefault();
-//     $.post("/login.json", email, startSession);
-// }
-
-
-
-// $('#login_form').on('submit', sendRequest)
-
-</script>
-
 
 {% endblock %}

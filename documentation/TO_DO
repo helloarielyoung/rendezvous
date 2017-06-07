@@ -34,6 +34,8 @@ better date/time picker
 Sent Invitations:
     sort by most recently sent?
 
+Hide logout button if you are not logged in.
+
 Invitation change status:  can i capture the flash in bootstrap and make it cooler?
 
 Navbar:  https://getbootstrap.com/components/#navbar-brand-image
@@ -90,13 +92,6 @@ Improve Invitation form
      Look into using "remote" option and loading the modal from a different HTML page http://getbootstrap.com/2.3.2/javascript.html#modals
 
 Add indexes in model.py on fields that are FK's
-
-Need to add more seed data to be able to test if these things work
-Finish User landing page for after login
-    Shows "active" Invitations
-    Shows "pending" Invitations
-    Shows "pending" friend requests
-    Need routes for each of those users on the invites
 
 Web page design security question:
     /users/<userid>

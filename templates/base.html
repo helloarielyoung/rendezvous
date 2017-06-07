@@ -27,11 +27,9 @@
         <body>
           <div class="container">
         <h3 class='rendezvous'>Rendezvous</h3> 
-
-        <a href="/logout" id="new-logout-button" class="btn btn-logout" role="button">New Logout</a>
-
-        <form action='/logout'> <input type='submit' value='logout'> </form>
-
+        {% if 'user_id' in session %}
+        <a href="/logout" id="new-logout-button" class="btn btn-logout" role="button">Logout</a>
+        {% endif %}
             <hr>
             <div id="flashMessages">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -52,12 +50,10 @@
 
             {% block content %} put your content here {% endblock %}
 
-            <p>
             {% if 'user_id' not in session %}
-              <a href="/login" autofocus><h5>Click here to log in.</h5></a>
-              <h5>Don't have an account? <a href="/register">Click here to register.</a></h5>
+            <h4>Click<a href="/login" autofocus> here</a> to log in.</h4>
+            <p> Don't have an account? <a href="/register">Click here to register.</a></p>
             {% endif %}
-            </p>
             <hr>
         </div>
     <!-- Placed at the end of the document so the pages load faster -->

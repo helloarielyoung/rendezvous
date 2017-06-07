@@ -222,7 +222,7 @@ function dataReceived(results) {
         div.innerHTML = '<img src="' + icon + '"> ' + name;
         legend.appendChild(div);
     }
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
 
     //END loop for users in allWaypoints
     }

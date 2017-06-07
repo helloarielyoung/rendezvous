@@ -8,6 +8,8 @@ Learn more about the developer:  www.linkedin.com/in/helloarielyoung/
 
 ![RendezvousGif](/static/img/Rendezvous_gif.gif)
 
+Rendezvous eliminates the need to text while driving, "Stuck in traffic, be 10min late"!
+
 #### Technologies
 Python, Flask, PostgreSQL, SQLAlchemy, HTML/CSS, Twitter Bootstrap, JavaScript, jQuery,  AJAX, Google Maps API, Google Places Web Service
 

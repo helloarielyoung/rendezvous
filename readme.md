@@ -6,7 +6,7 @@ Learn more about the developer:  www.linkedin.com/in/helloarielyoung/
 
 ![RendezvousUserProfile](https://github.com/helloarielyoung/rendezvous/blob/master/static/img/Rendezvous_user_profile.mp4)
 
-![RendezvousGif](/static/img/Rendezvous_gif.mp4)
+![RendezvousGif](/static/img/Rendezvous_gif.gif)
 
 #### Technologies
 Python, Flask, PostgreSQL, SQLAlchemy, HTML/CSS, Twitter Bootstrap, JavaScript, jQuery,  AJAX, Google Maps API, Google Places Web Service

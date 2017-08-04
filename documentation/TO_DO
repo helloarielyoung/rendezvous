@@ -1,5 +1,6 @@
 REMINDER:  on startup:
-    dropdb, createdb, seed.py, source secrets.sh, source env/bin/activate
+    vagrant up, vagrant ssh
+    dropdb, createdb, seed.py, source env/bin/activate, source secrets.sh
 
 ***********
 ***TO DO***
